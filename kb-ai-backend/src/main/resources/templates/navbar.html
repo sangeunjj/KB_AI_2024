@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <title>웹 사이트 네비게이션 바</title>
+</head>
+<body>
+<div th:fragment="navbar" class="navbar">
+    <div class="logo">KB <span>ANALYSIS</span></div>
+    <div class="search-container">
+        <input type="text" placeholder="기업명을 입력하세요">
+    </div>
+    <div class="nav-links">
+        <a href="#">Chat Us</a>
+        <a href="#">기업</a>
+        <a href="#">자동 보고서 생성</a>
+    </div>
+</div>
+</body>
+</html>
