@@ -33,7 +33,7 @@
     padding: 10px;
     position: relative;
     height: auto;
-    max-width: 800px; /* 원하는 최대 너비 설정 */
+    max-width: 1000px; /* 원하는 최대 너비 설정 */
     margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진 자동 설정 */
 }
 
