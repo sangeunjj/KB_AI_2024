@@ -29,26 +29,25 @@
 
 .input-container {
     display: flex;
-    align-items: center; /* 중간 정렬 */
+    align-items: center; /* 중앙 정렬 */
     padding: 10px;
-    background-color: #fff;
     position: relative;
     height: auto;
-    max-width: 1050px; /* 원하는 최대 너비 설정 */
+    max-width: 800px; /* 원하는 최대 너비 설정 */
     margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진 자동 설정 */
-    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
 }
 
 .input-container textarea {
     flex-grow: 1;
     padding: 10px;
-    border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 16px;
     line-height: 1.5;
     resize: none;
     box-sizing: border-box;
     margin-right: 10px; /* 버튼과의 간격 추가 */
+    overflow-y: auto; /* 스크롤 활성화 */
+    max-height: calc(1.5em * 5); /* 최대 5줄 높이 설정 */
 }
 
 .input-container button {
@@ -90,10 +89,14 @@
     background-color: transparent; /* 배경색 제거 */
     color: #6E6259; /* KB Gray 색상으로 변경 */
     align-self: flex-start;
-    text-align: right;
+    text-align: left; /* 왼쪽 정렬 */
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* 상단 정렬 */
     gap: 10px; /* 이미지와 텍스트 간의 간격 조정 */
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 100%; /* 전체 너비 사용 */
+    word-wrap: break-word;
 }
 
 .bot-message img {

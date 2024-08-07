@@ -105,6 +105,12 @@
         const maxHeight = parseInt(window.getComputedStyle(element).lineHeight) * 5; // 최대 5줄 높이 설정
         element.style.height = Math.min(element.scrollHeight, maxHeight) + "px";
 
+        if (element.scrollHeight > maxHeight) {
+            element.style.overflowY = "scroll"; // 스크롤 활성화
+        } else {
+            element.style.overflowY = "hidden"; // 스크롤 비활성화
+        }
+
         // 부모 요소의 높이를 입력 칸의 높이에 맞춰 조정
         const parent = element.parentElement;
         parent.style.height = element.style.height;
@@ -113,6 +119,7 @@
         const chatContainer = document.querySelector('.chat-container');
         chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
     }
+
 </script>
 </body>
 </html>
