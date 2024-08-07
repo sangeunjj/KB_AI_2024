@@ -129,12 +129,12 @@ body {
     background-color: #f4f4f4;
 }
 
-.sidebar .logout {
+.sidebar .auth {
     margin-top: 320px; /* Report와 100px 간격 추가 */
     padding-bottom: 20px; /* 하단 간격 추가 */
 }
 
-.sidebar .logout a {
+.sidebar .auth a {
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -143,11 +143,11 @@ body {
     font-size: 20px;
 }
 
-.sidebar .logout a img.icon {
+.sidebar .auth a img.icon {
     margin-right: 10px;
 }
 
-.sidebar .logout a:hover {
+.sidebar .auth a:hover {
     background-color: #f4f4f4;
 }
 
