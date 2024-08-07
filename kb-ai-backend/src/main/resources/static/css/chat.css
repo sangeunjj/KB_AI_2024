@@ -1,0 +1,106 @@
+/* General styles */
+.main-content {
+    background-color: #fff;
+    margin-top: 35px;
+}
+/* Chat container styles */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* overflow 속성 제거 */
+    background-color: #f4f4f9;
+    max-width: 1000px;
+    margin: auto auto auto auto; /*top, right, bottom, left*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-box {
+    flex-grow: 1;
+    padding: 20px;
+    height: 500px;
+    overflow-y: auto;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 메시지 간의 간격 조정 */
+}
+
+.input-container {
+    display: flex;
+    align-items: center; /* 중간 정렬 */
+    padding: 10px;
+    background-color: #fff;
+    position: relative;
+    height: auto;
+    max-width: 1050px; /* 원하는 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진 자동 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
+}
+
+.input-container textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    box-sizing: border-box;
+    margin-right: 10px; /* 버튼과의 간격 추가 */
+}
+
+.input-container button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #FFBC00;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-container button:hover {
+    background-color: #b58929;
+}
+
+
+/* Message styles */
+.message {
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 60%;
+    word-wrap: break-word;
+    font-size: 16px;
+    line-height: 1.5;
+    display: inline-block;
+}
+
+.user-message {
+    background-color: #ecebeb;
+    color: black;
+    align-self: flex-end;
+    text-align: left;
+    border-radius: 20px 20px 20px 20px; /* 왼쪽 위 모서리 둥글게 */
+    margin-bottom: 10px; /* 메시지 박스 간의 간격 조정 */
+}
+
+.bot-message {
+    background-color: transparent; /* 배경색 제거 */
+    color: #6E6259; /* KB Gray 색상으로 변경 */
+    align-self: flex-start;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 이미지와 텍스트 간의 간격 조정 */
+}
+
+.bot-message img {
+    width: 20px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ccc; /* 원의 테두리 색상 추가 */
+    padding: 8px; /* 이미지와 원 사이의 간격 추가 */
+    background-color: #f4f4f4; /* 원의 배경색 추가 */
+}
