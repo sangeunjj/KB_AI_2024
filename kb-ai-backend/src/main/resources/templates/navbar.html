@@ -3,22 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="/css/navbar.css">
     <title>웹 사이트 네비게이션 바</title>
 </head>
 <body>
-<div th:fragment="navbar" class="navbar">
-    <div class="left-section">
-        <div class="logo">KB <span>ANALYSIS</span></div>
-        <div class="search-container">
-            <input type="text" placeholder="기업명을 입력하세요">
-        </div>
+<div class="sidebar active" id="sidebar">
+    <div class="profile">
+        <img src="/icons/profile.png" alt="Profile Picture">
+        <span>김대리</span>
     </div>
-    <div class="nav-links">
-        <a href="#" class="chat-us">Chat Us</a>
-        <a href="#">기업</a>
-        <a href="#">자동 보고서 생성</a>
+    <div class="menu-items">
+        <a href="#"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
+        <a href="#"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
+        <a href="#"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
+    </div>
+    <div class="logout">
+        <a href="#"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
     </div>
 </div>
+<div class="content expanded" id="content">
+    <div class="navbar">
+        <div class="left-section">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <div class="logo">KB <span>ANALYSIS</span></div>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="기업명을 입력하세요">
+            <button class="search-clear">X</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+        sidebar.classList.toggle("active");
+        content.classList.toggle("expanded");
+    }
+
+    document.querySelector('.search-clear').addEventListener('click', function() {
+        document.querySelector('.search-container input').value = '';
+    });
+</script>
 </body>
 </html>
