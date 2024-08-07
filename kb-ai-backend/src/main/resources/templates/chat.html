@@ -10,16 +10,23 @@
 <body>
 <div class="sidebar active" id="sidebar">
     <div class="profile">
-        <img src="/icons/profile.png" alt="Profile Picture">
-        <span>김대리</span>
+        <!-- Gender가 1인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
+        <!-- Gender가 2인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
+        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+
+        <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
         <a href="/"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
         <a href="/company"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
         <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
     </div>
-    <div class="logout">
-        <a href="#"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
+    <div class="auth">
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon" width="25px" height="25px">Log In</a>
     </div>
 </div>
 <div class="content expanded" id="content">
@@ -122,7 +129,6 @@
         const chatContainer = document.querySelector('.chat-container');
         chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
     }
-
 </script>
 </body>
 </html>
