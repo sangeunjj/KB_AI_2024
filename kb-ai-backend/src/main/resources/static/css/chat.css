@@ -51,19 +51,26 @@
 }
 
 .input-container button {
-    padding: 10px 20px;
+    background: none;
     border: none;
-    background-color: #FFBC00;
-    color: white;
-    font-size: 16px;
-    border-radius: 4px;
+    padding: 0;
     cursor: pointer;
 }
 
-.input-container button:hover {
-    background-color: #b58929;
+.input-container button img {
+    width: 40px;  /* 원하는 크기로 조정 */
+    height: 40px; /* 원하는 크기로 조정 */
 }
 
+/*.rotated-image {*/
+/*    transform: rotate(-44deg); !* 이미지를 왼쪽으로 30도 회전 *!*/
+/*}*/
+
+
+.input-container button:disabled {
+    cursor: not-allowed; /* 커서 변경 */
+    opacity: 0.5; /* 투명도 적용하여 비활성화 표시 */
+}
 
 /* Message styles */
 .message {
