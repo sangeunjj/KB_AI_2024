@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/navbar.css">
-    <title>웹 사이트 네비게이션 바</title>
+    <title>Chat Page</title>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
@@ -32,7 +32,24 @@
             <button class="search-clear">X</button>
         </div>
     </div>
+    <div class="main-content">
+        <!-- 여기에 Chat 페이지의 내용을 추가하세요 -->
+        <h1>Company Page</h1>
+        <p>This is the Company page content.</p>
+    </div>
 </div>
 <script th:src="@{/js/navbar.js}"></script>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+        sidebar.classList.toggle("active");
+        content.classList.toggle("expanded");
+    }
+
+    document.querySelector('.search-clear').addEventListener('click', function() {
+        document.querySelector('.search-container input').value = '';
+    });
+</script>
 </body>
 </html>
