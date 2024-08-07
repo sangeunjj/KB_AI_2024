@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/chat.css">
-    <title>Chat Page</title>
+    <link rel="stylesheet" href="/css/report.css">
+    <title>Comparison Report</title>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
     <div class="profile">
-        <!-- Gender가 1인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
-        <!-- Gender가 2인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
-        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
-
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -41,12 +38,45 @@
         </div>
     </div>
     <div class="main-content">
-        <!-- 여기에 Chat 페이지의 내용을 추가하세요 -->
-        <h1>Report2 Page</h1>
-        <p>This is the Report2 page content.</p>
+        <div class="report-container">
+            <div class="tab-selection">
+                <div class="tab" onclick="location.href='/report1'">
+                    비교할 회사 직접 선택하기
+                    <div class="underline inactive"></div>
+                </div>
+                <div class="tab" onclick="location.href='/report2'">
+                    동종업계 회사 선택하기
+                    <div class="underline"></div>
+                </div>
+            </div>
+            <div class="report-content">
+                <h2>비교할 기업을 선택하세요. 기업 비교는 최대 3개까지 가능합니다.</h2>
+                <div class="company-selection">
+                    <button class="company-button">더존비즈온</button>
+                    <button class="company-button">더존상사</button>
+                    <button class="company-button">+</button>
+                </div>
+                <h3>중점적으로 비교할 피처를 선택하세요</h3>
+                <div class="features">
+                    <span>ESG</span> | <span>작년 실적</span> | <span>재무제표</span> | <span>성장 가능성</span> | <span>기업 이미지</span> | <span>신용 점수</span> | <span>전체</span>
+                </div>
+                <h3>세 기업의 비교 분석 결과입니다.</h3>
+                <div class="charts">
+                    <div class="chart"><img src="chart1.png" alt="Chart 1"></div>
+                    <div class="chart"><img src="chart2.png" alt="Chart 2"></div>
+                    <div class="chart"><img src="chart3.png" alt="Chart 3"></div>
+                    <div class="chart"><img src="chart4.png" alt="Chart 4"></div>
+                    <div class="chart"><img src="chart5.png" alt="Chart 5"></div>
+                    <div class="chart"><img src="chart6.png" alt="Chart 6"></div>
+                </div>
+                <div class="generate-report">
+                    <button class="generate-button">비교 내용 자동 보고서 생성</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<script th:src="@{/js/navbar.js}"></script>
+<script src="/js/navbar.js"></script>
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");

@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/chat.css">
-    <title>Chat Page</title>
+    <link rel="stylesheet" href="/css/report.css">
+    <title>Comparison Report</title>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
-    <div class="profile">
-        <!-- Gender가 1인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
-        <!-- Gender가 2인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
-        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
-
+    <div class="profile text-center">
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -25,8 +26,10 @@
         <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
     </div>
     <div class="auth">
-        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
-        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon" width="25px" height="25px">Log In</a>
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
     </div>
 </div>
 <div class="content expanded" id="content">
@@ -40,13 +43,113 @@
             <button class="search-clear">X</button>
         </div>
     </div>
-    <div class="main-content">
-        <!-- 여기에 Chat 페이지의 내용을 추가하세요 -->
-        <h1>Report1 Page</h1>
-        <p>This is the Report1 page content.</p>
+    <div class="main-content container mt-4">
+        <div class="report-container">
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <h5 class="text-uppercase tab">
+                        <a href="report1.html" class="tab-link active" id="tab1">비교할 회사 직접 선택하기</a>
+                    </h5>
+                </div>
+                <div class="col text-center">
+                    <h5 class="text-uppercase tab">
+                        <a href="report2.html" class="tab-link" id="tab2">동종업계 회사 선택하기</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="row mb-4" style="margin-bottom: 50px;">
+                <div class="col">
+                    <h5 style="margin-top: 30px; margin-bottom: 30px">비교할 기업을 선택하세요. 기업 비교는 최대 3개까지 가능합니다.</h5>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="checkbox" checked autocomplete="off"> 더존비즈온
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="checkbox" autocomplete="off"> 더존상사
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="checkbox" autocomplete="off"> +
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <h5 style="margin-top: 30px; margin-bottom: 30px">중점적으로 비교할 피처를 선택하세요</h5>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> ESG
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 작년 실적
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 재무제표
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 성장 가능성
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 기업 이미지
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 신용 점수
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="checkbox" autocomplete="off"> 전체
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <h5 style="margin-top: 30px; margin-bottom: 30px">세 기업의 비교 분석 결과입니다.</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart1.png" alt="Chart 1" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart2.png" alt="Chart 2" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart3.png" alt="Chart 3" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart4.png" alt="Chart 4" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart5.png" alt="Chart 5" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart bg-light p-3 mb-3">
+                                <img src="chart6.png" alt="Chart 6" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <button class="btn btn-warning btn-lg">비교 내용 자동 보고서 생성</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<script th:src="@{/js/navbar.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/navbar.js"></script>
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
@@ -55,7 +158,7 @@
         content.classList.toggle("expanded");
     }
 
-    document.querySelector('.search-clear').addEventListener('click', function() {
+    document.querySelector('.search-clear').addEventListener('click', function () {
         document.querySelector('.search-container input').value = '';
     });
 </script>
