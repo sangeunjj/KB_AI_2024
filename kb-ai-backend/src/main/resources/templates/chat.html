@@ -12,10 +12,11 @@
     </style>
 </head>
 <body>
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{navbar :: navbar}"></div>
 <div class="content">
     <h1>KB 직원들을 위한 기업금융 실시간 질의응답</h1>
     <p>기본 페이지입니다.</p>
 </div>
+<script th:src="@{/js/navbar.js}"></script>
 </body>
 </html>
