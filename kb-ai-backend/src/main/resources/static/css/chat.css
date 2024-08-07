@@ -12,6 +12,7 @@
     overflow: hidden; /* overflow 속성 제거 */
     background-color: #f4f4f9;
     max-width: 1000px;
+    /*width: 70%;*/
     margin: auto auto auto auto; /*top, right, bottom, left*/
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -33,24 +34,32 @@
     padding: 10px;
     position: relative;
     height: auto;
-    max-width: 1000px; /* 원하는 최대 너비 설정 */
+    max-width: 1000px;
+    /*width: 60%; !* 원하는 최대 너비 설정 *!*/
     margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진 자동 설정 */
 }
 
 .input-container textarea {
     flex-grow: 1;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 16px;
+    padding-left: 26px;
+    padding-right: 53px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 20px; /* 더 둥글게 설정 */
+    font-size: 19px;
     line-height: 1.5;
     resize: none;
     box-sizing: border-box;
-    margin-right: 10px; /* 버튼과의 간격 추가 */
+    margin-right: 50px; /* 버튼과의 간격을 더 추가 */
     overflow-y: auto; /* 스크롤 활성화 */
     max-height: calc(1.5em * 5); /* 최대 5줄 높이 설정 */
 }
 
 .input-container button {
+    margin-left: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
     background: none;
     border: none;
     padding: 0;
@@ -58,8 +67,8 @@
 }
 
 .input-container button img {
-    width: 40px;  /* 원하는 크기로 조정 */
-    height: 40px; /* 원하는 크기로 조정 */
+    width: 35px;  /* 원하는 크기로 조정 */
+    height: 35px; /* 원하는 크기로 조정 */
 }
 
 /*.rotated-image {*/
@@ -91,7 +100,6 @@
     border-radius: 20px 20px 20px 20px; /* 왼쪽 위 모서리 둥글게 */
     margin-bottom: 10px; /* 메시지 박스 간의 간격 조정 */
 }
-
 .bot-message {
     background-color: transparent; /* 배경색 제거 */
     color: #6E6259; /* KB Gray 색상으로 변경 */

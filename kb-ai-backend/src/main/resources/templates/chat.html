@@ -52,9 +52,9 @@
                 </div>
             </div>
         </div>
-        <div class="input-container">
-            <textarea id="user-input" placeholder="질문을 입력하세요..." rows="1" oninput="autoGrow(this)"></textarea>
-            <button onclick="sendMessage()">
+        <div class="input-container" style="position: relative;">
+            <textarea id="user-input" placeholder="메시지 ChatGPT" rows="1" oninput="autoGrow(this)" style="width: calc(100% - 50px); margin-right: 10px;"></textarea>
+            <button onclick="sendMessage()" style="position: absolute; right: 35px; bottom: 15px;">
                 <img src="/icons/send2.png" alt="전송 버튼" class="rotated-image">
             </button>
         </div>
