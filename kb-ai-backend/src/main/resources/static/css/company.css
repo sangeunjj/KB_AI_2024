@@ -2,7 +2,167 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .toggle-btn {
+    margin-right: 28px; /* 삼지창과 KB ANALYSIS 간격 조정 */
+    cursor: pointer;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FCAF16;
+}
+
+.navbar .logo span {
+    color: #776C61;
+}
+
+.navbar .navbar-search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 20px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.navbar .navbar-search-container input[type="text"] {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 5px;
+    margin-left: 10px;
+    flex-grow: 1;
+    font-size: 17px; /* 텍스트 크기를 조정 */
+}
+
+.navbar .navbar-search-container .search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    padding-right: 12px;
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding-top: 50px; /* 상단 간격 조정 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(-250px); /* 기본값을 닫힌 상태로 설정 */
+    transition: transform 0.3s ease;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar .profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.sidebar .profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.sidebar .profile span {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.sidebar .menu-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 45px; /* 프로필과 메뉴 항목 간격 조정 */
+}
+
+.sidebar .menu-items a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.sidebar .menu-items a img.icon {
+    margin-right: 17px;
+}
+
+.sidebar .menu-items a:hover {
     background-color: #f4f4f4;
+}
+
+.sidebar .auth {
+    margin-top: 320px; /* Report와 100px 간격 추가 */
+    padding-bottom: 20px; /* 하단 간격 추가 */
+}
+
+.sidebar .auth a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.sidebar .auth a img.icon {
+    margin-right: 10px;
+}
+
+.sidebar .auth a:hover {
+    background-color: #f4f4f4;
+}
+
+.content {
+    margin-left: 250px; /* 기본값을 열린 상태로 설정 */
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.content.expanded {
+    margin-left: 250px;
+}
+
+.content:not(.expanded) {
+    margin-left: 0; /* 닫힌 상태에서의 margin-left 설정 */
 }
 
 .company-container {
@@ -17,6 +177,48 @@ body {
     background-color: #f4f4f4;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.company-filters .search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.company-filters .search-container input[type="text"] {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 5px;
+    margin-left: 10px;
+    flex-grow: 1;
+    font-size: 17px; /* 텍스트 크기를 조정 */
+}
+
+.company-filters .search-container .search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    padding-right: 12px;
+}
+
+.company-filters button {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #776C61;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.company-filters button:hover {
+    background-color: #5c5148;
 }
 
 .company-filters label {
@@ -40,10 +242,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 20px; /* 간격을 넓게 조정 */
     background-color: #fff;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    /*margin-bottom: 5px; !* 간격을 넓게 조정 *!*/
+    border-bottom: 1px solid #ddd;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -83,31 +285,16 @@ h1, p {
     width: 18px;
     height: 18px;
 }
-
-.company-filters {
+.search-refresh-container {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* 검색창과 새로고침 아이콘을 나란히 배치 */
 }
 
-.company-filters input {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.company-filters button {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: none;
-    background-color: #776C61;
-    color: #fff;
-    border-radius: 3px;
+.search-refresh-container .refresh-icon {
+    width: 24px; /* 적절한 크기로 아이콘 크기 조정 */
+    height: 24px;
+    margin-left: 10px;
     cursor: pointer;
 }
-
-.company-filters button:hover {
-    background-color: #5c5148;
-}
-
 

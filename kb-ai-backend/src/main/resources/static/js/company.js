@@ -23,6 +23,7 @@ function toggleSidebar() {
 
 document.querySelector('.search-clear').addEventListener('click', function() {
     document.getElementById('search-input').value = '';
+    document.getElementById('sidebar-search-input').value = '';
     displayCompanies(companies);
 });
 
@@ -46,17 +47,6 @@ function searchCompany() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(searchInput));
     displayCompanies(filteredCompanies);
-}
-
-function searchCompanyInResults() {
-    const searchWithinResults = document.getElementById('search-within-results').checked;
-    const searchInput = document.getElementById('sidebar-search-input').value.toLowerCase();
-    const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(searchInput));
-    if (searchWithinResults) {
-        displayCompanies(filteredCompanies);
-    } else {
-        displayCompanies(companies);
-    }
 }
 
 function clearSearch() {
@@ -121,6 +111,7 @@ function displayCompanyDetails(company) {
 }
 
 document.getElementById('search-input').addEventListener('input', searchCompany);
+document.getElementById('sidebar-search-input').addEventListener('input', searchCompany);
 document.getElementById('esg-slider').addEventListener('input', filterCompanies);
 
 // 초기 기업 리스트 표시

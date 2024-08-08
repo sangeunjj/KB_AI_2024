@@ -36,7 +36,7 @@
             <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
             <div class="logo">KB <span>ANALYSIS</span></div>
         </div>
-        <div class="search-container">
+        <div class="navbar-search-container">
             <input type="text" id="search-input" placeholder="기업명을 입력하세요" oninput="searchCompany()">
             <button class="search-clear" onclick="clearSearch()">X</button>
         </div>
@@ -44,9 +44,13 @@
     <div class="main-content">
         <div class="company-container">
             <div class="company-filters">
-                <input type="text" id="sidebar-search-input" placeholder="기업명을 검색하세요" oninput="searchCompanyInResults()">
-                <label><input type="checkbox" id="search-within-results"> 결과 내 검색</label>
-                <button onclick="refreshCompanies()">새로고침</button>
+                <div class="search-refresh-container">
+                    <div class="search-container">
+                        <input type="text" id="sidebar-search-input" placeholder="기업명을 입력하세요" oninput="searchCompany()">
+                        <button class="search-clear" onclick="clearSearch()">X</button>
+                    </div>
+                    <img src="/icons/cycle.png" alt="새로고침" class="refresh-icon" onclick="refreshCompanies()">
+                </div>
                 <label for="esg-slider">ESG</label>
                 <input type="range" id="esg-slider" min="0" max="6" value="4" oninput="filterCompanies()" style="background-color: #776C61;">
                 <span id="esg-value">A</span>
