@@ -234,7 +234,7 @@ h1, p {
 .company-overview {
     padding: 20px;
     border-radius: 10px;
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
     display: flex;
     flex-direction: column;
@@ -256,7 +256,7 @@ h1, p {
 .item-title {
     font-weight: bold;
     color: #333;
-    width: 150px; /* 고정된 너비를 줘서 왼쪽 정렬 유지 */
+    width: 170px; /* 고정된 너비를 줘서 왼쪽 정렬 유지 */
 }
 
 .item-value {
