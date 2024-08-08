@@ -227,4 +227,6 @@ h1, p {
     color: #E4AA3F;
     /*color: #3B5CC0;*/
 }
-
+.hidden {
+    display: none;
+}

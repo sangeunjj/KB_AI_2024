@@ -278,9 +278,20 @@ document.addEventListener('DOMContentLoaded', () => {
     displayCompanies(companies);
 });
 
+// 선택한 메뉴만 노란색 글씨로 변경
 document.querySelectorAll('.com-details-index a').forEach(link => {
     link.addEventListener('click', function(event) {
         document.querySelectorAll('.com-details-index a').forEach(el => el.classList.remove('active'));
         this.classList.add('active');
     });
 });
+
+// 선택한 메뉴의 내용만 표시
+function showTabContent(tabId) {
+    // 모든 탭 내용을 숨김
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+    // 클릭된 탭 내용을 표시
+    document.getElementById(tabId).classList.remove('hidden');
+}
