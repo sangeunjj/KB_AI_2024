@@ -84,19 +84,19 @@ h1, p {
     height: 18px;
 }
 
-.search-container, .company-filters {
+.company-filters {
     display: flex;
     flex-direction: column;
 }
 
-.search-container input, .company-filters input {
+.company-filters input {
     padding: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-.search-container button, .company-filters button {
+.company-filters button {
     padding: 5px;
     margin-bottom: 10px;
     border: none;
@@ -106,6 +106,8 @@ h1, p {
     cursor: pointer;
 }
 
-.search-container button:hover, .company-filters button:hover {
+.company-filters button:hover {
     background-color: #5c5148;
 }
+
+

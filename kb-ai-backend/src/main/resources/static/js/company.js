@@ -1,7 +1,17 @@
 const companies = [
     { name: '에이젠글로벌', esg: 'A', address: '서울특별시', establishment: '2015-08-01', businessArea: 'IT', industryCode: '12345', status: true },
     { name: '앤톡', esg: 'B+', address: '부산광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    // 다른 기업 데이터...
+    { name: 'AJ네트웍스', esg: 'A', address: '대구광역시', establishment: '2010-01-24', businessArea: 'IT', industryCode: '095570', status: true },
+    { name: 'BGF', esg: 'B+', address: '인천광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
+    { name: 'BGF리테일', esg: 'B', address: '광주광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
+    { name: 'BNK금융지주', esg: 'C', address: '대전광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
+    { name: 'AK홀딩스', esg: 'C', address: '울산광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
+    { name: 'CJ CGV', esg: 'B+', address: '세종특별자치시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
+    { name: 'BNK캐피탈', esg: 'D', address: '경기도', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
+    { name: 'DN오토모티브', esg: 'D', address: '전라남도', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
+    { name: 'BYC', esg: 'S', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
+    { name: 'CJ ENM', esg: 'S', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
+    { name: 'DL건설', esg: 'A+', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
 ];
 
 function toggleSidebar() {
@@ -90,8 +100,7 @@ function displayCompanies(companyList) {
             <span class="company-businessArea">${company.businessArea}</span>
             <span class="company-industryCode">${company.industryCode}</span>
             <span class="company-esg">${company.esg}</span>
-            <span class="company-status"><img src="/icons/${company.status ? 'green_circle' : 'red_circle'}.png" alt="${company.status ? '긍정' : '부정'}" width="18px" height="18px"></span>
-        `;
+            <span class="company-status"><img src="/icons/${company.status ? 'green_circle' : 'red_circle'}.png" alt="${company.status ? '긍정' : '부정'}" width="20px" height="20px"></span>`;
         companyDiv.addEventListener('click', () => displayCompanyDetails(company));
         companyListDiv.appendChild(companyDiv);
     });
