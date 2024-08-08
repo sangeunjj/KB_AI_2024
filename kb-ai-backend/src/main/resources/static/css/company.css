@@ -213,3 +213,18 @@ h1, p {
 .company-details.collapsed .detail-tab {
     left: 0;
 }
+ .com-details-index a {
+     text-decoration: none;
+     color: black;
+     margin: 0 5px;
+ }
+
+.com-details-index span {
+    margin: 0 5px;
+}
+
+.com-details-index a.active {
+    color: #E4AA3F;
+    /*color: #3B5CC0;*/
+}
+

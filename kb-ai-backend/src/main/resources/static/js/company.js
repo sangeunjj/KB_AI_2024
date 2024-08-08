@@ -1,17 +1,121 @@
 const companies = [
-    { name: '에이젠글로벌', esg: 'A', address: '서울특별시', establishment: '2015-08-01', businessArea: 'IT', industryCode: '12345', status: true },
-    { name: '앤톡', esg: 'B+', address: '부산광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'AJ네트웍스', esg: 'A', address: '대구광역시', establishment: '2010-01-24', businessArea: 'IT', industryCode: '095570', status: true },
-    { name: 'BGF', esg: 'B+', address: '인천광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'BGF리테일', esg: 'B', address: '광주광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
-    { name: 'BNK금융지주', esg: 'C', address: '대전광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'AK홀딩스', esg: 'C', address: '울산광역시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
-    { name: 'CJ CGV', esg: 'B+', address: '세종특별자치시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'BNK캐피탈', esg: 'D', address: '경기도', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
-    { name: 'DN오토모티브', esg: 'D', address: '전라남도', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'BYC', esg: 'S', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
-    { name: 'CJ ENM', esg: 'S', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: false },
-    { name: 'DL건설', esg: 'A+', address: '서울특별시', establishment: '2016-05-12', businessArea: 'Fintech', industryCode: '67890', status: true },
+    {
+        name: '에이젠글로벌',
+        esg: 'A',
+        address: '서울특별시',
+        establishment: '2015-08-01',
+        businessArea: 'IT',
+        industryCode: '12345',
+        status: true
+    },
+    {
+        name: '앤톡',
+        esg: 'B+',
+        address: '부산광역시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'AJ네트웍스',
+        esg: 'A',
+        address: '대구광역시',
+        establishment: '2010-01-24',
+        businessArea: 'IT',
+        industryCode: '095570',
+        status: true
+    },
+    {
+        name: 'BGF',
+        esg: 'B+',
+        address: '인천광역시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'BGF리테일',
+        esg: 'B',
+        address: '광주광역시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: true
+    },
+    {
+        name: 'BNK금융지주',
+        esg: 'C',
+        address: '대전광역시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'AK홀딩스',
+        esg: 'C',
+        address: '울산광역시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: true
+    },
+    {
+        name: 'CJ CGV',
+        esg: 'B+',
+        address: '세종특별자치시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'BNK캐피탈',
+        esg: 'D',
+        address: '경기도',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: true
+    },
+    {
+        name: 'DN오토모티브',
+        esg: 'D',
+        address: '전라남도',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'BYC',
+        esg: 'S',
+        address: '서울특별시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: true
+    },
+    {
+        name: 'CJ ENM',
+        esg: 'S',
+        address: '서울특별시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: false
+    },
+    {
+        name: 'DL건설',
+        esg: 'A+',
+        address: '서울특별시',
+        establishment: '2016-05-12',
+        businessArea: 'Fintech',
+        industryCode: '67890',
+        status: true
+    },
 ];
 
 function toggleSidebar() {
@@ -21,7 +125,7 @@ function toggleSidebar() {
     content.classList.toggle("expanded");
 }
 
-document.querySelector('.search-clear').addEventListener('click', function() {
+document.querySelector('.search-clear').addEventListener('click', function () {
     document.getElementById('search-input').value = '';
     displayCompanies(companies);
 });
@@ -133,11 +237,11 @@ function displayCompanyDetails(company) {
     companyDetails.classList.remove('closed', 'collapsed');
 }
 
-function closeCompanyDetails() {
-    const companyDetails = document.getElementById('company-details');
-    companyDetails.classList.remove('active');
-    companyDetails.classList.add('closed');
-}
+// function closeCompanyDetails() {
+//     const companyDetails = document.getElementById('company-details');
+//     companyDetails.classList.remove('active');
+//     companyDetails.classList.add('closed');
+// }
 
 function openCompanyDetails() {
     const companyDetails = document.getElementById('company-details');
@@ -161,7 +265,7 @@ function collapseCompanyDetails() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.search-clear').addEventListener('click', function() {
+    document.querySelector('.search-clear').addEventListener('click', function () {
         document.getElementById('search-input').value = '';
         displayCompanies(companies);
     });
@@ -172,4 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 초기 기업 리스트 표시
     displayCompanies(companies);
+});
+
+document.querySelectorAll('.com-details-index a').forEach(link => {
+    link.addEventListener('click', function(event) {
+        document.querySelectorAll('.com-details-index a').forEach(el => el.classList.remove('active'));
+        this.classList.add('active');
+    });
 });

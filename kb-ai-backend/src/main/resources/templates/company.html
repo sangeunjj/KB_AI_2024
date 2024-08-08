@@ -65,7 +65,7 @@
                 </select>
             </div>
             <div class="company-list" id="company-list">
-                <!-- 기업 리스트가 여기에 표시됩니다 -->
+                <!-- 기업 리스트 여기 표시 -->
             </div>
         </div>
     </div>
@@ -73,10 +73,20 @@
 <div class="company-details collapsed" id="company-details">
     <div class="company-details-header">
         <span id="company-name">회사명</span>
-        <button class="close-btn" onclick="closeCompanyDetails()">X</button>
+        <button class="close-btn" onclick="toggleCompanyDetails()">X</button>
     </div>
     <div class="company-details-content">
-        <!-- 기업 상세 정보 표시 -->
+        <div class="com-details-index">
+            <a href="#기업개요" class="tab-link"><strong>기업개요</strong></a>
+            <span>|</span>
+            <a href="#재무정보" class="tab-link"><strong>재무정보</strong></a>
+            <span>|</span>
+            <a href="#ESG" class="tab-link"><strong>ESG 및 경영전략</strong></a>
+            <span>|</span>
+            <a href="#산업분석" class="tab-link"><strong>산업분석 및 시장동향</strong></a>
+            <span>|</span>
+            <a href="#미디어" class="tab-link"><strong>미디어 커버리지 및 평판관리</strong></a>
+        </div>
     </div>
     <div class="detail-tab" id="detail-tab" onclick="toggleCompanyDetails()">❯</div>
 </div>
