@@ -23,7 +23,6 @@ function toggleSidebar() {
 
 document.querySelector('.search-clear').addEventListener('click', function() {
     document.getElementById('search-input').value = '';
-    document.getElementById('sidebar-search-input').value = '';
     displayCompanies(companies);
 });
 
@@ -51,13 +50,35 @@ function searchCompany() {
 
 function clearSearch() {
     document.getElementById('search-input').value = '';
-    document.getElementById('sidebar-search-input').value = '';
     displayCompanies(companies);
 }
 
 function refreshCompanies() {
     clearSearch();
     displayCompanies(companies);
+}
+
+function toggleBookmark(event) {
+    event.stopPropagation();
+    const bookmarkIcon = event.target;
+    if (bookmarkIcon.src.includes('bookmark2.png')) {
+        bookmarkIcon.src = '/icons/bookmark_blank1.png';
+    } else {
+        bookmarkIcon.src = '/icons/bookmark2.png';
+    }
+}
+
+
+document.getElementById('search-input').addEventListener('input', searchCompany);
+document.getElementById('esg-slider').addEventListener('input', filterCompanies);
+
+// 초기 기업 리스트 표시
+displayCompanies(companies);
+
+function filterByRegion() {
+    const selectedRegion = document.getElementById('region-select').value;
+    const filteredCompanies = selectedRegion ? companies.filter(company => company.address === selectedRegion) : companies;
+    displayCompanies(filteredCompanies);
 }
 
 function displayCompanies(companyList) {
@@ -96,23 +117,9 @@ function displayCompanies(companyList) {
     });
 }
 
-function toggleBookmark(event) {
-    event.stopPropagation();
-    const bookmarkIcon = event.target;
-    if (bookmarkIcon.src.includes('bookmark2.png')) {
-        bookmarkIcon.src = '/icons/bookmark_blank1.png';
-    } else {
-        bookmarkIcon.src = '/icons/bookmark2.png';
-    }
-}
-
-function displayCompanyDetails(company) {
-    alert(`Displaying details for ${company.name}`);
-}
-
-document.getElementById('search-input').addEventListener('input', searchCompany);
-document.getElementById('sidebar-search-input').addEventListener('input', searchCompany);
-document.getElementById('esg-slider').addEventListener('input', filterCompanies);
-
 // 초기 기업 리스트 표시
 displayCompanies(companies);
+
+document.getElementById('search-input').addEventListener('input', searchCompany);
+document.getElementById('esg-slider').addEventListener('input', filterCompanies);
+document.getElementById('region-select').addEventListener('change', filterByRegion);

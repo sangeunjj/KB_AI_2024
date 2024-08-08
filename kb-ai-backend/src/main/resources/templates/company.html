@@ -44,17 +44,24 @@
     <div class="main-content">
         <div class="company-container">
             <div class="company-filters">
-                <div class="search-refresh-container">
-                    <div class="search-container">
-                        <input type="text" id="sidebar-search-input" placeholder="기업명을 입력하세요" oninput="searchCompany()">
-                        <button class="search-clear" onclick="clearSearch()">X</button>
-                    </div>
-                    <img src="/icons/cycle.png" alt="새로고침" class="refresh-icon" onclick="refreshCompanies()">
-                </div>
                 <label for="esg-slider">ESG</label>
                 <input type="range" id="esg-slider" min="0" max="6" value="4" oninput="filterCompanies()" style="background-color: #776C61;">
                 <span id="esg-value">A</span>
-                <!-- 다른 필터들도 여기 추가 -->
+
+                <label for="region-select">소재지역</label>
+                <select id="region-select" onchange="filterByRegion()">
+                    <option value="">전체</option>
+                    <option value="서울특별시">서울특별시</option>
+                    <option value="부산광역시">부산광역시</option>
+                    <option value="대구광역시">대구광역시</option>
+                    <option value="인천광역시">인천광역시</option>
+                    <option value="광주광역시">광주광역시</option>
+                    <option value="대전광역시">대전광역시</option>
+                    <option value="울산광역시">울산광역시</option>
+                    <option value="세종특별자치시">세종특별자치시</option>
+                    <option value="경기도">경기도</option>
+                    <option value="전라남도">전라남도</option>
+                </select>
             </div>
             <div class="company-list" id="company-list">
                 <!-- 기업 리스트가 여기에 표시됩니다 -->
