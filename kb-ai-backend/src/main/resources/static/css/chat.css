@@ -1,7 +1,10 @@
+.content {
+    background-color: #f8f9fa; /* 배경색 추가 */
+}
 /* General styles */
 .main-content {
     background-color: #fff;
-    margin-top: 35px;
+    padding-top: 35px;
 }
 /* Chat container styles */
 .chat-container {

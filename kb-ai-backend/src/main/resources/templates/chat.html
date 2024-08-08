@@ -16,7 +16,6 @@
         <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
         <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
-
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -49,6 +48,7 @@
             </div>
         </div>
         <div class="input-container" style="position: relative;">
+            <label for="user-input" style="display: none;">메시지 ChatGPT</label>
             <textarea id="user-input" placeholder="메시지 ChatGPT" rows="1" oninput="autoGrow(this)" style="width: calc(100% - 50px); margin-right: 10px;"></textarea>
             <button onclick="sendMessage()" style="position: absolute; right: 35px; bottom: 18px;">
                 <img src="/icons/send2.png" alt="전송 버튼" class="rotated-image">
@@ -56,7 +56,7 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/navbar.js}"></script>
+<script src="/js/navbar.js"></script>
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
@@ -65,8 +65,11 @@
         content.classList.toggle("expanded");
     }
 
-    document.querySelector('.search-clear').addEventListener('click', function () {
-        document.querySelector('.search-container input').value = '';
+    document.getElementById('user-input').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // 기본 동작(줄바꿈) 방지
+            sendMessage();
+        }
     });
 
     function sendMessage() {
@@ -98,13 +101,6 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
     }
-
-    document.getElementById('user-input').addEventListener('keypress', function (event) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault(); // 기본 동작(줄바꿈) 방지
-            sendMessage();
-        }
-    });
 
     function autoGrow(element) {
         element.style.height = "auto"; // 초기 높이를 자동으로 설정
