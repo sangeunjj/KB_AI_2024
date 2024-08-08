@@ -123,3 +123,53 @@ displayCompanies(companies);
 document.getElementById('search-input').addEventListener('input', searchCompany);
 document.getElementById('esg-slider').addEventListener('input', filterCompanies);
 document.getElementById('region-select').addEventListener('change', filterByRegion);
+
+// 기존 코드 생략
+function displayCompanyDetails(company) {
+    const companyDetails = document.getElementById('company-details');
+    document.getElementById('company-name').textContent = company.name;
+    // 상세 정보 내용 업데이트
+    companyDetails.classList.add('active');
+    companyDetails.classList.remove('closed', 'collapsed');
+}
+
+function closeCompanyDetails() {
+    const companyDetails = document.getElementById('company-details');
+    companyDetails.classList.remove('active');
+    companyDetails.classList.add('closed');
+}
+
+function openCompanyDetails() {
+    const companyDetails = document.getElementById('company-details');
+    companyDetails.classList.add('active');
+    companyDetails.classList.remove('closed', 'collapsed');
+}
+
+function toggleCompanyDetails() {
+    const companyDetails = document.getElementById('company-details');
+    if (companyDetails.classList.contains('collapsed')) {
+        openCompanyDetails();
+    } else {
+        collapseCompanyDetails();
+    }
+}
+
+function collapseCompanyDetails() {
+    const companyDetails = document.getElementById('company-details');
+    companyDetails.classList.remove('active', 'closed');
+    companyDetails.classList.add('collapsed');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.search-clear').addEventListener('click', function() {
+        document.getElementById('search-input').value = '';
+        displayCompanies(companies);
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchCompany);
+    document.getElementById('esg-slider').addEventListener('input', filterCompanies);
+    document.getElementById('region-select').addEventListener('change', filterByRegion);
+
+    // 초기 기업 리스트 표시
+    displayCompanies(companies);
+});

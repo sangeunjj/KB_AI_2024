@@ -275,3 +275,69 @@ h1, p {
     width: 18px;
     height: 18px;
 }
+
+.company-details {
+    position: fixed;
+    top: 0;
+    right: -75%; /* 기본은 숨김 상태 */
+    width: 75%; /* 창 너비 조정 */
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.company-details.active {
+    right: 0;
+}
+
+.company-details.closed {
+    right: -75%; /* 창이 끝까지 닫힘 */
+}
+
+.company-details.collapsed {
+    right: -75%; /* 창이 오른쪽 끝에 숨겨짐 */
+}
+
+.company-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.company-details-header .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.company-details-content {
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+}
+
+.detail-tab {
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    width: 30px;
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px 0px 0px 5px;
+    transition: left 0.3s ease;
+}
+
+.company-details.collapsed .detail-tab {
+    left: 0;
+}

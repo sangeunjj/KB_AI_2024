@@ -45,7 +45,8 @@
         <div class="company-container">
             <div class="company-filters">
                 <label for="esg-slider">ESG</label>
-                <input type="range" id="esg-slider" min="0" max="6" value="4" oninput="filterCompanies()" style="background-color: #776C61;">
+                <input type="range" id="esg-slider" min="0" max="6" value="4" oninput="filterCompanies()"
+                       style="background-color: #776C61;">
                 <span id="esg-value">A</span>
 
                 <label for="region-select">소재지역</label>
@@ -68,6 +69,16 @@
             </div>
         </div>
     </div>
+</div>
+<div class="company-details collapsed" id="company-details">
+    <div class="company-details-header">
+        <span id="company-name">회사명</span>
+        <button class="close-btn" onclick="closeCompanyDetails()">X</button>
+    </div>
+    <div class="company-details-content">
+        <!-- 기업 상세 정보 표시 -->
+    </div>
+    <div class="detail-tab" id="detail-tab" onclick="toggleCompanyDetails()">❯</div>
 </div>
 <script th:src="@{/js/navbar.js}"></script>
 <script src="/js/company.js"></script>
