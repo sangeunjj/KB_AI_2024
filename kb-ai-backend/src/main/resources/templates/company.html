@@ -38,71 +38,19 @@
     </div>
     <div class="main-content">
         <div class="company-container">
+            <div class="company-filters">
+                <label for="esg-slider">ESG</label>
+                <input type="range" id="esg-slider" min="0" max="6" value="6" oninput="filterCompanies()">
+                <span id="esg-value">A</span>
+                <!-- 다른 필터들도 여기 추가 -->
+            </div>
             <div class="company-list" id="company-list">
                 <!-- 기업 리스트가 여기에 표시됩니다 -->
-            </div>
-            <div class="company-details" id="company-details">
-                <!-- 기업 상세 정보가 여기에 표시됩니다 -->
             </div>
         </div>
     </div>
 </div>
 <script th:src="@{/js/navbar.js}"></script>
-<script>
-    const companies = [
-        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
-        { name: '앤톡', details: '앤톡 상세 정보' },
-        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
-        { name: '앤톡', details: '앤톡 상세 정보' },
-        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
-        { name: '앤톡', details: '앤톡 상세 정보' },
-        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
-        { name: '앤톡', details: '앤톡 상세 정보' },
-        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
-        { name: '앤톡', details: '앤톡 상세 정보' }
-        // 추가 기업 데이터
-    ];
-
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("active");
-        content.classList.toggle("expanded");
-    }
-
-    document.querySelector('.search-clear').addEventListener('click', function() {
-        document.getElementById('search-input').value = '';
-        displayCompanies(companies);
-    });
-
-    function searchCompany() {
-        const searchInput = document.getElementById('search-input').value.toLowerCase();
-        const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(searchInput));
-        displayCompanies(filteredCompanies);
-    }
-
-    function displayCompanies(companyList) {
-        const companyListDiv = document.getElementById('company-list');
-        companyListDiv.innerHTML = '';
-
-        companyList.forEach(company => {
-            const companyDiv = document.createElement('div');
-            companyDiv.textContent = company.name;
-            companyDiv.className = 'company-item';
-            companyDiv.onclick = () => displayCompanyDetails(company);
-            companyListDiv.appendChild(companyDiv);
-        });
-    }
-
-    function displayCompanyDetails(company) {
-        const companyDetailsDiv = document.getElementById('company-details');
-        companyDetailsDiv.textContent = company.details;
-    }
-
-    document.getElementById('search-input').addEventListener('input', searchCompany);
-
-    // 초기 기업 리스트 표시
-    displayCompanies(companies);
-</script>
+<script src="/js/company.js"></script>
 </body>
 </html>
