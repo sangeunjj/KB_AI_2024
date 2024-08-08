@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/chat.css">
-    <title>Chat Page</title>
+    <link rel="stylesheet" href="/css/company.css">
+    <title>Company Page</title>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
     <div class="profile">
-        <!-- Gender가 1인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
-        <!-- Gender가 2인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
-        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
         <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
-
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -36,18 +32,37 @@
             <div class="logo">KB <span>ANALYSIS</span></div>
         </div>
         <div class="search-container">
-            <input type="text" placeholder="기업명을 입력하세요">
+            <input type="text" id="search-input" placeholder="기업명을 입력하세요">
             <button class="search-clear">X</button>
         </div>
     </div>
     <div class="main-content">
-        <!-- 여기에 Chat 페이지의 내용을 추가하세요 -->
-        <h1>Company Page</h1>
-        <p>This is the Company page content.</p>
+        <div class="company-container">
+            <div class="company-list" id="company-list">
+                <!-- 기업 리스트가 여기에 표시됩니다 -->
+            </div>
+            <div class="company-details" id="company-details">
+                <!-- 기업 상세 정보가 여기에 표시됩니다 -->
+            </div>
+        </div>
     </div>
 </div>
 <script th:src="@{/js/navbar.js}"></script>
 <script>
+    const companies = [
+        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
+        { name: '앤톡', details: '앤톡 상세 정보' },
+        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
+        { name: '앤톡', details: '앤톡 상세 정보' },
+        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
+        { name: '앤톡', details: '앤톡 상세 정보' },
+        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
+        { name: '앤톡', details: '앤톡 상세 정보' },
+        { name: '에이젠글로벌', details: '에이젠글로벌 상세 정보' },
+        { name: '앤톡', details: '앤톡 상세 정보' }
+        // 추가 기업 데이터
+    ];
+
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         const content = document.getElementById("content");
@@ -56,8 +71,38 @@
     }
 
     document.querySelector('.search-clear').addEventListener('click', function() {
-        document.querySelector('.search-container input').value = '';
+        document.getElementById('search-input').value = '';
+        displayCompanies(companies);
     });
+
+    function searchCompany() {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(searchInput));
+        displayCompanies(filteredCompanies);
+    }
+
+    function displayCompanies(companyList) {
+        const companyListDiv = document.getElementById('company-list');
+        companyListDiv.innerHTML = '';
+
+        companyList.forEach(company => {
+            const companyDiv = document.createElement('div');
+            companyDiv.textContent = company.name;
+            companyDiv.className = 'company-item';
+            companyDiv.onclick = () => displayCompanyDetails(company);
+            companyListDiv.appendChild(companyDiv);
+        });
+    }
+
+    function displayCompanyDetails(company) {
+        const companyDetailsDiv = document.getElementById('company-details');
+        companyDetailsDiv.textContent = company.details;
+    }
+
+    document.getElementById('search-input').addEventListener('input', searchCompany);
+
+    // 초기 기업 리스트 표시
+    displayCompanies(companies);
 </script>
 </body>
 </html>

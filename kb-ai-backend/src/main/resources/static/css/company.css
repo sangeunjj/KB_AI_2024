@@ -1,0 +1,36 @@
+.company-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Navbar 높이를 제외한 전체 높이 */
+}
+
+.company-list {
+    width: 30%;
+    background-color: #f4f4f4;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.company-item {
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.company-item:hover {
+    background-color: #ddd;
+}
+
+.company-details {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+h1, p {
+    margin: 0;
+    padding: 0;
+}
