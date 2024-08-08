@@ -10,9 +10,12 @@
 <body>
 <div class="sidebar active" id="sidebar">
     <div class="profile">
-        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
-        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
-        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -21,8 +24,10 @@
         <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
     </div>
     <div class="auth">
-        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
-        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon" width="25px" height="25px">Log In</a>
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
     </div>
 </div>
 <div class="content expanded" id="content">
@@ -32,16 +37,19 @@
             <div class="logo">KB <span>ANALYSIS</span></div>
         </div>
         <div class="search-container">
-            <input type="text" id="search-input" placeholder="기업명을 입력하세요">
-            <button class="search-clear">X</button>
+            <input type="text" id="search-input" placeholder="기업명을 입력하세요" oninput="searchCompany()">
+            <button class="search-clear" onclick="clearSearch()">X</button>
         </div>
     </div>
     <div class="main-content">
         <div class="company-container">
             <div class="company-filters">
+                <input type="text" id="sidebar-search-input" placeholder="기업명을 검색하세요" oninput="searchCompanyInResults()">
+                <label><input type="checkbox" id="search-within-results"> 결과 내 검색</label>
+                <button onclick="refreshCompanies()">새로고침</button>
                 <label for="esg-slider">ESG</label>
-                <input type="range" id="esg-slider" min="0" max="6" value="6" oninput="filterCompanies()">
-                <span id="esg-value">A</span>
+                <input type="range" id="esg-slider" min="0" max="6" value="6" oninput="filterCompanies()" style="background-color: #776C61;">
+                <span id="esg-value">S</span>
                 <!-- 다른 필터들도 여기 추가 -->
             </div>
             <div class="company-list" id="company-list">

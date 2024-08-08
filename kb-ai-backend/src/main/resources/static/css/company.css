@@ -2,11 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
 }
 
 .company-container {
     display: flex;
     height: calc(100vh - 60px);
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .company-filters {
@@ -23,17 +26,20 @@ body {
 
 .company-filters input[type="range"] {
     width: 100%;
+    background-color: #776C61;
 }
 
 .company-list {
     width: 80%;
     padding: 20px;
     overflow-y: auto;
+    background-color: #fff;
 }
 
 .company-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
     background-color: #fff;
     margin-bottom: 10px;
@@ -51,20 +57,21 @@ body {
     cursor: pointer;
 }
 
-.company-item .company-name,
-.company-item .company-address,
-.company-item .company-establishment,
-.company-item .company-businessArea,
-.company-item .company-industryCode {
-    flex: 1;
-    text-align: left;
-    padding-left: 10px;
+.company-item span {
+    display: inline-block;
+    width: 12.5%;
+    text-align: center;
 }
 
 h1, p {
     margin: 0;
     padding: 0;
 }
+
+.company-item.columns span {
+    font-weight: bold;
+}
+
 /* bookmark2.png 아이콘 크기 설정 */
 .company-item .bookmark img[src*="bookmark2.png"] {
     width: 21px;
@@ -75,4 +82,30 @@ h1, p {
 .company-item .bookmark img[src*="bookmark_blank1.png"] {
     width: 18px;
     height: 18px;
+}
+
+.search-container, .company-filters {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-container input, .company-filters input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.search-container button, .company-filters button {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #776C61;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.search-container button:hover, .company-filters button:hover {
+    background-color: #5c5148;
 }
