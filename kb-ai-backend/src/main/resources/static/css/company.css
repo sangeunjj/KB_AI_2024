@@ -230,3 +230,50 @@ h1, p {
 .hidden {
     display: none;
 }
+/* 기업 개요 스타일 */
+.company-overview {
+    padding: 20px;
+    border-radius: 10px;
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.overview-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.overview-item:last-child {
+    border-bottom: none;
+}
+
+.item-title {
+    font-weight: bold;
+    color: #333;
+    width: 150px; /* 고정된 너비를 줘서 왼쪽 정렬 유지 */
+}
+
+.item-value {
+    color: #555;
+    flex-grow: 1; /* 오른쪽 정렬 */
+}
+
+.item-value a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.item-value a:hover {
+    text-decoration: underline;
+}
+
+.com-detail-title{
+    margin-top: 50px;
+    margin-left: 22px;
+}

@@ -194,8 +194,8 @@ function displayCompanies(companyList) {
     columnDiv.className = 'company-item columns';
     columnDiv.innerHTML = `
         <span class="bookmark"></span>
-        <span class="company-name">회사명</span>
-        <span class="company-address">주소</span>
+        <span class="company-name">기업명</span>
+        <span class="company-address">지역</span>
         <span class="company-establishment">설립일자</span>
         <span class="company-businessArea">사업영역</span>
         <span class="company-industryCode">산업분류</span>

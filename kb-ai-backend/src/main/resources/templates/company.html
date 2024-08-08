@@ -72,7 +72,7 @@
 </div>
 <div class="company-details collapsed" id="company-details">
     <div class="company-details-header">
-        <span id="company-name">회사명</span>
+        <span id="company-name">기업명</span>
         <button class="close-btn" onclick="toggleCompanyDetails()">X</button>
     </div>
     <div class="company-details-content">
@@ -88,12 +88,17 @@
             <a href="#미디어" class="tab-link" onclick="showTabContent('미디어')"><strong>미디어 커버리지 및 평판관리</strong></a>
         </div>
         <div id="기업개요" class="tab-content hidden">
-            <h2>기업 개요</h2>
-            <h2>회사명
-                주소
-                설립일자
-                사업영역
-                산업분류</h2>
+            <h4 class="com-detail-title">기업 개요</h4>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">기업코드:</span>
+                    <span class="item-value">13947</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">기업명:</span>
+                    <span class="item-value">앤톡 (Antock)</span>
+                </div>
+            </div>
         </div>
         <div id="재무정보" class="tab-content hidden">
             <h2>재무정보</h2>
