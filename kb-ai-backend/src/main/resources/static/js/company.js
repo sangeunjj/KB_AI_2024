@@ -148,6 +148,7 @@ function displayCompanyDetails(company) {
 
             // 데이터를 각 HTML 요소에 바인딩
             document.getElementById('company-name').textContent = dartData.corp_name || companyData.companyName;
+            document.getElementById('company-name2').textContent = dartData.corp_name || companyData.companyName;
             document.getElementById('company-ceo').textContent = dartData.ceo_nm;
             document.getElementById('company-stockCode').textContent = dartData.stock_code || "N/A";
             document.getElementById('company-industryCode').textContent = dartData.induty_code;
