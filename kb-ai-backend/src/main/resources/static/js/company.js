@@ -140,10 +140,27 @@ function displayCompanyDetails(company) {
         .then(response => response.json())
         .then(data => {
             const companyDetails = document.getElementById('company-details');
-            document.getElementById('company-name').textContent = data.company.companyName;
 
-            // 추가적으로 API에서 가져온 데이터를 활용해 상세 페이지를 채움
-            // 예: 대표자, 설립일자, 주소 등
+            // `company` 객체에서 데이터 가져오기
+            const companyData = data.company;
+            // `dartResponse` 객체에서 데이터 가져오기
+            const dartData = data.dartResponse;
+
+            // 데이터를 각 HTML 요소에 바인딩
+            document.getElementById('company-name').textContent = dartData.corp_name || companyData.companyName;
+            document.getElementById('company-ceo').textContent = dartData.ceo_nm;
+            document.getElementById('company-stockCode').textContent = dartData.stock_code || "N/A";
+            document.getElementById('company-industryCode').textContent = dartData.induty_code;
+            document.getElementById('company-estDt').textContent = dartData.est_dt;
+            document.getElementById('company-adres').textContent = dartData.adres;
+            document.getElementById('company-phnNo').textContent = dartData.phn_no;
+            document.getElementById('company-faxNo').textContent = dartData.fax_no;
+            document.getElementById('company-hmUrl').querySelector('a').textContent = dartData.hm_url || "N/A";
+            document.getElementById('company-hmUrl').querySelector('a').href = dartData.hm_url || "#";
+            document.getElementById('company-irUrl').querySelector('a').textContent = dartData.ir_url || "N/A";
+            document.getElementById('company-irUrl').querySelector('a').href = dartData.ir_url || "#";
+            document.getElementById('company-jurirNo').textContent = dartData.jurir_no;
+            document.getElementById('company-bizrNo').textContent = dartData.bizr_no;
 
             // 상세 정보 내용 업데이트
             companyDetails.classList.add('active');
