@@ -26,9 +26,9 @@ public class Company {
 //    private float cashFlowReport;
     // TODO 사업보고서(손익계산서), 사업보고서(재무상태표), 사업보고서(현금흐름표) 열 쭉 붙여서 보여주기
 
-    @Lob
     @Column(columnDefinition = "TEXT") // TEXT 타입으로 맵핑
     private String newsSummary; // 뉴스요약
+
     private float sentimentScore; // 긍정/부정 점수 (산업현황)
     private int twoWeeksArticleCount; // 2주정도 기사 개수
 }
