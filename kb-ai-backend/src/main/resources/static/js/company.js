@@ -244,8 +244,19 @@ function displayCompanyDetails(company) {
 
     // 지도를 초기화하고 표시
     initMap();
-}
 
+    // '기업개요' 탭을 활성화 상태로 설정
+    updateActiveTab('기업개요');
+}
+function updateActiveTab(tabId) {
+    // 모든 탭에서 active 클래스를 제거
+    document.querySelectorAll('.com-details-index a').forEach(link => {
+        link.classList.remove('active');
+    });
+
+    // 선택된 탭에 active 클래스 추가
+    document.querySelector(`.com-details-index a[href="#${tabId}"]`).classList.add('active');
+}
 // function closeCompanyDetails() {
 //     const companyDetails = document.getElementById('company-details');
 //     companyDetails.classList.remove('active');
