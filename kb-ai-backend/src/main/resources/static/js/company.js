@@ -295,3 +295,20 @@ function showTabContent(tabId) {
     // 클릭된 탭 내용을 표시
     document.getElementById(tabId).classList.remove('hidden');
 }
+
+// 지도를 초기화하고 표시하는 함수
+function initMap() {
+    var mapContainer = document.getElementById('map');
+
+    // 만약 이미 지도가 초기화되어 있다면 다시 로드하지 않도록 처리
+    if (mapContainer.innerHTML.trim() !== "") {
+        return;
+    }
+
+    var mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 기본 중심좌표 설정
+        level: 3 // 지도의 확대 레벨
+    };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+}

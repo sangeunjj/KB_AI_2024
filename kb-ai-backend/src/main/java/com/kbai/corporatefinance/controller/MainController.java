@@ -13,10 +13,10 @@ public class MainController {
     public String chat() {
         return "chat";
     }
-    @GetMapping("/company")
-    public String company() {
-        return "company";
-    }
+//    @GetMapping("/company")
+//    public String company() {
+//        return "company";
+//    }
     @GetMapping("/report1")
     public String report1() {
         return "report1";

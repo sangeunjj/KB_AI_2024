@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/company.css">
     <title>Company Page</title>
+    <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaoApiKey}"></script>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
@@ -77,7 +78,7 @@
     </div>
     <div class="company-details-content">
         <div class="com-details-index">
-            <a href="#기업개요" class="tab-link" onclick="showTabContent('기업개요')"><strong>기업개요</strong></a>
+            <a href="#기업개요" class="tab-link" onclick="showTabContent('기업개요'); initMap();"><strong>기업개요</strong></a>
             <span>|</span>
             <a href="#재무정보" class="tab-link" onclick="showTabContent('재무정보')"><strong>재무정보</strong></a>
             <span>|</span>
@@ -99,6 +100,8 @@
                     <span class="item-value">앤톡 (Antock)</span>
                 </div>
             </div>
+            <!--지도-->
+            <div id="map" style="width:100%;height:400px;"></div>
         </div>
         <div id="재무정보" class="tab-content hidden">
             <h3 class="com-detail-title">[사업보고서]</h3>
