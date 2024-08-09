@@ -1,122 +1,26 @@
 const companies = [
-    {
-        name: '에이젠글로벌',
-        esg: 'A',
-        address: '서울특별시',
-        establishment: '2015-08-01',
-        businessArea: 'IT',
-        industryCode: '12345',
-        status: true
-    },
-    {
-        name: '앤톡',
-        esg: 'B+',
-        address: '부산광역시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'AJ네트웍스',
-        esg: 'A',
-        address: '대구광역시',
-        establishment: '2010-01-24',
-        businessArea: 'IT',
-        industryCode: '095570',
-        status: true
-    },
-    {
-        name: 'BGF',
-        esg: 'B+',
-        address: '인천광역시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'BGF리테일',
-        esg: 'B',
-        address: '광주광역시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: true
-    },
-    {
-        name: 'BNK금융지주',
-        esg: 'C',
-        address: '대전광역시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'AK홀딩스',
-        esg: 'C',
-        address: '울산광역시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: true
-    },
-    {
-        name: 'CJ CGV',
-        esg: 'B+',
-        address: '세종특별자치시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'BNK캐피탈',
-        esg: 'D',
-        address: '경기도',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: true
-    },
-    {
-        name: 'DN오토모티브',
-        esg: 'D',
-        address: '전라남도',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'BYC',
-        esg: 'S',
-        address: '서울특별시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: true
-    },
-    {
-        name: 'CJ ENM',
-        esg: 'S',
-        address: '서울특별시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: false
-    },
-    {
-        name: 'DL건설',
-        esg: 'A+',
-        address: '서울특별시',
-        establishment: '2016-05-12',
-        businessArea: 'Fintech',
-        industryCode: '67890',
-        status: true
-    },
+    // 가짜 데이터 리스트
 ];
+
+// 기존의 가짜 데이터 리스트를 제거하고 API 호출로 대체
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/company')
+        .then(response => response.json())
+        .then(companies => {
+            displayCompanies(companies);
+        })
+        .catch(error => console.error('Error fetching company list:', error));
+
+    document.querySelector('.search-clear').addEventListener('click', function () {
+        document.getElementById('search-input').value = '';
+        refreshCompanies();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchCompany);
+    document.getElementById('esg-slider').addEventListener('input', filterCompanies);
+    document.getElementById('region-select').addEventListener('change', filterByRegion);
+});
+
 
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
@@ -194,28 +98,30 @@ function displayCompanies(companyList) {
     columnDiv.className = 'company-item columns';
     columnDiv.innerHTML = `
         <span class="bookmark"></span>
-        <span class="company-name">기업명</span>
-        <span class="company-address">지역</span>
-        <span class="company-establishment">설립일자</span>
-        <span class="company-businessArea">사업영역</span>
-        <span class="company-industryCode">산업분류</span>
-        <span class="company-esg">ESG 지표</span>
-        <span class="company-status">산업현황</span>
+        <span class="company-name">기업명</span> <!-- 기업명 -->
+        <span class="company-address">지역</span> <!-- 지역 (주소) -->
+        <span class="company-establishment">설립일자</span> <!-- 설립일자 -->
+        <span class="company-ceo">대표자명</span> <!-- 대표자명 -->
+        <span class="company-esg">ESG 지표</span> <!-- ESG 지표 -->
+        <span class="company-female-executives">여성임원수</span> <!-- 여성임원수 -->
+        <span class="company-sentiment">산업현황(긍/부정)</span> <!-- 산업현황 (긍정/부정 점수) -->
     `;
     companyListDiv.appendChild(columnDiv);
 
     companyList.forEach(company => {
+        const firstWordOfAddress = getFirstWordOfAddress(company.adres);
         const companyDiv = document.createElement('div');
         companyDiv.className = 'company-item';
         companyDiv.innerHTML = `
             <span class="bookmark" onclick="toggleBookmark(event)"><img src="/icons/bookmark2.png" alt="Bookmark Icon" width="20px" height="20px"></span>
-            <span class="company-name">${company.name}</span>
-            <span class="company-address">${company.address}</span>
-            <span class="company-establishment">${company.establishment}</span>
-            <span class="company-businessArea">${company.businessArea}</span>
-            <span class="company-industryCode">${company.industryCode}</span>
-            <span class="company-esg">${company.esg}</span>
-            <span class="company-status"><img src="/icons/${company.status ? 'green_circle' : 'red_circle'}.png" alt="${company.status ? '긍정' : '부정'}" width="20px" height="20px"></span>`;
+            <span class="company-name">${company.corp_name}</span> <!-- 기업명 -->
+            <span class="company-address">${firstWordOfAddress}</span> <!-- 지역 (주소) -->
+            <span class="company-establishment">${company.est_dt}</span> <!-- 설립일자 -->
+            <span class="company-ceo">${company.ceo_nm}</span> <!-- 대표자명 -->
+            <span class="company-esg">${company.esg}</span> <!-- ESG 지표 -->
+            <span class="company-female-executives">${company.femaleExecutives}</span> <!-- 여성임원수 -->
+            <span class="company-sentiment">${company.sentimentScore}</span> <!-- 산업현황 (긍정/부정 점수) -->
+        `;
         companyDiv.addEventListener('click', () => displayCompanyDetails(company));
         companyListDiv.appendChild(companyDiv);
     });
@@ -230,24 +136,34 @@ document.getElementById('region-select').addEventListener('change', filterByRegi
 
 // 기존 코드 생략
 function displayCompanyDetails(company) {
-    const companyDetails = document.getElementById('company-details');
-    document.getElementById('company-name').textContent = company.name;
-    // 상세 정보 내용 업데이트
-    companyDetails.classList.add('active');
-    companyDetails.classList.remove('closed', 'collapsed');
+    fetch(`/api/company/${company.companyCode}`)
+        .then(response => response.json())
+        .then(data => {
+            const companyDetails = document.getElementById('company-details');
+            document.getElementById('company-name').textContent = data.company.companyName;
 
-    // URL 해시를 '기업개요'로 설정 -> 상세페이지 창을 열었을 때 기본적으로 기업개요가 나타나도록 함
-    location.hash = '기업개요';
+            // 추가적으로 API에서 가져온 데이터를 활용해 상세 페이지를 채움
+            // 예: 대표자, 설립일자, 주소 등
 
-    // '기업개요' 탭을 표시
-    showTabContent('기업개요');
+            // 상세 정보 내용 업데이트
+            companyDetails.classList.add('active');
+            companyDetails.classList.remove('closed', 'collapsed');
 
-    // 지도를 초기화하고 표시
-    initMap();
+            // URL 해시를 '기업개요'로 설정 -> 상세페이지 창을 열었을 때 기본적으로 기업개요가 나타나도록 함
+            location.hash = '기업개요';
 
-    // '기업개요' 탭을 활성화 상태로 설정
-    updateActiveTab('기업개요');
+            // '기업개요' 탭을 표시
+            showTabContent('기업개요');
+
+            // 지도를 초기화하고 표시
+            initMap();
+
+            // '기업개요' 탭을 활성화 상태로 설정
+            updateActiveTab('기업개요');
+        })
+        .catch(error => console.error('Error fetching company details:', error));
 }
+
 function updateActiveTab(tabId) {
     // 모든 탭에서 active 클래스를 제거
     document.querySelectorAll('.com-details-index a').forEach(link => {
@@ -257,6 +173,7 @@ function updateActiveTab(tabId) {
     // 선택된 탭에 active 클래스 추가
     document.querySelector(`.com-details-index a[href="#${tabId}"]`).classList.add('active');
 }
+
 // function closeCompanyDetails() {
 //     const companyDetails = document.getElementById('company-details');
 //     companyDetails.classList.remove('active');
@@ -282,6 +199,9 @@ function collapseCompanyDetails() {
     const companyDetails = document.getElementById('company-details');
     companyDetails.classList.remove('active', 'closed');
     companyDetails.classList.add('collapsed');
+
+    // 해시태그를 초기화하고, URL을 http://localhost:8080/company로 설정
+    window.history.pushState('', document.title, window.location.pathname);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -300,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 선택한 메뉴만 노란색 글씨로 변경
 document.querySelectorAll('.com-details-index a').forEach(link => {
-    link.addEventListener('click', function(event) {
+    link.addEventListener('click', function (event) {
         document.querySelectorAll('.com-details-index a').forEach(el => el.classList.remove('active'));
         this.classList.add('active');
     });
@@ -331,4 +251,12 @@ function initMap() {
     };
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+}
+
+// 주소에서 앞 단어만 추출하는 함수를 추가
+function getFirstWordOfAddress(address) {
+    if (address) {
+        return address.split(' ')[0];
+    }
+    return '';
 }
