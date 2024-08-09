@@ -43,6 +43,7 @@ public class CompanyController {
                     company.getFemaleExecutives(),
                     company.getEsg(),
                     company.getSentimentScore(),
+                    company.getCompanyCode(),
                     dartData.getAdres(),
                     dartData.getEst_dt(),
                     dartData.getCeo_nm()
