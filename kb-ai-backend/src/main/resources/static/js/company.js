@@ -235,6 +235,15 @@ function displayCompanyDetails(company) {
     // 상세 정보 내용 업데이트
     companyDetails.classList.add('active');
     companyDetails.classList.remove('closed', 'collapsed');
+
+    // URL 해시를 '기업개요'로 설정 -> 상세페이지 창을 열었을 때 기본적으로 기업개요가 나타나도록 함
+    location.hash = '기업개요';
+
+    // '기업개요' 탭을 표시
+    showTabContent('기업개요');
+
+    // 지도를 초기화하고 표시
+    initMap();
 }
 
 // function closeCompanyDetails() {
