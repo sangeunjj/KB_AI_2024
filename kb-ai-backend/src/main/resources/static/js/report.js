@@ -34,8 +34,8 @@ function loadCompanies() {
 
             let currentGroup = ''; // 현재 자음 그룹
 
-            data.forEach((companyName, index) => {
-                const firstLetter = getFirstLetter(companyName); // 첫 글자 또는 자음 추출
+            data.forEach((company, index) => {
+                const firstLetter = getFirstLetter(company.companyName); // 첫 글자 또는 자음 추출
 
                 // 새로운 그룹이 시작되면 그룹 헤더를 추가
                 if (firstLetter !== currentGroup) {
@@ -53,12 +53,12 @@ function loadCompanies() {
 
                 // 기업명 항목 추가
                 const li = document.createElement("div");
-                li.textContent = companyName;
+                li.textContent = company.companyName;
                 li.classList.add("company-item");
 
                 // 회사 선택 시 버튼에 이름 표시
                 li.onclick = function() {
-                    selectCompany(companyName);
+                    selectCompany(company.companyName, company.companyCode); // 이름과 코드를 넘김
                 };
 
                 // 기업명을 3개의 리스트에 나누어 추가
@@ -83,19 +83,6 @@ function getFirstLetter(str) {
         return firstChar.toUpperCase(); // 영어의 경우 첫 글자를 반환 (대문자로 변환)
     }
 }
-
-// 회사 선택 시 버튼에 이름 표시
-// 처음으로 + 표시가 있는 버튼을 찾아 그 버튼의 텍스트를 선택한 회사 이름으로 변경
-
-function selectCompany(companyName) {
-    const buttons = document.querySelectorAll('.button');
-    const emptyButton = Array.from(buttons).find(button => button.textContent.trim() === '+');
-    if (emptyButton) {
-        emptyButton.textContent = companyName;
-        closeModal();
-    }
-}
-
 // 피처 선택 버튼 (여러 개 선택 가능)
 document.querySelectorAll('.feature-button').forEach(button => {
     button.addEventListener('click', function() {
@@ -115,3 +102,36 @@ document.querySelectorAll('.feature-button').forEach(button => {
         }
     });
 });
+
+function getSelectedCompanies() {
+    const selectedCompanies = Array.from(document.querySelectorAll('.button'))
+        .filter(button => button.textContent.trim() !== '+')
+        .map(button => button.dataset.companyCode); // 회사 코드로 변경
+    return selectedCompanies;
+}
+
+function fetchCompanyData() {
+    const companies = getSelectedCompanies();
+    const features = getSelectedFeatures();
+
+    fetch(`/api/company/features?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // 데이터를 사용하여 비교 결과를 표시
+            // 예시로 데이터를 콘솔에 출력. 필요한 경우 UI에 표시
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// 회사 선택 시 버튼에 이름 표시
+// 처음으로 + 표시가 있는 버튼을 찾아 그 버튼의 텍스트를 선택한 회사 이름으로 변경
+
+function selectCompany(companyName, companyCode) {
+    const buttons = document.querySelectorAll('.button');
+    const emptyButton = Array.from(buttons).find(button => button.textContent.trim() === '+');
+    if (emptyButton) {
+        emptyButton.textContent = companyName;
+        emptyButton.dataset.companyCode = companyCode; // 회사 코드 저장
+        closeModal();
+    }
+}
