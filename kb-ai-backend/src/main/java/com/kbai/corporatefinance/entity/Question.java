@@ -18,9 +18,9 @@ public class Question {
     @Column(name = "question_id")
     private Long id;
 
-    @Column(name = "question_text", nullable = false)
+    @Column(name = "question_text")
     private String text;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", columnDefinition = "TEXT")
     private LocalDateTime createdAt;
 }
