@@ -95,3 +95,12 @@ function selectCompany(companyName) {
         closeModal();
     }
 }
+
+// 피처 선택 버튼 (여러 개 선택 가능)
+document.querySelectorAll('.feature-button').forEach(button => {
+    button.addEventListener('click', function() {
+        // 현재 클릭된 버튼에 'selected' 클래스가 있으면 제거, 없으면 추가
+        this.classList.toggle('selected');
+    });
+});
+

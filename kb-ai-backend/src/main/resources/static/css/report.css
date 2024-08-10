@@ -158,3 +158,21 @@ body {
 .company-item:hover {
     background-color: #f1f1f1;
 }
+.feature-button {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #d3d3d3; /* 연한 회색 경계선 */
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin: 4px; /* 버튼 간 간격 추가 */
+}
+
+/* 선택된 상태 */
+.feature-button.selected {
+    background-color: rgba(251, 197, 49, 0.8);
+    border-color: rgb(255, 255, 255); /* 흰색 경계선 */
+    border-width: 1px; /* 경계선 두께 설정 */
+    border-style: solid; /* 경계선 스타일 설정 */
+}
