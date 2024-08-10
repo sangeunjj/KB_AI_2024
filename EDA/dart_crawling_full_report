@@ -1,3 +1,6 @@
+# 레포트 코드 "11011" 에 포함된 
+# 수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000 모두 가져오기
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
