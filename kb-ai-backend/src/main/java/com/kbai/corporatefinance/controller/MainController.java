@@ -9,11 +9,13 @@ public class MainController {
     public String mainPage() {
         return "chat";
     }
+
     @GetMapping("/chat")
     public String chat() {
         return "chat";
     }
-//    @GetMapping("/company")
+
+    //    @GetMapping("/company")
 //    public String company() {
 //        return "company";
 //    }
@@ -21,9 +23,15 @@ public class MainController {
     public String report1() {
         return "report1";
     }
+
     @GetMapping("/report2")
     public String report2() {
         return "report2";
+    }
+
+    @GetMapping("/c")
+    public String report3() {
+        return "circle_ex";
     }
 }
 

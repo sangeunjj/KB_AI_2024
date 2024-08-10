@@ -39,13 +39,13 @@
     <div class="main-content">
         <div class="chat-container">
             <div class="chat-box" id="chat-box">
-                <div class="message user-message">
-                    사용자 질문 내용이 여기에 표시됩니다.
-                </div>
-                <div class="message bot-message">
-                    <img src="/images/kb-logo.png" alt="Bot Profile Image">
-                    <span>GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.GPT 응답 내용이 여기에 표시됩니다.</span>
-                </div>
+<!--                <div class="message user-message">-->
+<!--&lt;!&ndash;                    사용자 질문 내용이 여기에 표시됩니다.&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div class="message bot-message">-->
+<!--                    <img src="/images/kb-logo.png" alt="Bot Profile Image">-->
+<!--                    <span></span>-->
+<!--                </div>-->
             </div>
         </div>
         <div class="input-container" style="position: relative;">
@@ -58,70 +58,6 @@
     </div>
 </div>
 <script src="/js/navbar.js"></script>
-<script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("active");
-        content.classList.toggle("expanded");
-    }
-
-    document.getElementById('user-input').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault(); // 기본 동작(줄바꿈) 방지
-            sendMessage();
-        }
-    });
-
-    function sendMessage() {
-        const userInput = document.getElementById('user-input');
-        const chatBox = document.getElementById('chat-box');
-        const message = userInput.value.trim();
-
-        if (message) {
-            const userMessage = document.createElement('div');
-            userMessage.classList.add('message', 'user-message');
-            userMessage.textContent = message;
-            chatBox.appendChild(userMessage);
-
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            userInput.value = '';
-
-            const botMessage = document.createElement('div');
-            botMessage.classList.add('message', 'bot-message');
-            const botImage = document.createElement('img');
-            botImage.src = "/images/kb-logo.png";
-            botImage.alt = "Bot Profile Image";
-            botMessage.appendChild(botImage);
-            const botText = document.createElement('span');
-            botText.textContent = '여기에 GPT 응답이 표시됩니다.';
-            botMessage.appendChild(botText);
-            chatBox.appendChild(botMessage);
-
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    }
-
-    function autoGrow(element) {
-        element.style.height = "auto"; // 초기 높이를 자동으로 설정
-        const maxHeight = parseInt(window.getComputedStyle(element).lineHeight) * 5; // 최대 5줄 높이 설정
-        element.style.height = Math.min(element.scrollHeight, maxHeight) + "px";
-
-        if (element.scrollHeight > maxHeight) {
-            element.style.overflowY = "scroll"; // 스크롤 활성화
-        } else {
-            element.style.overflowY = "hidden"; // 스크롤 비활성화
-        }
-
-        // 부모 요소의 높이를 입력 칸의 높이에 맞춰 조정
-        const parent = element.parentElement;
-        parent.style.height = element.style.height;
-
-        // 입력란이 위로 확장되도록 스크롤 위치 조정
-        const chatContainer = document.querySelector('.chat-container');
-        chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
-    }
-</script>
+<script src="/js/chat.js"></script>
 </body>
 </html>
