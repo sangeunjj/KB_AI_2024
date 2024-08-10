@@ -99,8 +99,19 @@ function selectCompany(companyName) {
 // 피처 선택 버튼 (여러 개 선택 가능)
 document.querySelectorAll('.feature-button').forEach(button => {
     button.addEventListener('click', function() {
-        // 현재 클릭된 버튼에 'selected' 클래스가 있으면 제거, 없으면 추가
-        this.classList.toggle('selected');
+        if (this.id === "allButton") {
+            // "전체" 버튼 클릭 시 전체 노란색으로 선택됨
+            const allSelected = this.classList.contains('selected');
+            document.querySelectorAll('.feature-button').forEach(btn => {
+                if (allSelected) {
+                    btn.classList.remove('selected'); // 모두 선택 해제
+                } else {
+                    btn.classList.add('selected'); // 모두 선택
+                }
+            });
+        } else {
+            // 개별 버튼 클릭 시
+            this.classList.toggle('selected');
+        }
     });
 });
-
