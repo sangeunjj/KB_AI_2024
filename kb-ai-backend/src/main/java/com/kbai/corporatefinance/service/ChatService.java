@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +28,11 @@ public class ChatService {
                     .append("ESG: ").append(company.getEsg()).append("\n")
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
                     .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company.getHasRegularEmployees() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(company.getGender() == 1 ? "남자" : "여자").append("\n")
-                    .append("뉴스 요약: ").append(company.getNewsSummary()).append("\n")
-                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
-                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
+                    .append("정규직 유무: ").append(company.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+                    .append("성별: ").append(Objects.equals(company.getGender(), "남") ? "남자" : "여자").append("\n");
+//                    .append("뉴스 요약: ").append(company.g()).append("\n")
+//                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
+//                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
         }
 
         enrichedPrompt.append("이러한 데이터들을 참고해서 답변해줘. 없으면 너가 추가해서 답변해줘.\n\n");
@@ -144,11 +145,11 @@ public class ChatService {
                     .append("ESG: ").append(company.getEsg()).append("\n")
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
                     .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company.getHasRegularEmployees() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(company.getGender() == 1 ? "남자" : "여자").append("\n")
-                    .append("뉴스 요약: ").append(company.getNewsSummary()).append("\n")
-                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
-                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
+                    .append("정규직 유무: ").append(company.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+                    .append("성별: ").append(Objects.equals(company.getGender(), "남") ? "남자" : "여자").append("\n");
+//                    .append("뉴스 요약: ").append(company.g()).append("\n")
+//                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
+//                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
         }
 
         enrichedPrompt.append("이 데이터를 바탕으로, 두 가지 질문을 작성해 주세요. 각 질문은 번호(1., 2.)를 붙여서 작성해 주세요.\n\n");

@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 95%;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -52,7 +52,8 @@ body {
 /*}*/
 
 .generate-report {
-    padding: 10px 30px;
+    margin-left: 12px;
+    padding: 10px 16px;
     font-size: 18px;
     background-color: rgba(251, 197, 49, 0.8);
     border: none;
@@ -176,4 +177,39 @@ body {
     border-color: rgb(255, 255, 255); /* 흰색 경계선 */
     border-width: 1px; /* 경계선 두께 설정 */
     border-style: solid; /* 경계선 스타일 설정 */
+}
+.chart-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.chart-section canvas {
+    width: 100%;
+    height: 400px; /* 필요에 따라 높이 조정 */
+}
+.visualize-button{
+    margin-left: 14px;
+    padding: 7px 20px;
+    font-size: 18px;
+    background-color: rgba(251, 197, 49, 0.8);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.charts-row {
+    display: flex;
+    justify-content: space-around; /* 그래프들이 좌우로 균등하게 배치 */
+    align-items: center; /* 세로 방향으로 가운데 정렬 */
+    width: 100%; /* 전체 폭을 100%로 설정 */
+    margin-top: 20px; /* 위쪽에 약간의 여백 추가 */
+}
+
+.chart-container {
+    flex: 1; /* 모든 차트가 동일한 비율로 공간을 차지 */
+    max-width: 30%; /* 각 차트가 전체 너비의 30%를 넘지 않도록 설정 */
+    height: auto; /* 높이는 자동으로 설정 */
+}
+.chart-container canvas {
+    width: 100% !important; /* 캔버스 너비를 부모 요소에 맞게 설정 */
+    height: auto !important; /* 높이는 자동으로 설정 */
 }

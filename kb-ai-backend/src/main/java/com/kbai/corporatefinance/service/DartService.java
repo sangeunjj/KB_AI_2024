@@ -11,7 +11,7 @@ public class DartService {
     public DartResponse getCompanyInfo(String corpCode, String dartApiKey) {
         String url = UriComponentsBuilder.fromHttpUrl("https://opendart.fss.or.kr/api/company.json")
                 .queryParam("crtfc_key", dartApiKey)
-                .queryParam("corp_code", "00" + corpCode) // TODO 회사코드 앞에 00을 붙여서 호출해야 함
+                .queryParam("corp_code", corpCode) // TODO 회사코드 앞에 00을 붙여서 호출해야 함
                 .toUriString();
 
         RestTemplate restTemplate = new RestTemplate();

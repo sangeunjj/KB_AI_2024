@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/report.css">
-    <link rel="stylesheet" href="/css/main.css"> <!-- 메인 CSS 파일 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Company Selection</title>
 </head>
 <body>
@@ -71,22 +71,30 @@
 
         <!-- 비교 결과 -->
         <div class="container results">
-            <div class="section-header">3. 비교 분석 결과</div>
+            <div class="section-header">
+                3. 비교 분석 시각화하기
+                <button class="generate-report" onclick="fetchCompanyData()">💡비교/분석 시각화💡</button>
+            </div>
             <p>세 기업의 비교 분석 결과입니다.</p>
-            <div class="charts">
-<!--                <img src="chart1.png" alt="Chart 1" class="chart">-->
-<!--                <img src="chart2.png" alt="Chart 2" class="chart">-->
-<!--                <img src="chart3.png" alt="Chart 3" class="chart">-->
-<!--                <img src="chart4.png" alt="Chart 4" class="chart">-->
-<!--                <img src="chart5.png" alt="Chart 5" class="chart">-->
-<!--                <img src="chart6.png" alt="Chart 6" class="chart">-->
+            <div class="charts-row">
+                <div class="chart-container">
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart2"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart3"></canvas>
+                </div>
             </div>
         </div>
 
         <!-- 자동 보고서 생성 -->
         <div class="container report-generation">
-            <div class="section-header">4. 비교 내용 자동 보고서 생성하기</div>
-            <button class="generate-report">💡자동 보고서 생성💡</button>
+            <div class="section-header">4. 비교/분석 자동 보고서 생성하기
+                <button class="generate-report">💡자동 보고서 생성💡</button>
+            </div>
+            <p>세 기업의 비교/분석 레포트입니다.</p>
         </div>
     </div>
 </div>
