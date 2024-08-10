@@ -31,12 +31,16 @@ body {
 
 .button, .chart {
     padding: 10px 20px;
-    background-color: #e0e0e0;
+    background-color: rgba(251, 197, 49, 0.8);
+    border-color: rgb(255, 255, 255); /* 연한 회색으로 설정 */
+    border-width: 1px; /* 경계선 두께 설정 */
+    border-style: solid; /* 경계선 스타일 설정 */
     cursor: pointer;
     font-size: 16px;
-    border: none;
     text-align: center;
+    border-radius: 10px;
 }
+
 
 .chart {
     width: 48%;
@@ -76,6 +80,8 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    max-height: 90vh; /* 화면 높이의 80%로 최대 높이 설정 */
+    overflow-y: auto; /* 수직 스크롤 가능하게 설정 */
 }
 
 .close {
