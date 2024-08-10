@@ -2,35 +2,57 @@ package com.kbai.corporatefinance.controller;
 
 import com.kbai.corporatefinance.dto.ChatGPTRequest;
 import com.kbai.corporatefinance.dto.ChatGPTResponse;
+import com.kbai.corporatefinance.entity.Question;
 import com.kbai.corporatefinance.service.ChatService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.kbai.corporatefinance.service.QuestionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/bot")
+@RequiredArgsConstructor
 public class CustomBotController {
 
     @Value("${openai.api.url}")
     private String apiURL;
 
-    @Autowired
-    private RestTemplate template;
-
-    @Autowired
-    private ChatService chatService;
+    private final RestTemplate template;
+    private final ChatService chatService;
+    private final QuestionService questionService;
 
     @GetMapping("/chat")
-    public String chat(@RequestParam(name = "prompt") String prompt) {
-
+    public String chat(String prompt) {
         // ChatService를 이용해 프롬프트 엔지니어링 수행
         ChatGPTRequest request = chatService.createPrompt(prompt);
+        return getChatgptResponse(request);
+    }
 
+    // 프론트엔드에서 호출하여 생성된 프롬프트를 가져가는 API
+    @GetMapping("/alarm-prompt")
+    public String getAlarmPrompt() {
+        ChatGPTRequest alarmPrompt = chatService.createAlarmPrompt();
+        String response = getChatgptResponse(alarmPrompt);
+
+        // 받은 응답을 바탕으로 질문을 생성하여 DB에 저장
+        questionService.saveQuestions(response);
+
+        return response;
+    }
+
+    // 오늘 생성된 질문 제공
+    @GetMapping("/questions/today")
+    public List<Question> getTodayQuestions() {
+        return questionService.getLatestTwoQuestions();
+    }
+
+    private String getChatgptResponse(ChatGPTRequest request) {
         try {
             ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class); // apiURL 주소로 request 객체를 JSON 형태로 전송
             assert chatGPTResponse != null;
