@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea {
 .chat-box {
     flex-grow: 1;
     padding: 20px;
-    height: 500px;
+    height: 610px;
     overflow-y: auto;
     /*background-color: rgb(255, 255, 255); !* 배경색 추가 *!*/
     display: flex;
@@ -156,7 +156,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea {
 
 /* New styles for the right-side question container */
 .today-que-container {
-    max-width: 35%; /* 전체 너비의 35% 사용 */
+    max-width: 30%; /* 전체 너비의 35% 사용 */
     width: 100%;
     background-color: #f4f4f9; /* 배경색 */
     border-radius: 10px;

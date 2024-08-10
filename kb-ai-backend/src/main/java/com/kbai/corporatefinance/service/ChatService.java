@@ -35,6 +35,7 @@ public class ChatService {
         }
 
         enrichedPrompt.append("이러한 데이터들을 참고해서 답변해줘. 없으면 너가 추가해서 답변해줘.\n\n");
+        enrichedPrompt.append("데이터들을 참고했다는 말과 너가 추가해서 찾았다는 말은 직접적으로 답변 내용에 언급하지마. \n");
 
         // 2. 사용자가 입력한 프롬프트 추가
         enrichedPrompt.append(prompt).append("\n\n");
@@ -123,7 +124,10 @@ public class ChatService {
         }
 
         // 모든 케이스에서 내용이 많은 경우, 목차를 추가하도록 유도
-        enrichedPrompt.append("\n\n내용이 많을 경우 번호와 특수문자를 사용하여 목차를 만들어 설명해 주세요.\n");
+        enrichedPrompt.append("\n\n답변 내용이 다양하고, 5줄 이상인 경우에만, 번호와 특수문자를 사용하여 목차를 만들어 설명해 주세요.\n");
+        enrichedPrompt.append("\n\n짧은 답변은 번호와 특수문자를 사용한 목차를 붙일 필요가 없어.\n");
+
+
 
         // 최종 프롬프트 생성
         return new ChatGPTRequest(model, enrichedPrompt.toString());
