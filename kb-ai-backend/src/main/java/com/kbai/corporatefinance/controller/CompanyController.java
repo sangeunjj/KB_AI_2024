@@ -121,7 +121,14 @@ public class CompanyController {
 
             // 선택된 피처에 따라 데이터 매핑
             if (features.contains("ESG")) {
-                companyData.put("ESG", company.getEsg());
+                companyData.put("ESG_23", company.getEsg());
+                companyData.put("ESG_22", company.getEsg_22());
+                companyData.put("ESG_23_e", company.getEsg_e());
+                companyData.put("ESG_23_s", company.getEsg_s());
+                companyData.put("ESG_23_g", company.getEsg_g());
+                companyData.put("ESG_22_e", company.getEsg_22_e());
+                companyData.put("ESG_22_s", company.getEsg_22_s());
+                companyData.put("ESG_22_g", company.getEsg_22_g());
             }
 //            if (features.contains("베타계수")) {
 //                companyData.put("베타계수", company.getBetaCoefficient());
