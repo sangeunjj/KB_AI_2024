@@ -108,7 +108,7 @@ public class CompanyController {
 
     @GetMapping("/features")
     public ResponseEntity<List<Map<String, Object>>> getCompanyFeatures(
-            @RequestParam List<Long> companyCodes, // 회사 코드를 받아옴
+            @RequestParam List<String> companyCodes, // 회사 코드를 받아옴
             @RequestParam List<String> features) {
 
         // 회사 코드 리스트에 따라 회사 엔티티를 가져옴
