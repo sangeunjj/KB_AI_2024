@@ -24,8 +24,8 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.
 YEAR="2023"
 RPT_CODE="11011"
 IDX_CODE = "M220000"  #수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000
-crtfc_key= #내 api KEY
 KEY= #내 api KEY
+crtfc_key= KEY
 url='http://opendart.fss.or.kr/api/fnlttSinglIndx.json'
 #url= 'https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json'
 
