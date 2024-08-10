@@ -38,7 +38,7 @@ body {
     cursor: pointer;
     font-size: 16px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 
@@ -47,15 +47,16 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.report-generation {
-    text-align: center;
-}
+/*.report-generation {*/
+/*    text-align: center;*/
+/*}*/
 
 .generate-report {
     padding: 10px 30px;
     font-size: 18px;
-    background-color: #ffc107;
+    background-color: rgba(251, 197, 49, 0.8);
     border: none;
+    border-radius: 20px;
     cursor: pointer;
 }
 
