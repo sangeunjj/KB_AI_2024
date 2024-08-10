@@ -13,11 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import com.kbai.corporatefinance.dto.CompanyDTO;
+
 
 @RestController
 @RequestMapping("/api/company")
@@ -76,31 +76,89 @@ public class CompanyController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping(value = "/ABC", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String>> getCompanyNamesSortedByABC() {
+    public ResponseEntity<List<CompanyDTO>> getCompanyNamesSortedByABC() {
         List<Company> companies = companyService.getAllCompanies();
 
         // Collator를 사용하여 한글과 영문을 함께 정렬, 한글을 우선 정렬
         Collator collator = Collator.getInstance(new Locale("ko", "KR"));
-        List<String> sortedCompanyNames = companies.stream()
-                .map(Company::getCompanyName)
-                .sorted((name1, name2) -> {
-                    boolean name1IsKorean = isKorean(name1);
-                    boolean name2IsKorean = isKorean(name2);
+        List<CompanyDTO> sortedCompanies = companies.stream()
+                .map(company -> new CompanyDTO(company.getCompanyName(), company.getCompanyCode()))
+                .sorted((company1, company2) -> {
+                    boolean name1IsKorean = isKorean(company1.getCompanyName());
+                    boolean name2IsKorean = isKorean(company2.getCompanyName());
                     if (name1IsKorean && !name2IsKorean) {
                         return -1; // name1이 한글이고 name2가 영어면 name1이 먼저 오도록 함
                     } else if (!name1IsKorean && name2IsKorean) {
                         return 1; // name1이 영어이고 name2가 한글이면 name2가 먼저 오도록 함
                     } else {
-                        return collator.compare(name1, name2); // 동일 언어끼리는 기본 정렬
+                        return collator.compare(company1.getCompanyName(), company2.getCompanyName()); // 동일 언어끼리는 기본 정렬
                     }
                 })
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(sortedCompanyNames);
+        return ResponseEntity.ok(sortedCompanies);
     }
+
 
     // 한글 여부를 확인하는 함수
     private boolean isKorean(String name) {
         return name.codePoints().anyMatch(codepoint -> Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.HANGUL_SYLLABLES);
+    }
+
+    @GetMapping("/features")
+    public ResponseEntity<List<Map<String, Object>>> getCompanyFeatures(
+            @RequestParam List<Long> companyCodes, // 회사 코드를 받아옴
+            @RequestParam List<String> features) {
+
+        // 회사 코드 리스트에 따라 회사 엔티티를 가져옴
+        List<Company> companies = companyService.getCompaniesByCodes(companyCodes);
+
+        // 선택된 피처에 따라 데이터를 매핑
+        List<Map<String, Object>> result = companies.stream().map(company -> {
+            Map<String, Object> companyData = new HashMap<>();
+            companyData.put("companyName", company.getCompanyName());
+
+            // 선택된 피처에 따라 데이터 매핑
+            if (features.contains("ESG")) {
+                companyData.put("ESG", company.getEsg());
+            }
+//            if (features.contains("베타계수")) {
+//                companyData.put("베타계수", company.getBetaCoefficient());
+//            }
+            if (features.contains("여성임원수")) {
+                companyData.put("여성임원수", company.getFemaleExecutives());
+            }
+            if (features.contains("정규직 유무")) {
+                companyData.put("정규직 유무", company.getHasRegularEmployees());
+            }
+            if (features.contains("성별")) {
+                companyData.put("성별", company.getGender());
+            }
+            // TODO 데이터 받으면 시행
+            if (features.contains("사업보고서(현금흐름표)")) {
+                // 이 부분은 추후 현금흐름표 데이터가 추가되면 구현
+                companyData.put("현금흐름표", "현금흐름표 데이터 없음"); // 예시 데이터
+            }
+            if (features.contains("사업보고서(손익계산서)")) {
+                // 이 부분은 추후 손익계산서 데이터가 추가되면 구현
+                companyData.put("손익계산서", "손익계산서 데이터 없음"); // 예시 데이터
+            }
+            if (features.contains("사업보고서(재무상태표)")) {
+                // 이 부분은 추후 재무상태표 데이터가 추가되면 구현
+                companyData.put("재무상태표", "재무상태표 데이터 없음"); // 예시 데이터
+            }
+            if (features.contains("뉴스 내용 및 개수")) {
+                companyData.put("뉴스 내용 및 개수", company.getNewsSummary());
+                companyData.put("기사 개수", company.getTwoWeeksArticleCount());
+            }
+            if (features.contains("산업현황(긍정/부정 점수)")) {
+                companyData.put("긍정/부정 점수", company.getSentimentScore());
+            }
+
+            return companyData;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(result);
     }
 }

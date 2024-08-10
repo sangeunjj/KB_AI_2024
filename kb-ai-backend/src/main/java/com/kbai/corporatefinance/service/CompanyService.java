@@ -21,4 +21,11 @@ public class CompanyService {
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
+
+    // 회사 이름 리스트에 따라 회사 엔티티를 가져오는 메서드
+
+    // 회사 코드 리스트에 따라 회사 엔티티를 가져오는 메서드
+    public List<Company> getCompaniesByCodes(List<Long> companyCodes) {
+        return companyRepository.findByCompanyCodeIn(companyCodes);
+    }
 }
