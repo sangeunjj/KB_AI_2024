@@ -104,13 +104,14 @@ document.querySelectorAll('.feature-button').forEach(button => {
     });
 });
 
-// 선택한 회사 알아내기
+// 선택한 회사의 기업코드를 가져오는 함수
 function getSelectedCompanies() {
-     // 회사 코드로 변경
+    // 회사 코드로 변경
     return Array.from(document.querySelectorAll('.button'))
         .filter(button => button.textContent.trim() !== '+')
-        .map(button => button.dataset.companyCode);
+        .map(button => button.dataset.companyCode); // 선택한 버튼의 데이터 속성에서 기업코드 가져옴
 }
+
 
 // 선택한 피처 알아내기
 function getSelectedFeatures() {
@@ -118,6 +119,7 @@ function getSelectedFeatures() {
         .map(button => button.textContent.trim());
 }
 
+// 선택한 기업과 피처에 따라 데이터를 가져와서 시각화하는 함수
 function fetchCompanyData() {
     const companies = getSelectedCompanies();
     const features = getSelectedFeatures();
@@ -133,13 +135,12 @@ function fetchCompanyData() {
 
 // 회사 선택 시 버튼에 이름 표시
 // 처음으로 + 표시가 있는 버튼을 찾아 그 버튼의 텍스트를 선택한 회사 이름으로 변경
-
 function selectCompany(companyName, companyCode) {
     const buttons = document.querySelectorAll('.button');
     const emptyButton = Array.from(buttons).find(button => button.textContent.trim() === '+');
     if (emptyButton) {
-        emptyButton.textContent = companyName;
-        emptyButton.dataset.companyCode = companyCode; // 회사 코드 저장
+        emptyButton.textContent = companyName; // 기업명만 버튼에 표시
+        emptyButton.dataset.companyCode = companyCode; // 회사 코드는 데이터 속성에 저장
         closeModal();
     }
 }
