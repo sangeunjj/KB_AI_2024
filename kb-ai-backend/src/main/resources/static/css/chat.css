@@ -135,3 +135,24 @@ h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea {
     padding: 8px; /* 이미지와 원 사이의 간격 추가 */
     /*background-color: #f4f4f4; !* 원의 배경색 추가 *!*/
 }
+.center-logo {
+    display: block;
+    margin: 0 auto;
+    width: 150px;  /* 로고 크기 조절 */
+}
+
+.question-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f4f4f9; /* 배경색 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    margin-top: 20px;
+}
+
+.questions-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: white; /* 질문 박스의 배경색 */
+}

@@ -80,3 +80,26 @@ function convertMarkdownToHtml(markdownText) {
     var converter = new showdown.Converter();
     return converter.makeHtml(markdownText);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const chatBox = document.getElementById('chat-box');
+    const questionContainer = document.getElementById('question-container');
+    const questionsBox = document.querySelector('.questions-box');
+
+    if (chatBox.children.length === 0) {
+        fetch('/bot/questions/today')
+            .then(response => response.json())
+            .then(questions => {
+                questionContainer.style.display = 'block';
+                questions.forEach(question => {
+                    const questionElement = document.createElement('p');
+                    questionElement.textContent = question.text;
+                    questionsBox.appendChild(questionElement);
+                });
+            })
+            .catch(error => console.error('Error loading questions:', error));
+    } else {
+        questionContainer.style.display = 'none';
+    }
+});
+
