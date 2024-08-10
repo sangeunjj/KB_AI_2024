@@ -8,7 +8,7 @@ from lxml import html
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 
-corp_list=stock_try['corp_code'].to_list()
+corp_list=stock_try['corp_code'].to_list()   ########## 상장기업명 뽑은 테이블 넣기
 idx_list = ['M210000', 'M220000', 'M230000', 'M240000']
 
 item_list=['bsns_year','stock_code','report_code','fs_div','sj_div','account_nm','thstrm_nm','thstrm_dt','thstrm_amount','thstrm_add_amount','frmtrm_nm','frmtrm_df','frmtrm_amount','frmtrm_add_amount','bfefrmtrm_nm','bfefrmtrm_dt','bfefrmtrm_amount','currency']
@@ -20,12 +20,12 @@ from IPython.display import display
 # 공시정보 필수 Parameter로 가져오기
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.4758.102"}
 
-KEY= #"내 api 키"
+
 YEAR="2023"
 RPT_CODE="11011"
 IDX_CODE = "M220000"  #수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000
-#CORP_CODE = "00126380" 
-crtfc_key= KEY
+crtfc_key= #내 api KEY
+KEY= #내 api KEY
 url='http://opendart.fss.or.kr/api/fnlttSinglIndx.json'
 #url= 'https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json'
 
@@ -35,7 +35,7 @@ for c in corp_list:
     CORP_CODE = str(c).zfill(8)
     #for i in idx_list:
         #IDX_CODE = i
-    IDX_CODE='M210000'
+    IDX_CODE='M210000'  #여긴선 얘만 가져옴
     params={'crtfc_key': KEY
         , 'corp_code': CORP_CODE
         , 'bsns_year' : YEAR
