@@ -1,7 +1,7 @@
 package com.kbai.corporatefinance.service;
 
 import com.kbai.corporatefinance.dto.ChatGPTRequest;
-import com.kbai.corporatefinance.entity.Company;
+import com.kbai.corporatefinance.entity.Company1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,16 @@ public class ChatService {
 
     public ChatGPTRequest createPrompt(String prompt) {
         // 1. DB의 값을 모두 가져와서 프롬프트에 추가
-        List<Company> companies = companyService.getAllCompanies();
+        List<Company1> companies = companyService.getAllCompanies();
         StringBuilder enrichedPrompt = new StringBuilder();
 
-        for (Company company : companies) {
-            enrichedPrompt.append("회사명: ").append(company.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company.getEsg()).append("\n")
+        for (Company1 company1 : companies) {
+            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
+                    .append("ESG: ").append(company1.getEsg()).append("\n")
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-                    .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(Objects.equals(company.getGender(), "남") ? "남자" : "여자").append("\n");
+                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
+                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
 //                    .append("뉴스 요약: ").append(company.g()).append("\n")
 //                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
 //                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
@@ -137,16 +137,16 @@ public class ChatService {
 
     public ChatGPTRequest createAlarmPrompt() {
         // 1. DB의 값을 모두 가져와서 프롬프트에 추가
-        List<Company> companies = companyService.getAllCompanies();
+        List<Company1> companies = companyService.getAllCompanies();
         StringBuilder enrichedPrompt = new StringBuilder();
 
-        for (Company company : companies) {
-            enrichedPrompt.append("회사명: ").append(company.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company.getEsg()).append("\n")
+        for (Company1 company1 : companies) {
+            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
+                    .append("ESG: ").append(company1.getEsg()).append("\n")
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-                    .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(Objects.equals(company.getGender(), "남") ? "남자" : "여자").append("\n");
+                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
+                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
 //                    .append("뉴스 요약: ").append(company.g()).append("\n")
 //                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
 //                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
