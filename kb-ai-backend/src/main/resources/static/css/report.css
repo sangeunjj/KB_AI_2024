@@ -1,73 +1,61 @@
-/* 모든 텍스트 요소에 Pretendard 적용 */
-body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-}
-
 /* 모든 요소가 font-family를 상속받도록 설정 */
 h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, label {
     font-family: inherit; /* 부모 요소의 font-family를 상속받음 */
 }
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    overflow-y: auto; /* 수직 스크롤 가능 */
 }
 
-.main-content {
+.container {
     width: 80%;
-    margin: 0 auto;
-    padding: 20px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.main-header {
-    display: flex;
-    justify-content: space-between;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
-.main-header button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    font-size: 16px;
+.section-header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 10px;
 }
 
-.main-header .active {
-    background-color: #ffc107;
+.company-selection, .criteria-selection, .results, .report-generation {
+    margin-bottom: 40px;
 }
 
-.company-selection, .criteria-selection {
-    margin-bottom: 20px;
-}
-
-.company-buttons, .criteria-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.company-button, .criteria-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #e0e0e0;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.results {
-    margin-top: 20px;
-}
-
-.charts {
+.buttons, .charts {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.charts img {
+.button, .chart {
+    padding: 10px 20px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    text-align: center;
+}
+
+.chart {
     width: 48%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.report-generation {
+    text-align: center;
+}
+
+.generate-report {
+    padding: 10px 30px;
+    font-size: 18px;
+    background-color: #ffc107;
+    border: none;
+    cursor: pointer;
 }

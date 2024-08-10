@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/chat.css">
     <link rel="stylesheet" href="/css/report.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <title>Chat Page</title>
@@ -43,40 +42,50 @@
         </div>
     </div>
     <div class="main-content">
-        <div class="main-header">
-            <button class="select-company active" onclick="window.location.href='/report1'">비교할 회사 직접 선택하기</button>
-            <button class="select-industry" onclick="window.location.href='/report2'">동종업계 회사 선택하기</button>
-        </div>
-        <div class="company-selection">
+        <!-- 기업 선택 -->
+        <div class="container company-selection">
+            <div class="section-header">1. 기업 선택하기</div>
             <p>비교할 기업을 선택하세요. 기업 비교는 최대 3개까지 가능합니다.</p>
-            <div class="company-buttons">
-                <button class="company-button">더존비즈온</button>
-                <button class="company-button">더존상사</button>
-                <button class="company-button">+</button>
+            <div class="buttons">
+                <button class="button">더존비즈온</button>
+                <button class="button">더존상사</button>
+                <button class="button">+</button>
             </div>
         </div>
-        <div class="criteria-selection">
+
+        <!-- 피처 선택 -->
+        <div class="container criteria-selection">
+            <div class="section-header">2. 중점적으로 비교할 피처 선택하기</div>
             <p>중점적으로 비교할 피처를 선택하세요</p>
-            <div class="criteria-buttons">
-                <button class="criteria-button">ESG</button>
-                <button class="criteria-button">작년 실적</button>
-                <button class="criteria-button">재무제표</button>
-                <button class="criteria-button">성장 가능성</button>
-                <button class="criteria-button">기업 이미지</button>
-                <button class="criteria-button">신용 점수</button>
-                <button class="criteria-button">전체</button>
+            <div class="buttons">
+                <button class="button">ESG</button>
+                <button class="button">작년 실적</button>
+                <button class="button">재무제표</button>
+                <button class="button">성장 가능성</button>
+                <button class="button">기업 이미지</button>
+                <button class="button">신용 점수</button>
+                <button class="button">전체</button>
             </div>
         </div>
-        <div class="results">
+
+        <!-- 비교 결과 -->
+        <div class="container results">
+            <div class="section-header">3. 비교 분석 결과</div>
             <p>세 기업의 비교 분석 결과입니다.</p>
             <div class="charts">
-                <img src="chart1.png" alt="Chart 1">
-                <img src="chart2.png" alt="Chart 2">
-                <img src="chart3.png" alt="Chart 3">
-                <img src="chart4.png" alt="Chart 4">
-                <img src="chart5.png" alt="Chart 5">
-                <img src="chart6.png" alt="Chart 6">
+                <img src="chart1.png" alt="Chart 1" class="chart">
+                <img src="chart2.png" alt="Chart 2" class="chart">
+                <img src="chart3.png" alt="Chart 3" class="chart">
+                <img src="chart4.png" alt="Chart 4" class="chart">
+                <img src="chart5.png" alt="Chart 5" class="chart">
+                <img src="chart6.png" alt="Chart 6" class="chart">
             </div>
+        </div>
+
+        <!-- 자동 보고서 생성 -->
+        <div class="container report-generation">
+            <div class="section-header">4. 비교 내용 자동 보고서 생성하기</div>
+            <button class="generate-report">자동 보고서 생성</button>
         </div>
     </div>
 </div>

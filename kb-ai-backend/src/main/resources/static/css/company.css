@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, label {
 }
 .content {
     margin-left: 250px;
-    padding: 20px;
+    padding: 25px;
     flex-grow: 1;
     transition: margin-left 0.3s ease;
     background-color: #f8f9fa; /* 배경색 추가 */
