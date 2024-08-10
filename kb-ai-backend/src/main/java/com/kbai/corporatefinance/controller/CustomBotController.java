@@ -2,6 +2,7 @@ package com.kbai.corporatefinance.controller;
 
 import com.kbai.corporatefinance.dto.ChatGPTRequest;
 import com.kbai.corporatefinance.dto.ChatGPTResponse;
+import com.kbai.corporatefinance.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/bot")
 public class CustomBotController {
-    @Value("${openai.model}")
-    private String model;
 
     @Value("${openai.api.url}")
     private String apiURL;
@@ -23,9 +22,15 @@ public class CustomBotController {
     @Autowired
     private RestTemplate template;
 
+    @Autowired
+    private ChatService chatService;
+
     @GetMapping("/chat")
     public String chat(@RequestParam(name = "prompt") String prompt) {
-        ChatGPTRequest request = new ChatGPTRequest(model, prompt);
+
+        // ChatService를 이용해 프롬프트 엔지니어링 수행
+        ChatGPTRequest request = chatService.createPrompt(prompt);
+
         try {
             ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class); // apiURL 주소로 request 객체를 JSON 형태로 전송
             assert chatGPTResponse != null;
