@@ -23,6 +23,7 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.
 KEY= # 내 api KEY
 YEAR="2023"
 RPT_CODE="11011"
+#사업보고서 : 11011, 1분기보고서 : 11013, 반기보고서 : 11012, 3분기보고서 : 11014
 IDX_CODE = "M220000"  #수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000
 #CORP_CODE = "00126380" 
 crtfc_key= KEY
