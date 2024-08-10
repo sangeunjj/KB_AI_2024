@@ -39,14 +39,17 @@
     </div>
     <div class="main-content">
         <div class="chat-container">
-
             <div class="chat-box" id="chat-box">
-
+                <div class="welcome-container" id="welcome-container">
+                    <img src="/images/kb-logo.png" alt="로고" class="center-logo">
+                    <p class="welcome-message">안녕하세요, 기업금융에 대해 알려드리는 <strong>비즈니즈GPT</strong>입니다.</p>
+                    <p class="welcome-message">제에게 무엇이든 물어보세요! </p>
+                </div>
                 <!-- 대화 메시지가 여기에 나타납니다 -->
             </div>
             <div class="input-container" style="position: relative;">
-                <label for="user-input" style="display: none;">메시지 ChatGPT</label>
-                <textarea id="user-input" placeholder="메시지 ChatGPT" rows="1" oninput="autoGrow(this)" style="width: calc(100% - 50px); margin-right: 10px;"></textarea>
+                <label for="user-input" style="display: none;">메시지 비즈니즈GPT</label>
+                <textarea id="user-input" placeholder="메시지 비즈니즈GPT" rows="1" oninput="autoGrow(this)" style="width: calc(100% - 50px); margin-right: 10px;"></textarea>
                 <button onclick="sendMessage()" style="position: absolute; right: 35px; bottom: 18px;">
                     <img src="/icons/send2.png" alt="전송 버튼" class="rotated-image">
                 </button>

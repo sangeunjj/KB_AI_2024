@@ -35,6 +35,7 @@ function autoGrow(element) {
 function sendMessage() {
     const userInput = document.getElementById('user-input');
     const chatBox = document.getElementById('chat-box');
+    const welcomeContainer = document.getElementById('welcome-container'); // welcome-container를 가져옴
     const message = userInput.value.trim();
 
     if (message) {
@@ -43,6 +44,11 @@ function sendMessage() {
         userMessage.classList.add('message', 'user-message');
         userMessage.textContent = message;
         chatBox.appendChild(userMessage);
+
+        // welcome-container 숨기기
+        if (welcomeContainer) {
+            welcomeContainer.style.display = 'none';
+        }
 
         // 입력 필드 초기화
         userInput.value = '';
@@ -63,7 +69,7 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
 
         // 프롬프트를 백엔드로 전송
-        fetch('/bot/chat?prompt=${encodeURIComponent(message)}')
+        fetch(`/bot/chat?prompt=${encodeURIComponent(message)}`)
             .then(response => response.text())
             .then(data => {
                 // 자리 표시자 텍스트를 실제 GPT 응답으로 교체
