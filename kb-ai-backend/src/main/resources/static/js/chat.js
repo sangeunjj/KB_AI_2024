@@ -63,7 +63,7 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
 
         // 프롬프트를 백엔드로 전송
-        fetch(`/bot/chat?prompt=${encodeURIComponent(message)}`)
+        fetch('/bot/chat?prompt=${encodeURIComponent(message)}')
             .then(response => response.text())
             .then(data => {
                 // 자리 표시자 텍스트를 실제 GPT 응답으로 교체
@@ -75,6 +75,7 @@ function sendMessage() {
             });
     }
 }
+
 // 마크다운 텍스트를 HTML로 변환하기 위한 JavaScript 함수
 function convertMarkdownToHtml(markdownText) {
     var converter = new showdown.Converter();
@@ -82,24 +83,19 @@ function convertMarkdownToHtml(markdownText) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const chatBox = document.getElementById('chat-box');
-    const questionContainer = document.getElementById('question-container');
+    const questionContainer = document.getElementById('today-que-container');
     const questionsBox = document.querySelector('.questions-box');
 
-    if (chatBox.children.length === 0) {
-        fetch('/bot/questions/today')
-            .then(response => response.json())
-            .then(questions => {
-                questionContainer.style.display = 'block';
-                questions.forEach(question => {
-                    const questionElement = document.createElement('p');
-                    questionElement.textContent = question.text;
-                    questionsBox.appendChild(questionElement);
-                });
-            })
-            .catch(error => console.error('Error loading questions:', error));
-    } else {
-        questionContainer.style.display = 'none';
-    }
+    fetch('/bot/questions/today')
+        .then(response => response.json())
+        .then(questions => {
+            questionContainer.style.display = 'block';
+            questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.textContent = question.text;
+                questionElement.classList.add('question-box');
+                questionsBox.appendChild(questionElement);
+            });
+        })
+        .catch(error => console.error('Error loading questions:', error));
 });
-
