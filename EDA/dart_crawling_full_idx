@@ -8,7 +8,7 @@ from lxml import html
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 
-corp_list=stock_try['corp_code'].to_list()
+corp_list=stock_df['corp_code'].to_list()   ########## 상장기업명 뽑은 테이블 넣기
 idx_list = ['M210000', 'M220000', 'M230000', 'M240000']
 
 item_list=['bsns_year','stock_code','report_code','fs_div','sj_div','account_nm','thstrm_nm','thstrm_dt','thstrm_amount','thstrm_add_amount','frmtrm_nm','frmtrm_df','frmtrm_amount','frmtrm_add_amount','bfefrmtrm_nm','bfefrmtrm_dt','bfefrmtrm_amount','currency']
