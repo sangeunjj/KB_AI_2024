@@ -25,7 +25,7 @@ public class ChatService {
         for (Company company : companies) {
             enrichedPrompt.append("회사명: ").append(company.getCompanyName()).append("\n")
                     .append("ESG: ").append(company.getEsg()).append("\n")
-                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
+//                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
                     .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
                     .append("정규직 유무: ").append(company.getHasRegularEmployees() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
                     .append("성별: ").append(company.getGender() == 1 ? "남자" : "여자").append("\n")
@@ -142,7 +142,7 @@ public class ChatService {
         for (Company company : companies) {
             enrichedPrompt.append("회사명: ").append(company.getCompanyName()).append("\n")
                     .append("ESG: ").append(company.getEsg()).append("\n")
-                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
+//                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
                     .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
                     .append("정규직 유무: ").append(company.getHasRegularEmployees() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
                     .append("성별: ").append(company.getGender() == 1 ? "남자" : "여자").append("\n")
