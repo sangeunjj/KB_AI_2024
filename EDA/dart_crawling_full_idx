@@ -20,7 +20,7 @@ from IPython.display import display
 # 공시정보 필수 Parameter로 가져오기
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.4758.102"}
 
-KEY="6fcbb95b62d25c42f004ec1a90e881ed91fbe938"
+KEY= # 내 api KEY
 YEAR="2023"
 RPT_CODE="11011"
 IDX_CODE = "M220000"  #수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000
