@@ -67,11 +67,16 @@ function sendMessage() {
             .then(response => response.text())
             .then(data => {
                 // 자리 표시자 텍스트를 실제 GPT 응답으로 교체
-                botText.textContent = data;
+                botText.innerHTML = convertMarkdownToHtml(data); // 마크다운을 HTML로 변환하여 표시
             })
             .catch(error => {
                 botText.textContent = "오류가 발생했습니다. 다시 시도해 주세요.";
                 console.error("Error:", error);
             });
     }
+}
+// 마크다운 텍스트를 HTML로 변환하기 위한 JavaScript 함수
+function convertMarkdownToHtml(markdownText) {
+    var converter = new showdown.Converter();
+    return converter.makeHtml(markdownText);
 }
