@@ -18,7 +18,18 @@ public class Company {
 
     private String companyName; // 기업명
     private String esg; // ESG
-    private float betaCoefficient; // 베타계수
+
+    private String esg_e; // E
+    private String esg_s; // S
+    private String esg_g; // G
+
+    private String esg_22; // ESG
+
+    private String esg_22_e; // E
+    private String esg_22_s; // S
+    private String esg_22_g; // G
+
+//    private float betaCoefficient; // 베타계수
     private int femaleExecutives; // 여성임원수
     private int hasRegularEmployees; // 정규직 유무, 정규직은 1번, 정규직x는 0번
     private int gender; // 성별, 남자는 1번, 여자는 2번
