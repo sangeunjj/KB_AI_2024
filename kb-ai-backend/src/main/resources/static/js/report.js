@@ -159,17 +159,25 @@ function visualizeESGData(data) {
     const ctx2 = document.getElementById('chart2').getContext('2d');
     const ctx3 = document.getElementById('chart3').getContext('2d');
 
-    const labels = ['2023 E', '2023 S', '2023 G', '2023 ESG 통합', '2022 E', '2022 S', '2022 G', '2022 ESG 통합'];
+    const labels = ['환경(Environmental)', '사회(Social)', '지배구조(Governance)', 'ESG 통합'];
 
-    // 차트 데이터를 준비합니다.
-    const chartData = data.map(company => ({
+    const pastelColors = [
+        // 'rgba(173, 216, 230, 0.8)', // Light Blue
+        // 'rgba(221, 160, 221, 0.8)', // Light Purple
+        // 'rgba(240, 230, 140, 0.8)'  // Light Yellow
+        // 'rgba(119, 119, 119, 0.8)', // Gray
+        'rgba(0, 102, 204, 0.8)',   // Blue
+        'rgba(34, 139, 34, 0.8)',   // Dark Green
+        'rgba(178, 34, 34, 0.8)'    // Dark Red
+    ];
+
+    const chartData = data.map((company, index) => ({
         label: company.companyName,
         data: [
-            gradeToNumber(company.ESG_23_e), gradeToNumber(company.ESG_23_s), gradeToNumber(company.ESG_23_g), gradeToNumber(company.ESG_23),
-            gradeToNumber(company.ESG_22_e), gradeToNumber(company.ESG_22_s), gradeToNumber(company.ESG_22_g), gradeToNumber(company.ESG_22)
+            gradeToNumber(company.ESG_23_e), gradeToNumber(company.ESG_23_s), gradeToNumber(company.ESG_23_g), gradeToNumber(company.ESG_23)
         ],
-        backgroundColor: 'rgba(251, 197, 49, 0.8)',
-        borderColor: 'rgb(255, 255, 255)',
+        backgroundColor: pastelColors[index],
+        borderColor: pastelColors[index].replace('0.8', '1'),
         borderWidth: 1
     }));
 
@@ -182,63 +190,37 @@ function visualizeESGData(data) {
         },
         options: {
             scales: {
+                x: {
+                    ticks: {
+                        color: 'black', // 축 글씨 색상
+                        font: {
+                            size: 14 // 축 글씨 크기
+                        }
+                    },
+                    barPercentage: 0.5, // 막대 폭 설정
+                    categoryPercentage: 0.7 // 범주 간 간격 설정
+                },
                 y: {
                     beginAtZero: true,
-                    max: 5 // 등급 스케일에 맞게 최대값 설정
+                    max: 5,
+                    ticks: {
+                        color: 'black', // 축 글씨 색상
+                        font: {
+                            size: 14 // 축 글씨 크기
+                        }
+                    }
                 }
             },
-            animation: false, // 애니메이션 제거
-            responsive: true
-        }
-    });
-
-    // 두 번째 차트: 레이더 차트
-    new Chart(ctx2, {
-        type: 'radar',
-        data: {
-            labels: labels.slice(0, 3).concat(labels.slice(4, 7)), // E, S, G만 포함
-            datasets: chartData.map(companyData => ({
-                ...companyData,
-                data: companyData.data.slice(0, 3).concat(companyData.data.slice(4, 7))
-            }))
-        },
-        options: {
-            responsive: true,
-            scales: {
-                r: {
-                    angleLines: {
-                        display: false
-                    },
-                    suggestedMin: 0,
-                    suggestedMax: 5 // 등급 스케일에 맞게 최대값 설정
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 14 // 범례 글씨 크기
+                        }
+                    }
                 }
             },
-            animation: false // 애니메이션 제거
-        }
-    });
-
-    // 세 번째 차트: 파이 차트로 통합 ESG 지표 시각화
-    const esg2023Data = data.map(company => gradeToNumber(company.ESG_23));
-    const companyNames = data.map(company => company.companyName);
-
-    new Chart(ctx3, {
-        type: 'pie',
-        data: {
-            labels: companyNames,
-            datasets: [{
-                data: esg2023Data,
-                backgroundColor: [
-                    'rgba(251, 197, 49, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(255, 99, 132, 0.8)'
-                ],
-                borderColor: 'rgb(255, 255, 255)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            animation: false // 애니메이션 제거
+            animation: false
         }
     });
 }
