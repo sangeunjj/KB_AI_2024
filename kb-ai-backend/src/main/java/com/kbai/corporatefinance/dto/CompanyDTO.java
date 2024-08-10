@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class CompanyDTO {
     private String companyName;
-    private Long companyCode;
+    private String companyCode;
 }

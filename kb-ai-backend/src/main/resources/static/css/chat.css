@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea {
 .chat-box {
     flex-grow: 1;
     padding: 20px;
-    height: 610px;
+    height: 500px;
     overflow-y: auto;
     /*background-color: rgb(255, 255, 255); !* 배경색 추가 *!*/
     display: flex;

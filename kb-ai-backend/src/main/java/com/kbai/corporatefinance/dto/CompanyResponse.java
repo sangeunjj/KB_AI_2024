@@ -7,13 +7,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class CompanyResponse {
     private String corp_name; // 기업명
-    private int femaleExecutives; // 여성임원수
+//    private int femaleExecutives; // 여성임원수
     private String esg; // ESG
-    private float sentimentScore; // 긍정/부정 점수 (산업현황)
-    private Long companyCode;
-    private String adres; // 주소
-    private String est_dt; // 설립일자
-    private String ceo_nm; // 대표자명
+//    private float sentimentScore; // 긍정/부정 점수 (산업현황)
+////    private Long companyCode;
+////    private String adres; // 주소
+////    private String est_dt; // 설립일자
+////    private String ceo_nm; // 대표자명
 }
 
 //        1. 기업명 -> db에서

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "company1")
+@Table(name = "company2")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -14,6 +14,9 @@ public class Company1 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = true)
     private Long cid; // 고유id
+
+    @Column(nullable = true)
+    private Long stockCode; // 주식코드
 
     @Column(nullable = true)
     private String companyCode; // 기업코드
@@ -43,22 +46,34 @@ public class Company1 {
     private float dividendYield; // 배당수익률
 
     @Column(nullable = true)
-    private String sector; // 부문
+    private int maleContractEmployeeCount; // 계약직수남
 
     @Column(nullable = true)
-    private String gender; // 성별, 남, 여
+    private int femaleContractEmployeeCount; // 계약직수여
 
     @Column(nullable = true)
-    private int regularEmployeeCount; // 정규직수
+    private Long totalSalaryMale; // 연봉합계남
 
     @Column(nullable = true)
-    private int contractEmployeeCount; // 계약직수
+    private Long totalSalaryFemale; // 연봉합계여
 
     @Column(nullable = true)
-    private int totalEmployeeCount; // 합계(정규직+계약직)
+    private Long maleRegularEmployeeCount; // 정규직수남
 
     @Column(nullable = true)
-    private Long averageSalaryPerPerson; // 1인평균연봉
+    private Long femaleRegularEmployeeCount; // 정규직수여
+
+    @Column(nullable = true)
+    private Long totalMaleEmployees; // 남자합계
+
+    @Column(nullable = true)
+    private Long totalFemaleEmployees; // 여자합계
+
+    @Column(nullable = true)
+    private float averageMaleSalary; // 평균연봉남
+
+    @Column(nullable = true)
+    private float averageFemaleSalary; // 평균연봉여
 
     @Column(nullable = true)
     private float operatingProfitBeforeTax; // 세전계속사업이익률
@@ -263,4 +278,52 @@ public class Company1 {
 
     @Column(nullable = true)
     private int maleExecutives; // 남성임원수
+
+    @Column(nullable = true)
+    private String status; // 상태
+
+    @Column(nullable = true)
+    private String message; // 메시지
+
+    @Column(nullable = true)
+    private String corpNameEng; // 회사 이름 (영어)
+
+    @Column(nullable = true)
+    private String stockName; // 주식명
+
+    @Column(nullable = true)
+    private String ceoName; // CEO 이름
+
+    @Column(nullable = true)
+    private String corpCls; // 회사 분류
+
+    @Column(nullable = true)
+    private String jurirNo; // 법인등록번호
+
+    @Column(nullable = true)
+    private String bizrNo; // 사업자등록번호
+
+    @Column(nullable = true)
+    private String address; // 주소
+
+    @Column(nullable = true)
+    private String homeUrl; // 홈페이지 URL
+
+    @Column(nullable = true)
+    private String irUrl; // IR URL
+
+    @Column(nullable = true)
+    private String phoneNumber; // 전화번호
+
+    @Column(nullable = true)
+    private String faxNumber; // 팩스번호
+
+    @Column(nullable = true)
+    private String industryCode; // 산업코드
+
+    @Column(nullable = true)
+    private String establishmentDate; // 설립일자
+
+    @Column(nullable = true)
+    private String accountingMonth; // 회계월
 }

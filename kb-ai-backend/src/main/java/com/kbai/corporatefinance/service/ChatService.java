@@ -25,11 +25,11 @@ public class ChatService {
 
         for (Company1 company1 : companies) {
             enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company1.getEsg()).append("\n")
+                    .append("ESG: ").append(company1.getEsg()).append("\n");
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
+//                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
+//                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+//                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
 //                    .append("뉴스 요약: ").append(company.g()).append("\n")
 //                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
 //                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
@@ -124,10 +124,36 @@ public class ChatService {
 
         }
 
+        // 재무재표 관련
+        if (prompt.contains("활동성 지표")) {
+            enrichedPrompt.append("내가 같이 보낸 데이터 중에 ['총자산회전율', '매출채권회전율', '재고자산회전율', '매출원가/재고자산', '매입채무회전율', '비유동자산회전율',\n" +
+                    "'유형자산회전율', '타인자본회전율', '자기자본회전율', '자본금회전율', '배당성향(%)' 컬럼을 참고해서 설명해줘 \n");
+            enrichedPrompt.append("컬럼들(지표들)이 가지는 각각 의미(해석)을 함께 포함해줘.");
+        }
+        if (prompt.contains("성장성 지표")) {
+            enrichedPrompt.append("내가 같이 보낸 데이터 중에 ['매출액증가율(YoY)', '매출총이익증가율(YoY)', '영업이익증가율(YoY)', '세전계속사업이익증가율(YoY)',\n" +
+                    "       '순이익증가율(YoY)', '총포괄이익증가율(YoY)', '총자산증가율', '비유동자산증가율', '유형자산증가율',\n" +
+                    "       '부채총계증가율', '총차입금증가율', '자기자본증가율', '유동자산증가율', '매출채권증가율', '재고자산증가율',\n" +
+                    "       '유동부채증가율', '매입채무증가율', '비유동부채증가율'] 컬럼을 참고해서 설명해줘 \n");
+            enrichedPrompt.append("컬럼들(지표들)이 가지는 각각 의미(해석)을 함께 포함해줘.");
+        }
+        if (prompt.contains("안정성 지표")) {
+            enrichedPrompt.append("내가 같이 보낸 데이터 중에 ['매출액증가율(YoY)', '매출총이익증가율(YoY)', '영업이익증가율(YoY)', '세전계속사업이익증가율(YoY)',\n" +
+                    "       '순이익증가율(YoY)', '총포괄이익증가율(YoY)', '총자산증가율', '비유동자산증가율', '유형자산증가율',\n" +
+                    "       '부채총계증가율', '총차입금증가율', '자기자본증가율', '유동자산증가율', '매출채권증가율', '재고자산증가율',\n" +
+                    "       '유동부채증가율', '매입채무증가율', '비유동부채증가율'] 컬럼을 참고해서 설명해줘 \n");
+            enrichedPrompt.append("컬럼들(지표들)이 가지는 각각 의미(해석)을 함께 포함해줘.");
+        }
+        if (prompt.contains("수익성 지표")) {
+            enrichedPrompt.append("내가 같이 보낸 데이터 중에  ['세전계속사업이익률', '순이익률', '총포괄이익률', '매출총이익률', '매출원가율', 'ROE', '판관비율',\n" +
+                    "       '총자산영업이익률', '총자산세전계속사업이익률', '자기자본영업이익률', '자기자본세전계속사업이익률', '자본금영업이익률',\n" +
+                    "       '자본금세전계속사업이익률', '납입자본이익률', '영업수익경비율'] 컬럼을 참고해서 설명해줘 \n");
+            enrichedPrompt.append("컬럼들(지표들)이 가지는 각각 의미(해석)을 함께 포함해줘.");
+        }
+
         // 모든 케이스에서 내용이 많은 경우, 목차를 추가하도록 유도
         enrichedPrompt.append("\n\n답변 내용이 다양하고, 5줄 이상인 경우에만, 번호와 특수문자를 사용하여 목차를 만들어 설명해 주세요.\n");
         enrichedPrompt.append("\n\n짧은 답변은 번호와 특수문자를 사용한 목차를 붙일 필요가 없어.\n");
-
 
 
         // 최종 프롬프트 생성
@@ -142,11 +168,11 @@ public class ChatService {
 
         for (Company1 company1 : companies) {
             enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company1.getEsg()).append("\n")
+                    .append("ESG: ").append(company1.getEsg()).append("\n");
 //                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
-                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
+//                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
+//                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+//                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
 //                    .append("뉴스 요약: ").append(company.g()).append("\n")
 //                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
 //                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
