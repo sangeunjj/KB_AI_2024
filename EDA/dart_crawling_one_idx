@@ -1,3 +1,6 @@
+#IDX_CODE = "M220000"  #수익성지표 : M210000 안정성지표 : M220000 성장성지표 : M230000 활동성지표 : M240000
+#지표 네개 중 하나를 정해서 하위 수치들만 가져오는 코드
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
