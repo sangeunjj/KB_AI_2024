@@ -128,4 +128,31 @@ public class ChatService {
         // 최종 프롬프트 생성
         return new ChatGPTRequest(model, enrichedPrompt.toString());
     }
+
+
+    public ChatGPTRequest createAlarmPrompt() {
+        // 1. DB의 값을 모두 가져와서 프롬프트에 추가
+        List<Company> companies = companyService.getAllCompanies();
+        StringBuilder enrichedPrompt = new StringBuilder();
+
+        for (Company company : companies) {
+            enrichedPrompt.append("회사명: ").append(company.getCompanyName()).append("\n")
+                    .append("ESG: ").append(company.getEsg()).append("\n")
+                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
+                    .append("여성 임원수: ").append(company.getFemaleExecutives()).append("\n")
+                    .append("정규직 유무: ").append(company.getHasRegularEmployees() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+                    .append("성별: ").append(company.getGender() == 1 ? "남자" : "여자").append("\n")
+                    .append("뉴스 요약: ").append(company.getNewsSummary()).append("\n")
+                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
+                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
+        }
+
+        enrichedPrompt.append("이러한 데이터들을 참고해서 은행직원이 궁금해할 만한 질문들을 두 개 생성해줘.\n");
+        enrichedPrompt.append("각 질문은 번호(1. 2.)를 붙여서 두 줄로 작성해줘.\n\n");
+//        1. 다코와 크레디피아제이십오차의 ESG 등급 차이에 대해서 어떤 요인이 영향을 미쳤을까요?
+//        2. 여성 임원수가 많은 기업들이 뉴스에서 어떠한 주제에 대해 주로 다루고 있는지 궁금합니다.
+
+        // 최종 프롬프트 생성
+        return new ChatGPTRequest(model, enrichedPrompt.toString());
+    }
 }
