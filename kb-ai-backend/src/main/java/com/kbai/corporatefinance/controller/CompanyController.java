@@ -93,15 +93,19 @@ public class CompanyController {
                 .sorted((company1, company2) -> {
                     boolean name1IsKorean = isKorean(company1.getCompanyName());
                     boolean name2IsKorean = isKorean(company2.getCompanyName());
+
                     if (name1IsKorean && !name2IsKorean) {
                         return -1; // name1이 한글이고 name2가 영어면 name1이 먼저 오도록 함
                     } else if (!name1IsKorean && name2IsKorean) {
                         return 1; // name1이 영어이고 name2가 한글이면 name2가 먼저 오도록 함
+                    } else if (name1IsKorean && name2IsKorean) {
+                        return collator.compare(company1.getCompanyName(), company2.getCompanyName()); // 한글끼리는 기본 정렬
                     } else {
-                        return collator.compare(company1.getCompanyName(), company2.getCompanyName()); // 동일 언어끼리는 기본 정렬
+                        return company1.getCompanyName().compareToIgnoreCase(company2.getCompanyName()); // 영어끼리는 기본 정렬
                     }
                 })
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok(sortedCompanies);
     }
 

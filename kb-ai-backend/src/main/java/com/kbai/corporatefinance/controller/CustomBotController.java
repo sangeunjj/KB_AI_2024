@@ -83,8 +83,13 @@ public class CustomBotController {
                 .map(company -> companyService.getCompanyFeatures(company, features))
                 .toList();
 
+        // 기업 이름 리스트 생성
+        List<String> companyNames = companies.stream()
+                .map(Company1::getCompanyName)
+                .collect(Collectors.toList());
+
         // 기업 이름과 데이터로 프롬프트 엔지니어링 수행
-        ChatGPTRequest chatGPTRequest = chatService.createReportPrompt(companies.get(0).getCompanyName(), features, companyDataList.get(0));
+        ChatGPTRequest chatGPTRequest = chatService.createReportPrompt(companyNames, features, companyDataList);
         // OpenAI API 호출
         String response = getChatgptResponse(chatGPTRequest);
 

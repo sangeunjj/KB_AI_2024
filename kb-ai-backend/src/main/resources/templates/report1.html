@@ -7,17 +7,21 @@
     <link rel="stylesheet" href="/css/report.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <title>Company Selection</title>
 </head>
 <body>
 <div class="sidebar active" id="sidebar">
     <div class="profile">
         <!-- Gender가 1인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}" alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
         <!-- Gender가 2인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}" alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
         <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
-        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}" th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
         <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
     </div>
     <div class="menu-items">
@@ -26,8 +30,10 @@
         <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
     </div>
     <div class="auth">
-        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
-        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon" width="25px" height="25px">Log In</a>
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
     </div>
 </div>
 
@@ -66,14 +72,18 @@
                 <button class="feature-button">ESG</button>
             </div>
         </div>
-        <!-- 비교 결과 -->
-        <div class="container results">
+
+        <div class="generate-report-container">
+            <button class="generate-report" onclick="fetchCompanyData()">시각화 & GPT기반 보고서 자동 생성하러 가기 ↗ </button>
+        </div>
+        <!-- 비교 결과 (처음엔 숨김) -->
+        <div class="container results" id="resultsContainer" style="display: none;">
             <div class="section-header">
                 3. 비교 분석 시각화하기
-                <button class="generate-report" onclick="fetchCompanyData()">💡시각화 및 GPT기반 보고서 생성↗💡</button>
             </div>
             <p>세 기업의 비교 분석 결과입니다.</p>
             <div class="grid-container">
+                <!-- Grid items here -->
                 <div id="grid-item-1" class="grid-item"></div>
                 <div id="grid-item-2" class="grid-item"></div>
                 <div id="grid-item-3" class="grid-item"></div>
@@ -104,19 +114,15 @@
                 <div id="grid-item-28" class="grid-item"></div>
                 <div id="grid-item-29" class="grid-item"></div>
                 <div id="grid-item-30" class="grid-item"></div>
-
             </div>
         </div>
 
-        <!-- 자동 보고서 생성 -->
-        <div class="container report-generation">
-            <div class="section-header">4. 비교/분석 자동 보고서 생성하기
-<!--                <button class="generate-report">💡자동 보고서 생성↗💡</button>-->
-            </div>
+        <!-- 자동 보고서 생성 (처음엔 숨김) -->
+        <div class="container report-generation" id="reportContainer" style="display: none;">
+            <div class="section-header">4. 비교/분석 자동 보고서 생성하기</div>
             <p>타 기업의 비교/분석 레포트입니다.</p>
-
-            <!-- 보고서 출력 위치 -->
-            <div id="report-output" style="padding: 20px; border: 1px solid #ddd; margin-top: 20px; background-color: #f9f9f9;">
+            <div id="report-output"
+                 style="padding: 20px; border: 1px solid #ddd; margin-top: 20px; background-color: #f9f9f9;">
                 <!-- 여기로 보고서가 출력됩니다. -->
             </div>
         </div>

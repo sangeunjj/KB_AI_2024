@@ -73,16 +73,19 @@ function loadCompanies() {
 // 한글의 첫 자음 또는 영어의 첫 글자를 추출하는 함수
 function getFirstLetter(str) {
     const firstChar = str.charAt(0);
-    const unicode = firstChar.charCodeAt(0) - 44032;
+    const unicode = firstChar.charCodeAt(0);
 
-    if (unicode >= 0 && unicode <= 11171) { // 한글 초성 범위 확인
-        const consonants = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
-        const firstConsonantIndex = Math.floor(unicode / 588);
-        return consonants[firstConsonantIndex];
+    if (unicode >= 0xAC00 && unicode <= 0xD7A3) { // Hangul Syllables
+        const initialConsonants = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+        const consonantIndex = Math.floor((unicode - 0xAC00) / 588);
+        return initialConsonants[consonantIndex];
+    } else if ((unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+        return firstChar.toUpperCase(); // English letters
     } else {
-        return firstChar.toUpperCase(); // 영어의 경우 첫 글자를 반환 (대문자로 변환)
+        return '#'; // For other characters
     }
 }
+
 
 // 피처 선택 버튼 (선택시 노란색으로 변함, 여러 개 선택 가능)
 document.querySelectorAll('.feature-button').forEach(button => {
@@ -120,31 +123,42 @@ function getSelectedFeatures() {
 let fetchedData = []; // 데이터를 저장할 변수
 
 // 선택한 기업과 피처에 따라 데이터를 가져와서 시각화하는 함수
+// Fetch data and show results and report sections
 function fetchCompanyData() {
     const companies = getSelectedCompanies();
     const features = getSelectedFeatures();
 
-    // 기존 API 호출
+    // Show the results and report sections
+    document.getElementById('resultsContainer').style.display = 'block';
+    document.getElementById('reportContainer').style.display = 'block';
+
+    // Show the loading message
+    document.getElementById('report-output').innerHTML = "<h3>비교/분석 자동 보고서</h3><p>응답 중입니다..... 잠시만 기다려주세요.</p>";
+
     fetch(`/api/company/features?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
         .then(response => response.json())
         .then(data => {
             fetchedData = data;
-            console.log(data);
+            // console.log(data);
             visualizeData(data, features);
 
-            // 새로운 API 호출로 프롬프트 엔지니어링 및 보고서 생성
             fetch(`/bot/generate-report?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
                 .then(response => response.text())
                 .then(report => {
-                    // console.log(report); // 생성된 보고서 내용 출력
-                    // 보고서 내용을 원하는 위치에 표시하거나 다른 처리를 할 수 있음
-                    // 보고서를 특정 위치에 출력
+                    // console.log(report);
+                    // Replace loading message with the actual report
                     const reportContainer = document.getElementById("report-output");
-                    reportContainer.innerHTML = `<h3>비교/분석 자동 보고서</h3><pre>${report}</pre>`;
+                    reportContainer.innerHTML = marked.parse(report);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("report-output").innerHTML = "<p>오류가 발생했습니다. 다시 시도해 주세요.</p>";
+                });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("report-output").innerHTML = "<h3>비교/분석 자동 보고서</h3><p>오류가 발생했습니다. 다시 시도해 주세요.</p>";
+        });
 }
 
 // 데이터 시각화 어디로 할지 정하는 갈림길 같은거

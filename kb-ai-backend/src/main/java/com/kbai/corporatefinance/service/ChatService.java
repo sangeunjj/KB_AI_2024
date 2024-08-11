@@ -198,135 +198,155 @@ public class ChatService {
         return new ChatGPTRequest(model, enrichedPrompt.toString());
     }
 
-    public ChatGPTRequest createReportPrompt(String companyName, List<String> selectedFeatures, Map<String, Object> companyData) {
+    public ChatGPTRequest createReportPrompt(List<String> companyNames, List<String> selectedFeatures, List<Map<String, Object>> companyDataList) {
         StringBuilder reportPrompt = new StringBuilder();
+
         // 보고서 서문
-        reportPrompt.append("### ").append(companyName).append(" 기업 분석 보고서\n\n");
+        reportPrompt.append("### 기업 비교 분석 보고서\n\n");
 
         // 피처에 따른 보고서 섹션 생성
         for (String feature : selectedFeatures) {
             switch (feature) {
                 case "3개년 현금 흐름 분석":
                     reportPrompt.append("### 1. **현금흐름 분석**\n\n")
-                            .append("**목표:** 기업의 현금흐름 상황을 분석하여 현금 생성 능력과 운영 효율성을 평가합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **영업활동으로 인한 현금흐름 (Operating Cash Flow):**\n")
-                            .append("    - **데이터 출처:** 연결 현금흐름표\n")
-                            .append("    - **최근 3년 간 영업활동으로 인한 현금흐름 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("operatingCashFlow.prePrevious")).append(" 원\n")
-                            .append("        - **2022년:** ").append(companyData.get("operatingCashFlow.previous")).append(" 원\n")
-                            .append("        - **2023년:** ").append(companyData.get("operatingCashFlow.current")).append(" 원\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로, 회사의 영업활동 현금흐름에 대한 해석을 제공하고, 향후 전망을 예측해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 현금흐름 상황을 비교하여 현금 생성 능력과 운영 효율성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **영업활동으로 인한 현금흐름 (Operating Cash Flow):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("operatingCashFlow.prePrevious")).append(" 원\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("operatingCashFlow.previous")).append(" 원\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("operatingCashFlow.current")).append(" 원\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 영업활동으로 인한 현금흐름의 변화는 각 기업의 운영 효율성 변동을 나타내며, 기업별 비교 분석을 통해 주요 원인과 개선 필요성을 도출할 수 있습니다.\n\n");
                     break;
 
                 case "재무 건전성 및 유동성 분석":
-                    reportPrompt.append("### 2. **우발채무 및 미수금 대비 현금성 자산 충분성 분석**\n\n")
-                            .append("**목표:** 기업이 예상치 못한 채무 발생에 대비할 수 있는 현금성 자산의 충분성을 평가합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **현금 및 현금성 자산:**\n")
-                            .append("    - **데이터 출처:** 연결 재무상태표\n")
-                            .append("    - **최근 3년 간 현금 및 현금성 자산 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("cashAndCashEquivalents.prePrevious")).append(" 원\n")
-                            .append("        - **2022년:** ").append(companyData.get("cashAndCashEquivalents.previous")).append(" 원\n")
-                            .append("        - **2023년:** ").append(companyData.get("cashAndCashEquivalents.current")).append(" 원\n")
-                            .append("    - **질문:** 위의 데이터를 기반으로 기업의 유동성을 분석하고, 현금성 자산의 충분성을 평가해 주세요.\n\n")
-                            .append("2. **우발채무 및 약정사항:**\n")
-                            .append("    - **데이터 출처:** 주석 5-32\n")
-                            .append("    - **보고된 우발채무 총 금액:** ").append(companyData.get("contingentLiabilities")).append(" 원\n")
-                            .append("    - **질문:** 위의 데이터를 기반으로 기업의 우발채무와 관련된 위험을 분석해 주세요.\n\n");
+                    reportPrompt.append("### 2. **재무 건전성 및 유동성 분석**\n\n")
+                            .append("**목표:** 여러 기업의 재무 건전성과 유동성을 비교하여 기업의 단기 및 장기 생존 가능성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **현금 및 현금성 자산:**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("cashAndCashEquivalents.prePrevious")).append(" 원\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("cashAndCashEquivalents.previous")).append(" 원\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("cashAndCashEquivalents.current")).append(" 원\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 기업별 현금성 자산의 비교를 통해 각 기업의 유동성 확보 상황을 평가할 수 있으며, 특정 기업의 유동성 위험 요소를 식별할 수 있습니다.\n\n");
                     break;
 
                 case "재무 건전성 및 수익성 지표 분석":
-                    reportPrompt.append("### 3. **영업이익률 및 부채비율 등 비율 지표 분석**\n\n")
-                            .append("**목표:** 최근 몇 년 간의 주요 비율 지표를 분석하여 기업의 재무 건전성과 수익성을 평가합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **영업이익률 (Operating Profit Margin):**\n")
-                            .append("    - **데이터 출처:** 포괄손익계산서\n")
-                            .append("    - **최근 3년 간 영업이익률 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("operatingProfitMargin.prePrevious")).append("%\n")
-                            .append("        - **2022년:** ").append(companyData.get("operatingProfitMargin.previous")).append("%\n")
-                            .append("        - **2023년:** ").append(companyData.get("operatingProfitMargin.current")).append("%\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 영업이익률 변동의 의미를 분석하고, 향후 기업의 수익성을 예측해 주세요.\n\n")
-                            .append("2. **부채비율 (Debt Ratio):**\n")
-                            .append("    - **데이터 출처:** 연결 재무상태표\n")
-                            .append("    - **최근 3년 간 부채비율 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("debtRatio.prePrevious")).append("%\n")
-                            .append("        - **2022년:** ").append(companyData.get("debtRatio.previous")).append("%\n")
-                            .append("        - **2023년:** ").append(companyData.get("debtRatio.current")).append("%\n")
-                            .append("    - **질문:** 위의 부채비율 변동을 바탕으로 기업의 재무 건전성을 평가해 주세요.\n\n");
+                    reportPrompt.append("### 3. **재무 건전성 및 수익성 지표 분석**\n\n")
+                            .append("**목표:** 여러 기업의 주요 비율 지표를 비교하여 재무 건전성과 수익성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **영업이익률 (Operating Profit Margin):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("operatingProfitMargin.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("operatingProfitMargin.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("operatingProfitMargin.current")).append("%\n\n")
+                                .append("    - **부채비율 (Debt Ratio):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("debtRatio.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("debtRatio.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("debtRatio.current")).append("%\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 영업이익률과 부채비율의 비교를 통해 각 기업의 수익성과 재무 건전성 간의 상관관계를 분석할 수 있습니다.\n\n");
                     break;
 
                 case "활동성 지표":
                     reportPrompt.append("### 4. **활동성 지표 분석**\n\n")
-                            .append("**목표:** 기업의 자산 활용 효율성을 평가하여 경영 효율성을 분석합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **총자산회전율 (Total Asset Turnover):**\n")
-                            .append("    - **데이터 출처:** 재무상태표\n")
-                            .append("    - **최근 3년 간 총자산회전율 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("totalAssetTurnover.prePrevious")).append("\n")
-                            .append("        - **2022년:** ").append(companyData.get("totalAssetTurnover.previous")).append("\n")
-                            .append("        - **2023년:** ").append(companyData.get("totalAssetTurnover.current")).append("\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 총자산회전율을 분석하고, 자산 활용 효율성을 평가해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 자산 활용 효율성을 비교하여 경영 효율성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **총자산회전율 (Total Asset Turnover):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("totalAssetTurnover.prePrevious")).append("\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("totalAssetTurnover.previous")).append("\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("totalAssetTurnover.current")).append("\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 총자산회전율의 비교를 통해 각 기업의 자산 운영 효율성을 분석할 수 있으며, 경영 효율성 개선이 필요한 기업을 식별할 수 있습니다.\n\n");
                     break;
 
                 case "성장성 지표":
                     reportPrompt.append("### 5. **성장성 지표 분석**\n\n")
-                            .append("**목표:** 기업의 매출 및 이익 성장성을 평가하여 장기적인 성장 가능성을 분석합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **매출액증가율 (Sales Growth Rate):**\n")
-                            .append("    - **데이터 출처:** 포괄손익계산서\n")
-                            .append("    - **최근 3년 간 매출액증가율 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("salesGrowthRate.prePrevious")).append("%\n")
-                            .append("        - **2022년:** ").append(companyData.get("salesGrowthRate.previous")).append("%\n")
-                            .append("        - **2023년:** ").append(companyData.get("salesGrowthRate.current")).append("%\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 매출 성장률의 변동을 분석하고, 향후 성장 가능성을 예측해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 매출 및 이익 성장성을 비교하여 장기적인 성장 가능성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **매출액증가율 (Sales Growth Rate):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("salesGrowthRate.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("salesGrowthRate.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("salesGrowthRate.current")).append("%\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 매출액증가율을 비교하여 각 기업의 성장성을 평가하고, 시장에서의 경쟁 우위를 가진 기업을 도출할 수 있습니다.\n\n");
                     break;
 
                 case "안정성 지표":
                     reportPrompt.append("### 6. **안정성 지표 분석**\n\n")
-                            .append("**목표:** 기업의 재무 구조의 안정성을 평가하여 장기적인 생존 가능성을 분석합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **자기자본비율 (Equity Ratio):**\n")
-                            .append("    - **데이터 출처:** 재무상태표\n")
-                            .append("    - **최근 3년 간 자기자본비율 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("equityRatio.prePrevious")).append("%\n")
-                            .append("        - **2022년:** ").append(companyData.get("equityRatio.previous")).append("%\n")
-                            .append("        - **2023년:** ").append(companyData.get("equityRatio.current")).append("%\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 기업의 재무 구조 안정성을 분석해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 재무 구조의 안정성을 비교하여 장기적인 생존 가능성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **자기자본비율 (Equity Ratio):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("equityRatio.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("equityRatio.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("equityRatio.current")).append("%\n\n")
+                                .append("    - **부채비율 (Debt Ratio):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("debtRatio.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("debtRatio.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("debtRatio.current")).append("%\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 자기자본비율과 부채비율의 비교를 통해 각 기업의 재무 구조 안정성을 분석하고, 재무 위험이 높은 기업을 식별할 수 있습니다.\n\n");
                     break;
 
                 case "수익성 지표":
                     reportPrompt.append("### 7. **수익성 지표 분석**\n\n")
-                            .append("**목표:** 기업의 수익 창출 능력을 평가하여 경영 효율성을 분석합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **순이익률 (Net Profit Margin):**\n")
-                            .append("    - **데이터 출처:** 포괄손익계산서\n")
-                            .append("    - **최근 3년 간 순이익률 데이터:**\n")
-                            .append("        - **2021년:** ").append(companyData.get("netProfitMargin.prePrevious")).append("%\n")
-                            .append("        - **2022년:** ").append(companyData.get("netProfitMargin.previous")).append("%\n")
-                            .append("        - **2023년:** ").append(companyData.get("netProfitMargin.current")).append("%\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 순이익률의 변동을 분석하고, 향후 수익성을 평가해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 수익 창출 능력을 비교하여 경영 효율성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **순이익률 (Net Profit Margin):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("netProfitMargin.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("netProfitMargin.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("netProfitMargin.current")).append("%\n\n")
+                                .append("    - **매출총이익률 (Gross Profit Margin):**\n")
+                                .append("        - **2021년:** ").append(companyDataList.get(i).get("grossProfitMargin.prePrevious")).append("%\n")
+                                .append("        - **2022년:** ").append(companyDataList.get(i).get("grossProfitMargin.previous")).append("%\n")
+                                .append("        - **2023년:** ").append(companyDataList.get(i).get("grossProfitMargin.current")).append("%\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** 수익성 지표를 비교하여 각 기업의 경영 효율성을 평가하고, 수익성 개선이 필요한 기업을 식별할 수 있습니다.\n\n");
                     break;
 
                 case "ESG":
                     reportPrompt.append("### 8. **환경, 사회, 지배구조 (ESG) 분석**\n\n")
-                            .append("**목표:** 기업의 ESG(환경, 사회, 지배구조) 성과를 평가하여 지속 가능성을 분석합니다.\n\n")
-                            .append("### **주요 지표 및 데이터**\n\n")
-                            .append("1. **환경 (Environmental):**\n")
-                            .append("    - **데이터 출처:** ESG 보고서\n")
-                            .append("    - **기업의 환경 성과 데이터:**\n")
-                            .append("        - **2023년 점수:** ").append(companyData.get("ESG_23_e")).append("\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 기업의 환경 성과를 분석해 주세요.\n\n")
-                            .append("2. **사회 (Social):**\n")
-                            .append("    - **데이터 출처:** ESG 보고서\n")
-                            .append("    - **기업의 사회 성과 데이터:**\n")
-                            .append("        - **2023년 점수:** ").append(companyData.get("ESG_23_s")).append("\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 기업의 사회적 책임 성과를 분석해 주세요.\n\n")
-                            .append("3. **지배구조 (Governance):**\n")
-                            .append("    - **데이터 출처:** ESG 보고서\n")
-                            .append("    - **기업의 지배구조 성과 데이터:**\n")
-                            .append("        - **2023년 점수:** ").append(companyData.get("ESG_23_g")).append("\n")
-                            .append("    - **질문:** 위의 데이터를 바탕으로 기업의 지배구조를 평가해 주세요.\n\n");
+                            .append("**목표:** 여러 기업의 ESG(환경, 사회, 지배구조) 성과를 비교하여 지속 가능성을 평가합니다.\n\n")
+                            .append("### **주요 지표 및 데이터**\n\n");
+
+                    for (int i = 0; i < companyNames.size(); i++) {
+                        reportPrompt.append("**").append(companyNames.get(i)).append("**:\n")
+                                .append("    - **환경 (Environmental):**\n")
+                                .append("        - **점수:** ").append(companyDataList.get(i).get("ESG_23_e")).append("\n")
+                                .append("    - **사회 (Social):**\n")
+                                .append("        - **점수:** ").append(companyDataList.get(i).get("ESG_23_s")).append("\n")
+                                .append("    - **지배구조 (Governance):**\n")
+                                .append("        - **점수:** ").append(companyDataList.get(i).get("ESG_23_g")).append("\n\n");
+                    }
+
+                    reportPrompt.append("    - **해석:** ESG 성과를 비교하여 각 기업의 지속 가능성을 평가하고, 개선이 필요한 영역을 식별할 수 있습니다.\n\n");
                     break;
 
                 default:
@@ -335,9 +355,9 @@ public class ChatService {
             }
         }
 
-        // 보고서 종합 해석 요청
-        reportPrompt.append("### **종합 해석 요청:**\n\n")
-                .append(companyName).append("의 분석 결과를 종합하여 기업의 현재 상태와 향후 전망에 대한 종합적인 해석을 제공해 주세요.\n");
+        // 보고서 종합 해석 추가
+        reportPrompt.append("### **종합 해석:**\n\n")
+                .append("선택한 기업들의 데이터를 비교 분석한 결과, 각 피처에서 나타난 주요 결과를 종합하여 기업의 현재 상태를 평가할 수 있습니다. 추가적인 데이터 분석이나 시뮬레이션이 필요하다면 말씀해 주세요.\n");
 
         // 최종 프롬프트 생성
         return new ChatGPTRequest(model, reportPrompt.toString());
