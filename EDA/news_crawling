@@ -1,0 +1,144 @@
+# 필요한 라이브러리 임포트
+from bs4 import BeautifulSoup
+import requests
+import re
+import time
+import pandas as pd
+from tqdm import tqdm
+from transformers import PreTrainedTokenizerFast, BartForConditionalGeneration
+import tensorflow as tf
+
+# 페이지 url 형식에 맞게 바꾸어 주는 함수 만들기
+def makePgNum(num):
+    if num == 1:
+        return num
+    elif num == 0:
+        return num + 1
+    else:
+        return num + 9 * (num - 1)
+
+# 크롤링할 url 생성하는 함수 만들기(검색어, 크롤링 시작 페이지, 크롤링 종료 페이지)
+def makeUrl(search, start_pg, end_pg):
+    if start_pg == end_pg:
+        start_page = makePgNum(start_pg)
+        url = "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=" + search + "&start=" + str(start_page)
+        return url
+    else:
+        urls = []
+        for i in range(start_pg, end_pg + 1):
+            page = makePgNum(i)
+            url = "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=" + search + "&start=" + str(page)
+            urls.append(url)
+        return urls    
+
+# html에서 원하는 속성 추출하는 함수 만들기 (기사, 추출하려는 속성값)
+def news_attrs_crawler(articles, attrs):
+    attrs_content = []
+    for i in articles:
+        attrs_content.append(i.attrs[attrs])
+    return attrs_content
+
+# ConnectionError방지
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.4758.102"}
+
+#html생성해서 기사크롤링하는 함수 만들기(url): 링크를 반환
+def articles_crawler(url):
+    original_html = requests.get(url, headers=headers)
+    html = BeautifulSoup(original_html.text, "html.parser")
+
+    url_naver = html.select("div.group_news > ul.list_news > li div.news_area > div.news_info > div.info_group > a.info")
+    url = news_attrs_crawler(url_naver, 'href')
+    return url
+
+# 기사 크롤링 및 요약 함수
+def summarize_articles(company_name, start_page=1, end_page=300):   ####### 몇페이지까지 크롤링할건지 조정하기
+    # naver url 생성
+    url = makeUrl(company_name, start_page, end_page)
+
+    # 뉴스 크롤러 실행
+    news_titles = []
+    news_contents = []
+    final_urls = []
+    for i in url:
+        urls = articles_crawler(i)
+        for link in urls:
+            if "news.naver.com" in link:
+                final_urls.append(link)
+
+    # 뉴스 내용 크롤링
+    for i in tqdm(final_urls, desc=f"크롤링 {company_name}"):
+        # 각 기사 html get하기
+        news = requests.get(i, headers=headers)
+        news_html = BeautifulSoup(news.text, "html.parser")
+
+        # 뉴스 제목 가져오기
+        title = news_html.select_one("#ct > div.media_end_head.go_trans > div.media_end_head_title > h2")
+        if title is None:
+            title = news_html.select_one("#content > div.end_ct > div > h2")
+        
+        # 뉴스 본문 가져오기
+        content = news_html.select("article#dic_area")
+        if not content:
+            content = news_html.select("#articeBody")
+
+        # 기사 텍스트만 가져오기
+        content = ''.join(str(content))
+
+        # html태그제거 및 텍스트 다듬기
+        pattern1 = '<[^>]*>'
+        title = re.sub(pattern=pattern1, repl='', string=str(title))
+        content = re.sub(pattern=pattern1, repl='', string=content)
+        pattern2 = """[\n\n\n\n\n// flash 오류를 우회하기 위한 함수 추가\nfunction _flash_removeCallback() {}"""
+        content = content.replace(pattern2, '')
+
+        if title and content:
+            news_titles.append(title)
+            news_contents.append(content)
+
+    # 크롤링한 기사가 없으면 빈 문자열 반환
+    if not news_contents:
+        return ""
+
+    # 크롤링한 기사 내용을 하나의 텍스트로 합치기
+    combined_text = " ".join(news_contents)
+
+    # KoBART 토크나이저와 모델 로드
+    tokenizer = PreTrainedTokenizerFast.from_pretrained('gogamza/kobart-base-v2')
+    model = BartForConditionalGeneration.from_pretrained('gogamza/kobart-base-v2')
+
+    # 입력 텍스트의 길이 제한 설정
+    max_input_length = 1024
+
+    # 입력 텍스트 길이 조정
+    if len(combined_text) > max_input_length:
+        combined_text = combined_text[:max_input_length]
+
+    # 입력 텍스트 토큰화
+    inputs = tokenizer(combined_text, max_length=max_input_length, return_tensors='pt', truncation=True)
+
+    # 요약 생성
+    summary_ids = model.generate(inputs['input_ids'], max_length=150, min_length=80, length_penalty=2.0, num_beams=4, early_stopping=True)
+
+    # 요약 결과 디코딩
+    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+
+    return summary
+
+# 엑셀 파일에서 데이터 불러오기
+file_path = './전체기업.csv'  # 엑셀 파일 경로 수정
+df = pd.read_csv(file_path)
+
+# 뉴스 요약 컬럼 생성
+df['뉴스요약'] = ''
+
+# 기업명별로 뉴스 요약 생성하여 추가
+for index, row in tqdm(df.iterrows(), total=df.shape[0], desc="전체 진행"):
+    company_name = row['corp_name']
+    summary = summarize_articles(company_name)
+    df.at[index, '뉴스요약'] = summary
+
+# 최종 결과를 엑셀 파일로 저장
+output_path = './기업별_뉴스요약_결과.csv'  # 결과 파일 경로 수정
+df.to_csv(output_path, index=False, encoding='utf-8-sig')
+
+print("모든 기업에 대한 뉴스 요약이 완료되었습니다.")
