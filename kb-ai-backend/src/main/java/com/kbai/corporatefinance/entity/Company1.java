@@ -488,4 +488,106 @@ public class Company1 {
 
     @Column(nullable = true)
     private Long costOfSalesPrePrevious; // 매출원가_전전기
+
+    @Column(nullable = true)
+    private float receivablesToCashRatioCurrent; // 미수금대현금자산비율_당액 (Receivables to Cash Ratio - Current)
+
+    @Column(nullable = true)
+    private float receivablesToCashRatioPrevious; // 미수금대현금자산비율_전기 (Receivables to Cash Ratio - Previous)
+
+    @Column(nullable = true)
+    private float receivablesToCashRatioPrePrevious; // 미수금대현금자산비율_전전기 (Receivables to Cash Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float financialCostToSalesRatioCurrent; // 금융비용대매출액비율_당액 (Financial Cost to Sales Ratio - Current)
+
+    @Column(nullable = true)
+    private float financialCostToSalesRatioPrevious; // 금융비용대매출액비율_전기 (Financial Cost to Sales Ratio - Previous)
+
+    @Column(nullable = true)
+    private float financialCostToSalesRatioPrePrevious; // 금융비용대매출액비율_전전기 (Financial Cost to Sales Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float operatingCashFlowChangeRatePrevious; // 영업활동현금흐름_전기_변화율 (Operating Cash Flow Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float operatingCashFlowChangeRateCurrent; // 영업활동현금흐름_당액_변화율 (Operating Cash Flow Change Rate - Current)
+
+    @Column(nullable = true)
+    private float investingCashFlowChangeRatePrevious; // 투자활동현금흐름_전기_변화율 (Investing Cash Flow Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float investingCashFlowChangeRateCurrent; // 투자활동현금흐름_당액_변화율 (Investing Cash Flow Change Rate - Current)
+
+    @Column(nullable = true)
+    private float financingCashFlowChangeRatePrevious; // 재무활동현금흐름_전기_변화율 (Financing Cash Flow Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float financingCashFlowChangeRateCurrent; // 재무활동현금흐름_당액_변화율 (Financing Cash Flow Change Rate - Current)
+
+    @Column(nullable = true)
+    private float debtRatioCurrent; // 부채비율_당액 (Debt Ratio - Current)
+
+    @Column(nullable = true)
+    private float liquidityRatioCurrent; // 유동비율_당액 (Liquidity Ratio - Current)
+
+    @Column(nullable = true)
+    private float operatingProfitMarginCurrent; // 영업이익률_당액 (Operating Profit Margin - Current)
+
+    @Column(nullable = true)
+    private float financialCostToOperatingIncomeRatioCurrent; // 금융비용대영업이익비율_당액 (Financial Cost to Operating Income Ratio - Current)
+
+    @Column(nullable = true)
+    private float provisionsToEquityRatioCurrent; // 자본대비충당부채비율_당액 (Provisions to Equity Ratio - Current)
+
+    @Column(nullable = true)
+    private float debtRatioPrevious; // 부채비율_전기 (Debt Ratio - Previous)
+
+    @Column(nullable = true)
+    private float liquidityRatioPrevious; // 유동비율_전기 (Liquidity Ratio - Previous)
+
+    @Column(nullable = true)
+    private float operatingProfitMarginPrevious; // 영업이익률_전기 (Operating Profit Margin - Previous)
+
+    @Column(nullable = true)
+    private float financialCostToOperatingIncomeRatioPrevious; // 금융비용대영업이익비율_전기 (Financial Cost to Operating Income Ratio - Previous)
+
+    @Column(nullable = true)
+    private float provisionsToEquityRatioPrevious; // 자본대비충당부채비율_전기 (Provisions to Equity Ratio - Previous)
+
+    @Column(nullable = true)
+    private float debtRatioPrePrevious; // 부채비율_전전기 (Debt Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float liquidityRatioPrePrevious; // 유동비율_전전기 (Liquidity Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float operatingProfitMarginPrePrevious; // 영업이익률_전전기 (Operating Profit Margin - Pre-Previous)
+
+    @Column(nullable = true)
+    private float financialCostToOperatingIncomeRatioPrePrevious; // 금융비용대영업이익비율_전전기 (Financial Cost to Operating Income Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float provisionsToEquityRatioPrePrevious; // 자본대비충당부채비율_전전기 (Provisions to Equity Ratio - Pre-Previous)
+
+    @Column(nullable = true)
+    private float operatingProfitMarginChangeRatePrevious; // 영업이익률_전기_변화율 (Operating Profit Margin Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float operatingProfitMarginChangeRateCurrent; // 영업이익률_당액_변화율 (Operating Profit Margin Change Rate - Current)
+
+    @Column(nullable = true)
+    private float debtRatioChangeRatePrevious; // 부채비율_전기_변화율 (Debt Ratio Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float debtRatioChangeRateCurrent; // 부채비율_당액_변화율 (Debt Ratio Change Rate - Current)
+
+    @Column(nullable = true)
+    private float liquidityRatioChangeRatePrevious; // 유동비율_전기_변화율 (Liquidity Ratio Change Rate - Previous)
+
+    @Column(nullable = true)
+    private float liquidityRatioChangeRateCurrent; // 유동비율_당액_변화율 (Liquidity Ratio Change Rate - Current)
+
+    @Column(nullable = true)
+    private int daysUntilToday; // 오늘까지_일수 (Days Until Today)
 }

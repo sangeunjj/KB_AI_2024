@@ -189,6 +189,48 @@ public class CsvCustomService {
                         .costOfSalesCurrent(parseLongOrDefault(row[155], 0L)) // 매출원가_당액
                         .costOfSalesPrevious(parseLongOrDefault(row[156], 0L)) // 매출원가_전기
                         .costOfSalesPrePrevious(parseLongOrDefault(row[157], 0L)) // 매출원가_전전기
+                        .operatingProfitPrevious(parseLongOrDefault(row[150], 0L)) // 영업이익_전기
+                        .operatingProfitPrePrevious(parseLongOrDefault(row[151], 0L)) // 영업이익_전전기
+                        .accountsReceivableCurrent2(parseLongOrDefault(row[152], 0L)) // 매출채권_당액
+                        .accountsReceivablePrevious2(parseLongOrDefault(row[153], 0L)) // 매출채권_전기
+                        .accountsReceivablePrePrevious2(parseLongOrDefault(row[154], 0L)) // 매출채권_전전기
+                        .costOfSalesCurrent(parseLongOrDefault(row[155], 0L)) // 매출원가_당액
+                        .costOfSalesPrevious(parseLongOrDefault(row[156], 0L)) // 매출원가_전기
+                        .costOfSalesPrePrevious(parseLongOrDefault(row[157], 0L)) // 매출원가_전전기
+                        .receivablesToCashRatioCurrent(parseFloatOrDefault(row[158], 0.0f)) // 미수금대현금자산비율_당액
+                        .receivablesToCashRatioPrevious(parseFloatOrDefault(row[159], 0.0f)) // 미수금대현금자산비율_전기
+                        .receivablesToCashRatioPrePrevious(parseFloatOrDefault(row[160], 0.0f)) // 미수금대현금자산비율_전전기
+                        .financialCostToSalesRatioCurrent(parseFloatOrDefault(row[161], 0.0f)) // 금융비용대매출액비율_당액
+                        .financialCostToSalesRatioPrevious(parseFloatOrDefault(row[162], 0.0f)) // 금융비용대매출액비율_전기
+                        .financialCostToSalesRatioPrePrevious(parseFloatOrDefault(row[163], 0.0f)) // 금융비용대매출액비율_전전기
+                        .operatingCashFlowChangeRatePrevious(parseFloatOrDefault(row[164], 0.0f)) // 영업활동현금흐름_전기_변화율
+                        .operatingCashFlowChangeRateCurrent(parseFloatOrDefault(row[165], 0.0f)) // 영업활동현금흐름_당액_변화율
+                        .investingCashFlowChangeRatePrevious(parseFloatOrDefault(row[166], 0.0f)) // 투자활동현금흐름_전기_변화율
+                        .investingCashFlowChangeRateCurrent(parseFloatOrDefault(row[167], 0.0f)) // 투자활동현금흐름_당액_변화율
+                        .financingCashFlowChangeRatePrevious(parseFloatOrDefault(row[168], 0.0f)) // 재무활동현금흐름_전기_변화율
+                        .financingCashFlowChangeRateCurrent(parseFloatOrDefault(row[169], 0.0f)) // 재무활동현금흐름_당액_변화율
+                        .debtRatioCurrent(parseFloatOrDefault(row[170], 0.0f)) // 부채비율_당액
+                        .liquidityRatioCurrent(parseFloatOrDefault(row[171], 0.0f)) // 유동비율_당액
+                        .operatingProfitMarginCurrent(parseFloatOrDefault(row[172], 0.0f)) // 영업이익률_당액
+                        .financialCostToOperatingIncomeRatioCurrent(parseFloatOrDefault(row[173], 0.0f)) // 금융비용대영업이익비율_당액
+                        .provisionsToEquityRatioCurrent(parseFloatOrDefault(row[174], 0.0f)) // 자본대비충당부채비율_당액
+                        .debtRatioPrevious(parseFloatOrDefault(row[175], 0.0f)) // 부채비율_전기
+                        .liquidityRatioPrevious(parseFloatOrDefault(row[176], 0.0f)) // 유동비율_전기
+                        .operatingProfitMarginPrevious(parseFloatOrDefault(row[177], 0.0f)) // 영업이익률_전기
+                        .financialCostToOperatingIncomeRatioPrevious(parseFloatOrDefault(row[178], 0.0f)) // 금융비용대영업이익비율_전기
+                        .provisionsToEquityRatioPrevious(parseFloatOrDefault(row[179], 0.0f)) // 자본대비충당부채비율_전기
+                        .debtRatioPrePrevious(parseFloatOrDefault(row[180], 0.0f)) // 부채비율_전전기
+                        .liquidityRatioPrePrevious(parseFloatOrDefault(row[181], 0.0f)) // 유동비율_전전기
+                        .operatingProfitMarginPrePrevious(parseFloatOrDefault(row[182], 0.0f)) // 영업이익률_전전기
+                        .financialCostToOperatingIncomeRatioPrePrevious(parseFloatOrDefault(row[183], 0.0f)) // 금융비용대영업이익비율_전전기
+                        .provisionsToEquityRatioPrePrevious(parseFloatOrDefault(row[184], 0.0f)) // 자본대비충당부채비율_전전기
+                        .operatingProfitMarginChangeRatePrevious(parseFloatOrDefault(row[185], 0.0f)) // 영업이익률_전기_변화율
+                        .operatingProfitMarginChangeRateCurrent(parseFloatOrDefault(row[186], 0.0f)) // 영업이익률_당액_변화율
+                        .debtRatioChangeRatePrevious(parseFloatOrDefault(row[187], 0.0f)) // 부채비율_전기_변화율
+                        .debtRatioChangeRateCurrent(parseFloatOrDefault(row[188], 0.0f)) // 부채비율_당액_변화율
+                        .liquidityRatioChangeRatePrevious(parseFloatOrDefault(row[189], 0.0f)) // 유동비율_전기_변화율
+                        .liquidityRatioChangeRateCurrent(parseFloatOrDefault(row[190], 0.0f)) // 유동비율_당액_변화율
+                        .daysUntilToday(parseIntOrDefault(row[191], 0)) // 오늘까지_일수
                         .build();
                 companyRepository.save(company); // 데이터베이스에 저장
             }
