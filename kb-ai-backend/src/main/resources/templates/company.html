@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/company.css">
+    <title>Company Page</title>
+    <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaoApiKey}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+</head>
+<body>
+<div class="sidebar active" id="sidebar">
+    <div class="profile">
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+        <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
+    </div>
+    <div class="menu-items">
+        <a href="/"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
+        <a href="/company"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
+        <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
+    </div>
+    <div class="auth">
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
+    </div>
+</div>
+<div class="content expanded" id="content">
+    <div class="navbar">
+        <div class="left-section">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <div class="logo">KB <span>ANALYSIS</span></div>
+        </div>
+        <div class="navbar-search-container">
+            <input type="text" id="search-input" placeholder="기업명을 입력하세요" oninput="searchCompany()">
+            <button class="search-clear" onclick="clearSearch()">X</button>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="company-container">
+            <div class="company-filters">
+
+                <div id="region-select">
+                    <label><input type="checkbox" value="서울" onchange="filterByRegion()"> 서울</label>
+                    <label><input type="checkbox" value="부산" onchange="filterByRegion()"> 부산</label>
+                    <label><input type="checkbox" value="대구" onchange="filterByRegion()"> 대구</label>
+                    <label><input type="checkbox" value="인천" onchange="filterByRegion()"> 인천</label>
+                    <label><input type="checkbox" value="광주" onchange="filterByRegion()"> 광주</label>
+                    <label><input type="checkbox" value="대전" onchange="filterByRegion()"> 대전</label>
+                    <label><input type="checkbox" value="울산" onchange="filterByRegion()"> 울산</label>
+                    <label><input type="checkbox" value="세종" onchange="filterByRegion()"> 세종</label>
+                    <label><input type="checkbox" value="경기" onchange="filterByRegion()"> 경기</label>
+                </div>
+            </div>
+            <div class="company-list" id="company-list">
+                <!-- 기업 리스트 여기 표시 -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="company-details collapsed" id="company-details">
+    <div class="company-details-header">
+        <span id="company-name">기업명</span>
+        <button class="close-btn" onclick="toggleCompanyDetails()">X</button>
+    </div>
+    <div class="company-details-content">
+        <div class="com-details-index">
+            <a href="#기업개요" class="tab-link" onclick="showTabContent('기업개요'); initMap();"><strong>기업개요</strong></a>
+            <span>|</span>
+            <a href="#재무정보" class="tab-link" onclick="showTabContent('재무정보')"><strong>재무정보</strong></a>
+            <span>|</span>
+            <a href="#ESG" class="tab-link" onclick="showTabContent('ESG')"><strong>ESG 및 경영전략</strong></a>
+            <span>|</span>
+            <a href="#산업분석" class="tab-link" onclick="showTabContent('산업분석')"><strong>산업분석 및 시장동향</strong></a>
+            <span>|</span>
+            <a href="#미디어" class="tab-link" onclick="showTabContent('미디어')"><strong>미디어 커버리지 및 평판관리</strong></a>
+        </div>
+        <div id="기업개요" class="tab-content hidden">
+            <div class="company-overview">
+                <div class="section">
+                    <h4 class="section-title">기업 개황</h4>
+                    <div class="section-content">
+                        <div class="overview-item">
+                            <span class="item-title">회사명:</span>
+                            <span id="company-name2" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">대표자명:</span>
+                            <span id="company-ceo" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">종목코드:</span>
+                            <span id="company-stockCode" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">업종코드:</span>
+                            <span id="company-industryCode" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">설립일자:</span>
+                            <span id="company-estDt" class="item-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h4 class="section-title">연락처 정보</h4>
+                    <div class="section-content">
+                        <div class="overview-item">
+                            <span class="item-title">주소:</span>
+                            <span id="company-adres" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">전화번호:</span>
+                            <span id="company-phnNo" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">팩스번호:</span>
+                            <span id="company-faxNo" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">홈페이지 URL:</span>
+                            <span id="company-hmUrl" class="item-value"><a href="#" target="_blank"></a></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">IR 홈페이지 URL:</span>
+                            <span id="company-irUrl" class="item-value"><a href="#" target="_blank"></a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h4 class="section-title">법적 정보</h4>
+                    <div class="section-content">
+                        <div class="overview-item">
+                            <span class="item-title">법인등록번호:</span>
+                            <span id="company-jurirNo" class="item-value"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="item-title">사업자등록번호:</span>
+                            <span id="company-bizrNo" class="item-value"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map" style="width:100%;height:400px;"></div>
+        </div>
+        <div id="재무정보" class="tab-content hidden">
+            <h3 class="com-detail-title">[사업보고서]</h3>
+            <h4 class="com-detail-title">- 현금흐름표</h4>
+            <h4 class="com-detail-title">- 손익계산서</h4>
+            <h4 class="com-detail-title">- 재무상태표</h4>
+            <h3 class="com-detail-title">[베타계수]</h3>
+        </div>
+        <div id="ESG" class="tab-content hidden">
+            <h3 class="com-detail-title">[ESG]</h3>
+            <p>ESG란? Environment, Social, Governance Guidance 재무정보에 대비되는 개념으로 재무에서 드러나지 않는 기업의 리스크 관리 지표이자 지속 가능성 평가
+                지표입니다. 비재무정보는 지속가능발전소에서 제공합니다.</p>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">- ESG등급:</span>
+                    <span class="item-value">A+</span>
+                </div>
+            </div>
+            <h4 class="com-detail-title">- 환경</h4>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">온실가스 배출량:</span>
+                    <span class="item-value">7.2</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">온실가스 배출량:</span>
+                    <span class="item-value">7.2</span>
+                </div>
+            </div>
+            <h3 class="com-detail-title">[조직구성]</h3>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">정규직 유무:</span>
+                    <span class="item-value">예</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">성별:</span>
+                    <span class="item-value">남</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">여성임원수:</span>
+                    <span class="item-value">28%</span>
+                </div>
+            </div>
+        </div>
+        <div id="산업분석" class="tab-content hidden">
+            <h3 class="com-detail-title">[산업현황]</h3>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">산업분류:</span>
+                    <span class="item-value">IT업계</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">긍/부정:</span>
+                    <span class="item-value">긍정</span>
+                </div>
+            </div>
+        </div>
+        <div id="미디어" class="tab-content hidden">
+            <h2>미디어 커버리지 및 평판관리</h2>
+            <div class="company-overview">
+                <div class="overview-item">
+                    <span class="item-title">긍정/부정 점수:</span>
+                    <span class="item-value">8점</span>
+                </div>
+                <div class="overview-item">
+                    <span class="item-title">2주 동안 기사 개수:</span>
+                    <span class="item-value">10개</span>
+                </div>
+            </div>
+            <h3 class="com-detail-title">[뉴스요약]</h3>
+            <p>
+                뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약뉴스요약</p>
+        </div>
+    </div>
+    <div class="detail-tab" id="detail-tab" onclick="toggleCompanyDetails()">❯</div>
+</div>
+<script src="/js/company.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <title>웹 사이트 네비게이션 바</title>
+</head>
+<body>
+<div class="sidebar active" id="sidebar">
+    <div class="profile">
+        <img src="/icons/women.png" alt="Profile Picture">
+        <span>김대리</span>
+    </div>
+    <div class="menu-items">
+        <a href="/"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
+        <a href="/company"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
+        <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
+    </div>
+    <div class="logout">
+        <a href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon" width="25px" height="25px">Log Out</a>
+    </div>
+</div>
+<div class="content expanded" id="content">
+    <div class="navbar">
+        <div class="left-section">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <div class="logo">KB <span>ANALYSIS</span></div>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="기업명을 입력하세요">
+            <button class="search-clear">X</button>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/navbar.js}"></script>
+</body>
+</html>

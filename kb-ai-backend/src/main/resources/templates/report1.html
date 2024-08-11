@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/report.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>Company Selection</title>
+</head>
+<body>
+<div class="sidebar active" id="sidebar">
+    <div class="profile">
+        <!-- Gender가 1인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
+        <!-- Gender가 2인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
+        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+        <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
+    </div>
+    <div class="menu-items">
+        <a href="/"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
+        <a href="/company"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
+        <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
+    </div>
+    <div class="auth">
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
+    </div>
+</div>
+
+<div class="content expanded" id="content">
+    <div class="navbar">
+        <div class="left-section">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <div class="logo">KB <span>ANALYSIS</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <!-- 기업 선택 -->
+        <div class="container company-selection">
+            <div class="section-header">1. 기업 선택하기</div>
+            <p>비교할 기업을 선택하세요. 기업 비교는 최대 3개까지 가능합니다.</p>
+            <div class="buttons">
+                <button class="button" id="company1" onclick="openModal()">+</button>
+                <button class="button" id="company2" onclick="openModal()">+</button>
+                <button class="button" id="company3" onclick="openModal()">+</button>
+            </div>
+        </div>
+
+        <!-- 피처 선택 -->
+        <div class="container criteria-selection">
+            <div class="section-header">2. 해당 기업에서 궁금하신 내용이 무엇인가요?</div>
+            <p>중점적으로 비교할 피처를 선택하세요(중복 선택 가능)</p>
+            <div class="buttons">
+                <button class="feature-button" id="allButton">전체</button> <!-- 전체 선택 버튼 -->
+                <button class="feature-button">3개년 현금 흐름 분석</button>
+                <button class="feature-button">재무 건전성 및 수익성 지표 분석</button>
+                <button class="feature-button">재무 건전성 및 유동성 분석</button>
+                <button class="feature-button">활동성 지표</button>
+                <button class="feature-button">성장성 지표</button>
+                <button class="feature-button">안정성 지표</button>
+                <button class="feature-button">수익성 지표</button>
+                <button class="feature-button">ESG</button>
+            </div>
+        </div>
+
+        <div class="generate-report-container">
+            <button class="generate-report" onclick="fetchCompanyData()">시각화 & GPT기반 보고서 자동 생성하러 가기 ↗ </button>
+        </div>
+        <!-- 비교 결과 (처음엔 숨김) -->
+        <div class="container results" id="resultsContainer" style="display: none;">
+            <div class="section-header">
+                3. 비교 분석 시각화하기
+            </div>
+            <p>세 기업의 비교 분석 결과입니다.</p>
+            <div class="grid-container">
+                <!-- Grid items here -->
+                <div id="grid-item-1" class="grid-item"></div>
+                <div id="grid-item-2" class="grid-item"></div>
+                <div id="grid-item-3" class="grid-item"></div>
+                <div id="grid-item-4" class="grid-item"></div>
+                <div id="grid-item-5" class="grid-item"></div>
+                <div id="grid-item-6" class="grid-item"></div>
+                <div id="grid-item-7" class="grid-item"></div>
+                <div id="grid-item-8" class="grid-item"></div>
+                <div id="grid-item-9" class="grid-item"></div>
+                <div id="grid-item-10" class="grid-item"></div>
+                <div id="grid-item-11" class="grid-item"></div>
+                <div id="grid-item-12" class="grid-item"></div>
+                <div id="grid-item-13" class="grid-item"></div>
+                <div id="grid-item-14" class="grid-item"></div>
+                <div id="grid-item-15" class="grid-item"></div>
+                <div id="grid-item-16" class="grid-item"></div>
+                <div id="grid-item-17" class="grid-item"></div>
+                <div id="grid-item-18" class="grid-item"></div>
+                <div id="grid-item-19" class="grid-item"></div>
+                <div id="grid-item-20" class="grid-item"></div>
+                <div id="grid-item-21" class="grid-item"></div>
+                <div id="grid-item-22" class="grid-item"></div>
+                <div id="grid-item-23" class="grid-item"></div>
+                <div id="grid-item-24" class="grid-item"></div>
+                <div id="grid-item-25" class="grid-item"></div>
+                <div id="grid-item-26" class="grid-item"></div>
+                <div id="grid-item-27" class="grid-item"></div>
+                <div id="grid-item-28" class="grid-item"></div>
+                <div id="grid-item-29" class="grid-item"></div>
+                <div id="grid-item-30" class="grid-item"></div>
+            </div>
+        </div>
+
+        <!-- 자동 보고서 생성 (처음엔 숨김) -->
+        <div class="container report-generation" id="reportContainer" style="display: none;">
+            <div class="section-header">4. 비교/분석 자동 보고서 생성하기</div>
+            <p>타 기업의 비교/분석 레포트입니다.</p>
+            <div id="report-output"
+                 style="padding: 20px; border: 1px solid #ddd; margin-top: 20px; background-color: #f9f9f9;">
+                <!-- 여기로 보고서가 출력됩니다. -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 모달 -->
+<div id="companyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>기업을 선택하세요</h2>
+        <div class="company-sections">
+            <div id="companyList1" class="company-list"></div>
+            <div id="companyList2" class="company-list"></div>
+            <div id="companyList3" class="company-list"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/navbar.js"></script>
+<script src="/js/report.js"></script> <!-- 메인 JS 파일 -->
+</body>
+</html>

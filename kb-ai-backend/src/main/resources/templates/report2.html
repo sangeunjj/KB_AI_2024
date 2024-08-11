@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/report.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <title>Chat Page</title>
+</head>
+<body>
+<div class="sidebar active" id="sidebar">
+    <div class="profile">
+        <!-- Gender가 1인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 1}" th:src="@{/icons/men.png}"
+             alt="Profile Picture">
+        <!-- Gender가 2인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender == 2}" th:src="@{/icons/women.png}"
+             alt="Profile Picture">
+        <!-- 로그인하지 않은 경우 또는 다른 값인 경우 -->
+        <img class="profile-image" th:if="${session.member?.gender != 1 and session.member?.gender != 2}"
+             th:src="@{/icons/default-profile1.png}" alt="Profile Picture">
+        <span id="username" th:text="${session.member?.username ?: '익명'}">김대리</span>
+    </div>
+    <div class="menu-items">
+        <a href="/"><img src="/icons/chat2.png" alt="Chat Icon" class="icon" width="25px" height="25px">Chat</a>
+        <a href="/company"><img src="/icons/company2.png" alt="Company Icon" class="icon" width="25px" height="25px">Company</a>
+        <a href="/report1"><img src="/icons/report9.png" alt="Report Icon" class="icon" width="25px" height="25px">Report</a>
+    </div>
+    <div class="auth">
+        <a th:if="${session.member}" href="/logout"><img src="/icons/logout1.png" alt="Logout Icon" class="icon"
+                                                         width="25px" height="25px">Log Out</a>
+        <a th:unless="${session.member}" href="/login"><img src="/icons/login.png" alt="Login Icon" class="icon"
+                                                            width="25px" height="25px">Log In</a>
+    </div>
+</div>
+<div class="content expanded" id="content">
+    <div class="navbar">
+        <div class="left-section">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <div class="logo">KB <span>ANALYSIS</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="main-header">
+            <button class="select-company" onclick="window.location.href='/report1'">비교할 회사 직접 선택하기</button>
+            <button class="select-industry active" onclick="window.location.href='/report2'">동종업계 회사 선택하기</button>
+
+        </div>
+        <div class="company-selection">
+            <p>비교할 기업을 선택하세요. 동종 업계 비교를 해드립니다.</p>
+            <div class="company-buttons">
+                <button class="company-button">+</button>
+            </div>
+        </div>
+        <div class="criteria-selection">
+            <p>중점적으로 비교할 피처를 선택하세요</p>
+            <div class="criteria-buttons">
+                <button class="criteria-button">ESG</button>
+                <button class="criteria-button">작년 실적</button>
+                <button class="criteria-button">재무제표</button>
+                <button class="criteria-button">성장 가능성</button>
+                <button class="criteria-button">기업 이미지</button>
+                <button class="criteria-button">신용 점수</button>
+                <button class="criteria-button">전체</button>
+            </div>
+        </div>
+        <div class="results">
+            <p>세 기업의 비교 분석 결과입니다.</p>
+            <div class="charts">
+                <img src="chart1.png" alt="Chart 1">
+                <img src="chart2.png" alt="Chart 2">
+                <img src="chart3.png" alt="Chart 3">
+                <img src="chart4.png" alt="Chart 4">
+                <img src="chart5.png" alt="Chart 5">
+                <img src="chart6.png" alt="Chart 6">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/navbar.js"></script>
+</body>
+</html>

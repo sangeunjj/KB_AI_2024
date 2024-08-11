@@ -1,0 +1,304 @@
+/* 모든 텍스트 요소에 Pretendard 적용 */
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    overflow-y: auto; /* 수직 스크롤 가능 */
+}
+
+/* 모든 요소가 font-family를 상속받도록 설정 */
+h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, label {
+    font-family: inherit; /* 부모 요소의 font-family를 상속받음 */
+}
+.content {
+    margin-left: 100px;
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+    background-color: #f8f9fa; /* 배경색 추가 */
+}
+
+.content.expanded {
+    margin-left: 250px;
+}
+
+.content:not(.expanded) {
+    margin-left: 0;
+}
+
+.navbar .navbar-search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 20px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.navbar .navbar-search-container input[type="text"] {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 5px;
+    margin-left: 10px;
+    flex-grow: 1;
+    font-size: 17px;
+    color: #333;
+}
+
+.navbar .navbar-search-container .search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    padding-right: 12px;
+}
+
+.company-container {
+    display: flex;
+    height: calc(100vh - 60px);
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* 테두리 둥글게 */
+    overflow: hidden;
+}
+
+.company-filters {
+    width: 20%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.company-filters select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    appearance: none;
+    background-image: url('../icons/arrow_down.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.company-filters label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.company-filters input[type="range"] {
+    width: 100%;
+    background-color: #776C61;
+}
+
+.company-list {
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+.company-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+}
+
+.company-item:hover {
+    background-color: #f4f4f4;
+}
+
+.company-item .bookmark {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.company-item span {
+    display: inline-block;
+    width: 12.5%;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.company-item.columns span {
+    font-weight: bold;
+}
+
+.company-item .bookmark img[src*="bookmark2.png"] {
+    width: 21px;
+    height: 21px;
+}
+
+.company-item .bookmark img[src*="bookmark_blank1.png"] {
+    width: 18px;
+    height: 18px;
+}
+
+.company-details {
+    position: fixed;
+    top: 0;
+    right: -75%;
+    width: 75%;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.company-details.active {
+    right: 0;
+}
+
+.company-details.closed {
+    right: -75%;
+}
+
+.company-details.collapsed {
+    right: -75%;
+}
+
+.company-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.company-details-header .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.company-details-content {
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+}
+
+.detail-tab {
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    width: 30px;
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px 0 0 5px;
+    transition: left 0.3s ease;
+}
+
+.company-details.collapsed .detail-tab {
+    left: 0;
+}
+
+.com-details-index a {
+    text-decoration: none;
+    color: black;
+    margin: 0 5px;
+}
+
+.com-details-index span {
+    margin: 0 5px;
+}
+
+.com-details-index a.active {
+    color: #E4AA3F;
+}
+
+.hidden {
+    display: none;
+}
+
+.company-overview {
+    display: flex;
+    justify-content: space-between;
+    gap: 65px;
+}
+
+.company-overview .section {
+    width: 48%;
+}
+
+.section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    /*text-align: center;*/
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #E4AA3F;
+    padding-bottom: 10px;
+    /*width: 25%;*/
+    border-bottom: 1px solid #ddd;
+}
+
+.section-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.overview-item:last-child {
+    border-bottom: none;
+}
+
+.item-title {
+    font-weight: bold;
+    color: #333;
+    width: 170px;
+}
+
+.item-value {
+    color: #555;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.item-value a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.item-value a:hover {
+    text-decoration: underline;
+}

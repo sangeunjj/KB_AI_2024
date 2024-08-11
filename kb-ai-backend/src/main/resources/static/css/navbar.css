@@ -1,0 +1,173 @@
+/* 모든 텍스트 요소에 Pretendard 적용 */
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 모든 요소가 font-family를 상속받도록 설정 */
+h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, label {
+    font-family: inherit; /* 부모 요소의 font-family를 상속받음 */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .toggle-btn {
+    margin-right: 28px; /* 삼지창과 KB ANALYSIS 간격 조정 */
+    cursor: pointer;
+    /*font-weight: bold;*/
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FCAF16;
+}
+
+.navbar .logo span {
+    color: #776C61;
+}
+
+.navbar .search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 20px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.navbar .search-container input[type="text"] {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 5px;
+    margin-left: 10px;
+    flex-grow: 1;
+    font-size: 17px; /* 텍스트 크기를 조정 */
+}
+
+.navbar .search-container .search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    padding-right: 12px;
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding-top: 50px; /* 상단 간격 조정 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(-250px); /* 기본값을 닫힌 상태로 설정 */
+    transition: transform 0.3s ease;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar .profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.sidebar .profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.sidebar .profile span {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.sidebar .menu-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 45px; /* 프로필과 메뉴 항목 간격 조정 */
+}
+
+.sidebar .menu-items a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.sidebar .menu-items a img.icon {
+    margin-right: 17px;
+}
+
+.sidebar .menu-items a:hover {
+    background-color: #f4f4f4;
+}
+
+.sidebar .auth {
+    margin-top: 320px; /* Report와 100px 간격 추가 */
+    padding-bottom: 20px; /* 하단 간격 추가 */
+}
+
+.sidebar .auth a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.sidebar .auth a img.icon {
+    margin-right: 10px;
+}
+
+.sidebar .auth a:hover {
+    background-color: #f4f4f4;
+}
+
+.content {
+    margin-left: 250px; /* 기본값을 열린 상태로 설정 */
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.content.expanded {
+    margin-left: 250px;
+}
+
+.content:not(.expanded) {
+    margin-left: 0; /* 닫힌 상태에서의 margin-left 설정 */
+}
