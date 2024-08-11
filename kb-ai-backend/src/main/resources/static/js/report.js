@@ -224,7 +224,7 @@ function visualizeESGData(data, ctx) {
             animation: false
         }
     };
-    addChartToGrid('esgChart', chartConfig);
+    addChartToGrid('esgChart', chartConfig, '환경, 사회, 지배구조(ESG) 통합 분석');
 }
 
 // 활동성 지표 시각화
@@ -284,7 +284,7 @@ function visualizeActivityMetrics(data, ctx) {
             animation: false
         }
     };
-    addChartToGrid('activitychart', chartConfig);
+    addChartToGrid('activityChart', chartConfig, '활동성 지표 분석');
 }
 
 // 성장성 지표 시각화
@@ -343,7 +343,7 @@ function visualizeGrowthMetrics(data, ctx) {
             animation: false
         }
     };
-    addChartToGrid('growthchart', chartConfig);
+    addChartToGrid('growthChart', chartConfig, '성장성 지표 분석');
 }
 
 // 수익성 지표 시각화
@@ -401,7 +401,7 @@ function visualizeProfitabilityMetrics(data, ctx) {
             animation: false
         }
     };
-    addChartToGrid('fitchart', chartConfig);
+    addChartToGrid('profitabilityChart', chartConfig, '수익성 지표 분석');
 }
 
 
@@ -463,7 +463,7 @@ function visualizeStabilityMetrics(data, ctx) {
             animation: false
         }
     };
-    addChartToGrid('stabledchart', chartConfig);
+    addChartToGrid('stabilityChart', chartConfig, '안정성 지표 분석');
 }
 
 // 회사 선택 시 버튼에 이름 표시
@@ -488,14 +488,13 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function addChartToGrid(chartId, chartConfig) {
-    // 1행 1열, 1행 2열, 1행 3열, 2행 1열, 2행 2열, 2행 3열의 순서로 채움
+function addChartToGrid(chartId, chartConfig, title) {
     const gridPositions = ['grid-item-1', 'grid-item-2', 'grid-item-3', 'grid-item-4', 'grid-item-5', 'grid-item-6'];
 
     for (let position of gridPositions) {
         const gridItem = document.getElementById(position);
         if (!gridItem.innerHTML.trim()) { // 해당 위치가 비어있는지 확인
-            gridItem.innerHTML = `<canvas id="${chartId}"></canvas>`;
+            gridItem.innerHTML = `<h3>${title}</h3><canvas id="${chartId}"></canvas>`;
             const ctx = document.getElementById(chartId).getContext('2d');
             new Chart(ctx, chartConfig);
             break;
