@@ -2,23 +2,32 @@ package com.kbai.corporatefinance.controller;
 
 import com.kbai.corporatefinance.dto.ChatGPTRequest;
 import com.kbai.corporatefinance.dto.ChatGPTResponse;
+import com.kbai.corporatefinance.entity.Company1;
 import com.kbai.corporatefinance.entity.Question;
 import com.kbai.corporatefinance.service.ChatService;
+import com.kbai.corporatefinance.service.CompanyService;
 import com.kbai.corporatefinance.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/bot")
 @RequiredArgsConstructor
 public class CustomBotController {
+
+    @Value("${openai.model}")
+    private String model;
 
     @Value("${openai.api.url}")
     private String apiURL;
@@ -26,6 +35,7 @@ public class CustomBotController {
     private final RestTemplate template;
     private final ChatService chatService;
     private final QuestionService questionService;
+    private final CompanyService companyService;
 
     @GetMapping("/chat")
     public String chat(String prompt) {
@@ -62,5 +72,22 @@ public class CustomBotController {
         } catch (HttpClientErrorException e) {
             return "API 요청 중 오류가 발생했습니다: " + e.getMessage();
         }
+    }
+
+    @GetMapping("/generate-report")
+    public ResponseEntity<String> generateReport(@RequestParam List<String> companyCodes, @RequestParam List<String> features) {
+        // 선택한 기업들의 데이터를 가져옴
+        List<Company1> companies = companyService.getCompaniesByCodes(companyCodes);
+        // 각 기업에 대해 데이터를 매핑
+        List<Map<String, Object>> companyDataList = companies.stream()
+                .map(company -> companyService.getCompanyFeatures(company, features))
+                .toList();
+
+        // 기업 이름과 데이터로 프롬프트 엔지니어링 수행
+        ChatGPTRequest chatGPTRequest = chatService.createReportPrompt(companies.get(0).getCompanyName(), features, companyDataList.get(0));
+        // OpenAI API 호출
+        String response = getChatgptResponse(chatGPTRequest);
+
+        return ResponseEntity.ok(response);
     }
 }

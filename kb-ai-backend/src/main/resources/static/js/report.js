@@ -124,12 +124,25 @@ function fetchCompanyData() {
     const companies = getSelectedCompanies();
     const features = getSelectedFeatures();
 
+    // 기존 API 호출
     fetch(`/api/company/features?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
         .then(response => response.json())
         .then(data => {
-            fetchedData = data; // 데이터를 저장
-            console.log(data); // 데이터를 사용하여 비교 결과를 표시
+            fetchedData = data;
+            console.log(data);
             visualizeData(data, features);
+
+            // 새로운 API 호출로 프롬프트 엔지니어링 및 보고서 생성
+            fetch(`/bot/generate-report?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
+                .then(response => response.text())
+                .then(report => {
+                    // console.log(report); // 생성된 보고서 내용 출력
+                    // 보고서 내용을 원하는 위치에 표시하거나 다른 처리를 할 수 있음
+                    // 보고서를 특정 위치에 출력
+                    const reportContainer = document.getElementById("report-output");
+                    reportContainer.innerHTML = `<h3>비교/분석 자동 보고서</h3><pre>${report}</pre>`;
+                })
+                .catch(error => console.error('Error:', error));
         })
         .catch(error => console.error('Error:', error));
 }
