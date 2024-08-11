@@ -13,7 +13,7 @@ public class CsvController {
     private final CsvCustomService csvCustomService;
 
     @PostMapping("/import-csv")
-    public String importCsv(@RequestParam(defaultValue = "src/main/resources/company_data_final.csv") String filePath) {
+    public String importCsv(@RequestParam(defaultValue = "src/main/resources/company_data_final_3.csv") String filePath) {
         csvCustomService.importCsvData(filePath);
         return "CSV data imported successfully!";
     }

@@ -24,20 +24,23 @@ public class ChatService {
         List<Company1> companies = companyService.getAllCompanies();
         StringBuilder enrichedPrompt = new StringBuilder();
 
-        for (Company1 company1 : companies) {
-            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company1.getEsg()).append("\n");
-//                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-//                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
-//                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-//                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
-//                    .append("뉴스 요약: ").append(company.g()).append("\n")
-//                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
-//                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
+        int limit = Math.min(companies.size(), 10);
+        for (Company1 company1 : companies.subList(0, limit)) {
+            enrichedPrompt.append("요즘 기업 뉴스 요약: ").append(company1.getSumm()).append("\n");
         }
 
-        enrichedPrompt.append("이러한 데이터들을 참고해서 답변해줘. 없으면 너가 추가해서 답변해줘.\n\n");
-        enrichedPrompt.append("데이터들을 참고했다는 말과 너가 추가해서 찾았다는 말은 직접적으로 답변 내용에 언급하지마. \n");
+//            enrichedPrompt.append("요즘 기업 뉴스 요약: ").append(company1.getSumm()).append("\n");
+////            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
+////                    .append("ESG: ").append(company1.getEsg()).append("\n");
+////                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
+////                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
+////                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
+////                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
+////                    .append("뉴스 요약: ").append(company.g()).append("\n")
+////                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
+////                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
+//        }
+
 
         // 2. 사용자가 입력한 프롬프트 추가
         enrichedPrompt.append(prompt).append("\n\n");
@@ -166,33 +169,36 @@ public class ChatService {
         List<Company1> companies = companyService.getAllCompanies();
         StringBuilder enrichedPrompt = new StringBuilder();
 
-        for (Company1 company1 : companies) {
-            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
-                    .append("ESG: ").append(company1.getEsg()).append("\n");
-//                    .append("베타계수: ").append(company.getBetaCoefficient()).append("\n")
-//                    .append("여성 임원수: ").append(company1.getFemaleExecutives()).append("\n")
-//                    .append("정규직 유무: ").append(company1.getRegularEmployeeCount() == 1 ? "정규직 있음" : "정규직 없음").append("\n")
-//                    .append("성별: ").append(Objects.equals(company1.getGender(), "남") ? "남자" : "여자").append("\n");
-//                    .append("뉴스 요약: ").append(company.g()).append("\n")
-//                    .append("긍정/부정 점수: ").append(company.getSentimentScore()).append("\n")
-//                    .append("2주간 기사 개수: ").append(company.getTwoWeeksArticleCount()).append("\n\n");
-        }
+//        for (Company1 company1 : companies) {
+//            enrichedPrompt.append("회사명: ").append(company1.getCompanyName()).append("\n")
+//                    .append("요즘 기업 뉴스 요약: ").append(company1.getSumm()).append("\n");
+//                    .append("ESG: ").append(company1.getEsg()).append("\n")
+//                    .append("company_code: ").append(company1.getCompanyCode()).append("\n")
+//                    .append("male_contract_employee_count: ").append(company1.getMaleContractEmployeeCount()).append("\n")
+//                    .append("female_contract_employee_count: ").append(company1.getFemaleContractEmployeeCount()).append("\n")
+//                    .append("total_salary_male: ").append(company1.getTotalSalaryMale()).append("\n")
+//                    .append("total_salary_female: ").append(company1.getTotalSalaryFemale()).append("\n")
+//                    .append("male_regular_employee_count: ").append(company1.getMaleRegularEmployeeCount()).append("\n")
+//                    .append("female_regular_employee_count: ").append(company1.getFemaleRegularEmployeeCount()).append("\n")
+//                    .append("total_male_employees: ").append(company1.getTotalMaleEmployees()).append("\n")
+//                    .append("total_female_employees: ").append(company1.getTotalFemaleEmployees()).append("\n")
+//                    .append("average_male_salary: ").append(company1.getAverageMaleSalary()).append("\n")
+//                    .append("average_female_salary: ").append(company1.getAverageFemaleSalary()).append("\n");
+//        }
 
         enrichedPrompt.append("이 데이터를 바탕으로, 두 가지 질문을 작성해 주세요. 각 질문은 번호(1., 2.)를 붙여서 작성해 주세요.\n\n");
 
         // 1번 질문: 재무적 요소를 다루는 질문
-        enrichedPrompt.append("1. 00 기업의 재무제표를 분석하여 다음 사항을 물어보는 통합 질문을 작성해주세요.\n");
+        enrichedPrompt.append("1. 00 기업의 재무제표를 분석하여 재무 건전성을 평가하는 질문을 작성해주세요. \n");
         enrichedPrompt.append("첫째, 현금흐름이 어떻게 발생하고 있나요?\n");
         enrichedPrompt.append("둘째, 우발채무나 미수금이 발생할 가능성에 비해 현금성 자산이 충분한가요?\n");
         enrichedPrompt.append("셋째, 영업이익률이나 부채비율 같은 주요 비율 지표가 최근 몇 년 동안 어떻게 변동해 왔나요?\n");
-        enrichedPrompt.append("위 질문들이 모두 포함된, 기업의 재무 건전성을 평가할 수 있는 질문을 작성해주세요\n\n");
 
         // 2번 질문: 비재무적 요소를 다루는 질문
-        enrichedPrompt.append("2. 00 기업의 비재무적 요소를 평가하여 다음 사항을 물어보는 통합 질문을 작성해주세요.\n");
+        enrichedPrompt.append("2. 00 기업의 비재무적 요소를 평가하여 기업의 비재무적 건전성을 평가할 수 있는 질문을 작성해주세요.\n");
         enrichedPrompt.append("첫째, 이 기업의 ESG 등급이 업계 평균과 비교하여 어떤가요?\n");
         enrichedPrompt.append("둘째, 이 기업의 여성 임원 수가 업계 평균과 비교하여 어느 수준인가요?\n");
         enrichedPrompt.append("셋째, 최근 뉴스에서 다루어진 이슈들이 이 기업의 대외 이미지에 어떤 영향을 미칠 수 있나요?\n");
-        enrichedPrompt.append("위 사항들을 종합적으로 고려된, 기업의 비재무적 건전성을 평가할 수 있는 질문을 작성해주세요\n\n");
 
         // 최종 프롬프트 생성
         return new ChatGPTRequest(model, enrichedPrompt.toString());

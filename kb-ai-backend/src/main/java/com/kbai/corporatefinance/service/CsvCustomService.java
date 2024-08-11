@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -231,6 +233,8 @@ public class CsvCustomService {
                         .liquidityRatioChangeRatePrevious(parseFloatOrDefault(row[189], 0.0f)) // 유동비율_전기_변화율
                         .liquidityRatioChangeRateCurrent(parseFloatOrDefault(row[190], 0.0f)) // 유동비율_당액_변화율
                         .daysUntilToday(parseIntOrDefault(row[191], 0)) // 오늘까지_일수
+                        .datee(row[192]) // 날짜 필드 추가
+                        .summ(row[193]) // summary - CSV 파일에서 요약 데이터
                         .build();
                 companyRepository.save(company); // 데이터베이스에 저장
             }

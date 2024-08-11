@@ -18,7 +18,7 @@ public class Question {
     @Column(name = "question_id")
     private Long id;
 
-    @Column(name = "question_text")
+    @Column(name = "question_text", length = 5000)
     private String text;
 
     @Column(name = "created_at", columnDefinition = "TEXT")

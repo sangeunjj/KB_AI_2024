@@ -3,6 +3,8 @@ package com.kbai.corporatefinance.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "company2")
 @Getter
@@ -590,4 +592,10 @@ public class Company1 {
 
     @Column(nullable = true)
     private int daysUntilToday; // 오늘까지_일수 (Days Until Today)
+
+    @Column(nullable = true)
+    private String datee;
+
+    @Column(nullable = true, length = 5000)
+    private String summ;
 }

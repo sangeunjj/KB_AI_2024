@@ -2,6 +2,7 @@ package com.kbai.corporatefinance.service;
 
 import com.kbai.corporatefinance.entity.Company1;
 import com.kbai.corporatefinance.repository.CompanyRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import java.util.Map;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
+
+    @Transactional
     public Company1 getCompanyByCode(Long companyCode) {
         return companyRepository.findById(companyCode)
                 .orElseThrow(() -> new RuntimeException("기업코드에 맞는 회사를 찾을 수 없습니다."));

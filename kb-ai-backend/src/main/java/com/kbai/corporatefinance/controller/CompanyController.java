@@ -31,41 +31,42 @@ public class CompanyController {
     private String dartApiKey;
 
     // [기업 페이지]
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CompanyResponse>> getCompanyList() { // dart api와 db에서 모두 가져오기
-        // DB에서 모든 Company 엔티티 가져오기
+    public ResponseEntity<List<CompanyResponse>> getCompanyList(
+            @RequestParam(value = "search", required = false) String searchTerm,
+            @RequestParam(value = "region", required = false) List<String> regions) {
+
         List<Company1> companies = companyService.getAllCompanies();
 
-        List<CompanyResponse> responses = new ArrayList<>();
-
-        // 각 회사에 대해 Dart API 호출하여 추가 데이터 가져오기
-        for (Company1 company : companies) {
-//            DartResponse dartData = dartService.getCompanyInfo(company.getCompanyCode(), dartApiKey);
-
-            // 각 회사의 데이터를 합쳐서 CompanyResponse로 변환
-            CompanyResponse response = new CompanyResponse(
-                    company.getCompanyName(),
-//                    company.getFemaleExecutives(),
-                    company.getEsg()
-//                    company.getSentimentScore(),
-//                    company.getCompanyCode(),
-//                    dartData.getAdres(),
-//                    dartData.getEst_dt(),
-//                    dartData.getCeo_nm()
-            );
-
-            // 리스트에 추가
-            responses.add(response);
+        // 기업명으로 필터링
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            companies = companies.stream()
+                    .filter(company -> company.getCompanyName().toLowerCase().contains(searchTerm.toLowerCase()))
+                    .collect(Collectors.toList());
         }
-        // 리스트를 응답으로 반환
+
+        // 지역으로 필터링
+        if (regions != null && !regions.isEmpty()) {
+            companies = companies.stream()
+                    .filter(company -> regions.contains(company.getAddress()))
+                    .collect(Collectors.toList());
+        }
+
+
+        List<CompanyResponse> responses = companies.stream()
+                .map(company -> new CompanyResponse(
+                        company.getCompanyName(),
+                        company.getAddress(),
+                        company.getEstablishmentDate(),
+                        company.getCeoName()))
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(responses);
     }
 
     // [기업 상세 페이지]
     @GetMapping(value = "/{corpCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyDetailResponse> getCompanyDetails(@PathVariable Long corpCode) { // dart api와 db에서 모두 가져오기
-        // DB에서 Company 엔티티 가져오기
+    public ResponseEntity<CompanyDetailResponse> getCompanyDetails(@PathVariable Long corpCode) { // dart api와 db에서 모두 가져오기// DB에서 Company 엔티티 가져오기
         Company1 company = companyService.getCompanyByCode(corpCode);
 
         // Dart API 호출하여 추가 데이터 가져오기
@@ -290,4 +291,6 @@ public class CompanyController {
 
         return ResponseEntity.ok(result);
     }
+
+
 }
