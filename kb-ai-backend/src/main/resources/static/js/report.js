@@ -370,198 +370,198 @@ function gradeToNumber(grade) {
 function visualizeCustomCashFlowComparison(data) {
     const labels = ["3년 전", "2년 전", "1년 전"];
 
-    // 재무활동현금흐름, 영업활동현금흐름, 투자활동현금흐름을 각각 다른 그래프에 그리기 위한 데이터셋 배열
-    const operatingCashFlowDatasets = [];
-    const investingCashFlowDatasets = [];
-    const financingCashFlowDatasets = [];
-
     // 색상 설정
     const colors = [
-        "rgba(52, 152, 219, 0.9)",  // 파란색
-        "rgba(231, 76, 60, 0.9)",   // 빨간색
-        "rgba(46, 204, 113, 0.9)"   // 녹색
+        "rgba(52, 152, 219, 1)",  // 파란색
+        "rgba(231, 76, 60, 1)",   // 빨간색
+        "rgba(46, 204, 113, 1)"   // 녹색
     ];
 
-    // 각 기업의 현금 흐름 데이터를 처리
+    // 각 회사에 대해 세 개의 그래프를 생성
     data.forEach((company, index) => {
         const color = colors[index % colors.length];
         const cashFlowData = company.cashFlow;
 
-        // 영업활동현금흐름 추세선
-        operatingCashFlowDatasets.push({
-            label: `${company.companyName} - 영업활동현금흐름`,
-            data: [
-                cashFlowData.operatingCashFlow.prePrevious,
-                cashFlowData.operatingCashFlow.previous,
-                cashFlowData.operatingCashFlow.current
-            ],
-            borderColor: color,
-            backgroundColor: color.replace("0.9", "0.2"),
-            fill: false,
-            tension: 0.4,
-            pointStyle: 'circle',
-            pointRadius: 5,
-            pointHoverRadius: 7,
-        });
-
-        // 투자활동현금흐름 추세선
-        investingCashFlowDatasets.push({
-            label: `${company.companyName} - 투자활동현금흐름`,
-            data: [
-                cashFlowData.investingCashFlow.prePrevious,
-                cashFlowData.investingCashFlow.previous,
-                cashFlowData.investingCashFlow.current
-            ],
-            borderColor: color,
-            backgroundColor: color.replace("0.9", "0.2"),
-            fill: false,
-            tension: 0.4,
-            pointStyle: 'triangle',
-            pointRadius: 5,
-            pointHoverRadius: 7,
-        });
-
-        // 재무활동현금흐름 추세선
-        financingCashFlowDatasets.push({
-            label: `${company.companyName} - 재무활동현금흐름`,
-            data: [
-                cashFlowData.financingCashFlow.prePrevious,
-                cashFlowData.financingCashFlow.previous,
-                cashFlowData.financingCashFlow.current
-            ],
-            borderColor: color,
-            backgroundColor: color.replace("0.9", "0.2"),
-            fill: false,
-            tension: 0.4,
-            pointStyle: 'rect',
-            pointRadius: 5,
-            pointHoverRadius: 7,
-        });
-    });
-
-    // 차트 구성
-    const createChartConfig = (datasets, title) => ({
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: datasets
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: title,
-                    font: {
-                        size: 24,
-                        weight: "bold",
-                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-                    },
-                    color: "#000000"  // 검은색 텍스트 색상
-                },
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        font: {
-                            size: 14,
-                            weight: "bold",
-                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-                        },
-                        color: "#000000"  // 검은색 텍스트 색상
-                    }
-                },
-                tooltip: {
-                    backgroundColor: "#f5f5f5",
-                    titleFont: {
-                        size: 16,
-                        weight: "bold",
-                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                        color: "#000000"  // 검은색 텍스트 색상
-                    },
-                    bodyFont: {
-                        size: 14,
-                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                        color: "#000000"  // 검은색 텍스트 색상
-                    },
-                    callbacks: {
-                        label: function (context) {
-                            return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
-                        }
-                    }
-                }
+        // 영업활동현금흐름 그래프
+        const operatingCashFlowConfig = {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${company.companyName} - 영업활동현금흐름`,
+                    data: [
+                        cashFlowData.operatingCashFlow.prePrevious,
+                        cashFlowData.operatingCashFlow.previous,
+                        cashFlowData.operatingCashFlow.current
+                    ],
+                    borderColor: color,
+                    backgroundColor: color,
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                }]
             },
-            scales: {
-                x: {
-                    display: true,
+            options: {
+                responsive: true,
+                plugins: {
                     title: {
                         display: true,
-                        text: '년도',
-                        color: '#000000',
+                        text: `${company.companyName} - 영업활동현금흐름`,
                         font: {
-                            size: 16,
-                            weight: 'bold',
-                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                            size: 18
                         }
                     },
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: "bold",
-                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-                        },
-                        color: "#000000"  // 검은색 텍스트 색상
+                    legend: {
+                        display: false
                     },
-                    grid: {
-                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
+                            }
+                        }
                     }
                 },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: '금액 (원)',
-                        color: '#000000',
-                        font: {
-                            size: 16,
-                            weight: 'bold',
-                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '년도'
                         }
                     },
-                    beginAtZero: false,
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: "bold",
-                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-                        },
-                        color: "#000000"  // 검은색 텍스트 색상
-                    },
-                    grid: {
-                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '금액 (원)'
+                        }
                     }
-                }
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 20,
-                    bottom: 10
-                }
-            },
-            elements: {
-                line: {
-                    borderWidth: 3
                 }
             }
-        }
-    });
+        };
+        addChartToGrid(`operatingCashFlowChart_${company.companyName}`, operatingCashFlowConfig, `${company.companyName} - 영업활동현금흐름`);
 
-    // 각 현금흐름 차트를 그리드에 추가
-    addChartToGrid("operatingCashFlowChart", createChartConfig(operatingCashFlowDatasets, "영업활동현금흐름 비교 분석"), "영업활동현금흐름 비교 분석");
-    addChartToGrid("investingCashFlowChart", createChartConfig(investingCashFlowDatasets, "투자활동현금흐름 비교 분석"), "투자활동현금흐름 비교 분석");
-    addChartToGrid("financingCashFlowChart", createChartConfig(financingCashFlowDatasets, "재무활동현금흐름 비교 분석"), "재무활동현금흐름 비교 분석");
+        // 투자활동현금흐름 그래프
+        const investingCashFlowConfig = {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${company.companyName} - 투자활동현금흐름`,
+                    data: [
+                        cashFlowData.investingCashFlow.prePrevious,
+                        cashFlowData.investingCashFlow.previous,
+                        cashFlowData.investingCashFlow.current
+                    ],
+                    borderColor: color,
+                    backgroundColor: color,
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `${company.companyName} - 투자활동현금흐름`,
+                        font: {
+                            size: 18
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '년도'
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '금액 (원)'
+                        }
+                    }
+                }
+            }
+        };
+        addChartToGrid(`investingCashFlowChart_${company.companyName}`, investingCashFlowConfig, `${company.companyName} - 투자활동현금흐름`);
+
+        // 재무활동현금흐름 그래프
+        const financingCashFlowConfig = {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${company.companyName} - 재무활동현금흐름`,
+                    data: [
+                        cashFlowData.financingCashFlow.prePrevious,
+                        cashFlowData.financingCashFlow.previous,
+                        cashFlowData.financingCashFlow.current
+                    ],
+                    borderColor: color,
+                    backgroundColor: color,
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `${company.companyName} - 재무활동현금흐름`,
+                        font: {
+                            size: 18
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '년도'
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '금액 (원)'
+                        }
+                    }
+                }
+            }
+        };
+        addChartToGrid(`financingCashFlowChart_${company.companyName}`, financingCashFlowConfig, `${company.companyName} - 재무활동현금흐름`);
+    });
 }
 
 function addChartToGrid(chartId, chartConfig, title) {
