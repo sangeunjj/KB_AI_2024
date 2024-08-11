@@ -220,46 +220,37 @@ public class CompanyController {
                 profitabilityMetrics.put("영업수익경비율", company.getOperatingExpenseRatio());
                 companyData.put("수익성 지표", profitabilityMetrics);
             }
+            // 3개년 현금 흐름 분석 추가
+            if (features.contains("3개년 현금 흐름 분석")) {
+                Map<String, Object> cashFlowData = new HashMap<>();
+
+                // 영업활동현금흐름
+                Map<String, Long> operatingCashFlow = new HashMap<>();
+                operatingCashFlow.put("current", company.getOperatingCashFlowCurrent());
+                operatingCashFlow.put("previous", company.getOperatingCashFlowPrevious());
+                operatingCashFlow.put("prePrevious", company.getOperatingCashFlowPrePrevious());
+                cashFlowData.put("operatingCashFlow", operatingCashFlow);
+
+                // 투자활동현금흐름
+                Map<String, Long> investingCashFlow = new HashMap<>();
+                investingCashFlow.put("current", company.getInvestingCashFlowCurrent());
+                investingCashFlow.put("previous", company.getInvestingCashFlowPrevious());
+                investingCashFlow.put("prePrevious", company.getInvestingCashFlowPrePrevious());
+                cashFlowData.put("investingCashFlow", investingCashFlow);
+
+                // 재무활동현금흐름
+                Map<String, Long> financingCashFlow = new HashMap<>();
+                financingCashFlow.put("current", company.getFinancingCashFlowCurrent());
+                financingCashFlow.put("previous", company.getFinancingCashFlowPrevious());
+                financingCashFlow.put("prePrevious", company.getFinancingCashFlowPrePrevious());
+                cashFlowData.put("financingCashFlow", financingCashFlow);
+
+                companyData.put("cashFlow", cashFlowData);
+            }
 
             return companyData;
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(result);
-    }
-
-    @GetMapping(value = "/{corpCode}/cash-flow", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> getCompanyCashFlow(@PathVariable Long corpCode) {
-        // Fetch the company by corpCode
-        Company1 company = companyService.getCompanyByCode(corpCode);
-
-        if (company == null) {
-            return ResponseEntity.notFound().build(); // 기업 못찾음
-        }
-
-        // Prepare the data to return
-        Map<String, Object> cashFlowData = new HashMap<>();
-
-        // Operating Cash Flow
-        Map<String, Long> operatingCashFlow = new HashMap<>();
-        operatingCashFlow.put("current", company.getOperatingCashFlowCurrent());
-        operatingCashFlow.put("previous", company.getOperatingCashFlowPrevious());
-        operatingCashFlow.put("prePrevious", company.getOperatingCashFlowPrePrevious());
-        cashFlowData.put("operatingCashFlow", operatingCashFlow);
-
-        // Investing Cash Flow
-        Map<String, Long> investingCashFlow = new HashMap<>();
-        investingCashFlow.put("current", company.getInvestingCashFlowCurrent());
-        investingCashFlow.put("previous", company.getInvestingCashFlowPrevious());
-        investingCashFlow.put("prePrevious", company.getInvestingCashFlowPrePrevious());
-        cashFlowData.put("investingCashFlow", investingCashFlow);
-
-        // Financing Cash Flow
-        Map<String, Long> financingCashFlow = new HashMap<>();
-        financingCashFlow.put("current", company.getFinancingCashFlowCurrent());
-        financingCashFlow.put("previous", company.getFinancingCashFlowPrevious());
-        financingCashFlow.put("prePrevious", company.getFinancingCashFlowPrePrevious());
-        cashFlowData.put("financingCashFlow", financingCashFlow);
-
-        return ResponseEntity.ok(cashFlowData);
     }
 }

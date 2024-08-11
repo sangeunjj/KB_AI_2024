@@ -3,7 +3,13 @@ body {
     overflow-y: scroll; /* 수직 스크롤이 항상 존재하도록 설정 */
     overflow-x: hidden; /* 수평 스크롤을 숨겨 흔들림 방지 */
     margin: 0;
+    color: black; /* 모든 기본 텍스트를 검정색으로 설정 */
     padding: 0;
+}
+
+/* 추가적으로 개별 텍스트 요소에 대해 색상을 지정 */
+h1, h2, h3, h4, h5, h6, p, li, span, a {
+    color: black;
 }
 
 .container {

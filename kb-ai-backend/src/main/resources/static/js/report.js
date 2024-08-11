@@ -151,6 +151,209 @@ function visualizeData(data, features) {
     if (features.includes('수익성 지표')) {
         visualizeProfitabilityMetrics(data); // 차트를 추가적으로 할당하거나 교체할 수 있음
     }
+    if (features.includes('3개년 현금 흐름 분석')) {
+        visualizeCustomCashFlowComparison(data); // 차트를 추가적으로 할당하거나 교체할 수 있음
+    }
+    // if (features.includes('재무 비율 및 건전성 분석')) {
+    //     visualize(data); // 차트를 추가적으로 할당하거나 교체할 수 있음
+    // }
+}
+
+function visualizeCustomCashFlowComparison(data) {
+    const labels = ["3년 전", "2년 전", "1년 전"];
+
+    // 재무활동현금흐름, 영업활동현금흐름, 투자활동현금흐름을 각각 다른 그래프에 그리기 위한 데이터셋 배열
+    const operatingCashFlowDatasets = [];
+    const investingCashFlowDatasets = [];
+    const financingCashFlowDatasets = [];
+
+    // 색상 설정
+    const colors = [
+        "rgba(52, 152, 219, 0.9)",  // 파란색
+        "rgba(231, 76, 60, 0.9)",   // 빨간색
+        "rgba(46, 204, 113, 0.9)"   // 녹색
+    ];
+
+    // 각 기업의 현금 흐름 데이터를 처리
+    data.forEach((company, index) => {
+        const color = colors[index % colors.length];
+        const cashFlowData = company.cashFlow;
+
+        // 영업활동현금흐름 추세선
+        operatingCashFlowDatasets.push({
+            label: `${company.companyName} - 영업활동현금흐름`,
+            data: [
+                cashFlowData.operatingCashFlow.prePrevious,
+                cashFlowData.operatingCashFlow.previous,
+                cashFlowData.operatingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'circle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+
+        // 투자활동현금흐름 추세선
+        investingCashFlowDatasets.push({
+            label: `${company.companyName} - 투자활동현금흐름`,
+            data: [
+                cashFlowData.investingCashFlow.prePrevious,
+                cashFlowData.investingCashFlow.previous,
+                cashFlowData.investingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'triangle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+
+        // 재무활동현금흐름 추세선
+        financingCashFlowDatasets.push({
+            label: `${company.companyName} - 재무활동현금흐름`,
+            data: [
+                cashFlowData.financingCashFlow.prePrevious,
+                cashFlowData.financingCashFlow.previous,
+                cashFlowData.financingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'rect',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+    });
+
+    // 차트 구성
+    const createChartConfig = (datasets, title) => ({
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: title,
+                    font: {
+                        size: 24,
+                        weight: "bold",
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                    },
+                    color: "#000000"  // 검은색 텍스트 색상
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    }
+                },
+                tooltip: {
+                    backgroundColor: "#f5f5f5",
+                    titleFont: {
+                        size: 16,
+                        weight: "bold",
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: '년도',
+                        color: '#000000',
+                        font: {
+                            size: 16,
+                            weight: 'bold',
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: '금액 (원)',
+                        color: '#000000',
+                        font: {
+                            size: 16,
+                            weight: 'bold',
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        }
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 20,
+                    bottom: 10
+                }
+            },
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
+        }
+    });
+
+    // 각 현금흐름 차트를 그리드에 추가
+    addChartToGrid("operatingCashFlowChart", createChartConfig(operatingCashFlowDatasets, "영업활동현금흐름 비교 분석"), "영업활동현금흐름 비교 분석");
+    addChartToGrid("investingCashFlowChart", createChartConfig(investingCashFlowDatasets, "투자활동현금흐름 비교 분석"), "투자활동현금흐름 비교 분석");
+    addChartToGrid("financingCashFlowChart", createChartConfig(financingCashFlowDatasets, "재무활동현금흐름 비교 분석"), "재무활동현금흐름 비교 분석");
 }
 
 /* 💡 ESG 데이터 -> 수치로 변경 💡*/
@@ -164,68 +367,218 @@ function gradeToNumber(grade) {
 }
 
 // ESG 지표 시각화
-function visualizeESGData(data, ctx) {
-    const labels = ['환경(Environmental)', '사회(Social)', '지배구조(Governance)', 'ESG 통합'];
-    const pastelColors = [
-        'rgba(0, 102, 204, 0.8)',   // Blue
-        'rgba(34, 139, 34, 0.8)',   // Dark Green
-        'rgba(178, 34, 34, 0.8)'    // Dark Red
-    ];
-    const chartData = data.map((company, index) => ({
-        label: company.companyName,
-        data: [
-            gradeToNumber(company.ESG_23_e), gradeToNumber(company.ESG_23_s), gradeToNumber(company.ESG_23_g), gradeToNumber(company.ESG_23)
-        ],
-        backgroundColor: pastelColors[index],
-        borderColor: pastelColors[index].replace('0.8', '1'),
-        borderWidth: 1
-    }));
+function visualizeCustomCashFlowComparison(data) {
+    const labels = ["3년 전", "2년 전", "1년 전"];
 
-    // 첫 번째 차트: 막대 그래프
-    const chartConfig = {
-        type: 'bar',
+    // 재무활동현금흐름, 영업활동현금흐름, 투자활동현금흐름을 각각 다른 그래프에 그리기 위한 데이터셋 배열
+    const operatingCashFlowDatasets = [];
+    const investingCashFlowDatasets = [];
+    const financingCashFlowDatasets = [];
+
+    // 색상 설정
+    const colors = [
+        "rgba(52, 152, 219, 0.9)",  // 파란색
+        "rgba(231, 76, 60, 0.9)",   // 빨간색
+        "rgba(46, 204, 113, 0.9)"   // 녹색
+    ];
+
+    // 각 기업의 현금 흐름 데이터를 처리
+    data.forEach((company, index) => {
+        const color = colors[index % colors.length];
+        const cashFlowData = company.cashFlow;
+
+        // 영업활동현금흐름 추세선
+        operatingCashFlowDatasets.push({
+            label: `${company.companyName} - 영업활동현금흐름`,
+            data: [
+                cashFlowData.operatingCashFlow.prePrevious,
+                cashFlowData.operatingCashFlow.previous,
+                cashFlowData.operatingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'circle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+
+        // 투자활동현금흐름 추세선
+        investingCashFlowDatasets.push({
+            label: `${company.companyName} - 투자활동현금흐름`,
+            data: [
+                cashFlowData.investingCashFlow.prePrevious,
+                cashFlowData.investingCashFlow.previous,
+                cashFlowData.investingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'triangle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+
+        // 재무활동현금흐름 추세선
+        financingCashFlowDatasets.push({
+            label: `${company.companyName} - 재무활동현금흐름`,
+            data: [
+                cashFlowData.financingCashFlow.prePrevious,
+                cashFlowData.financingCashFlow.previous,
+                cashFlowData.financingCashFlow.current
+            ],
+            borderColor: color,
+            backgroundColor: color.replace("0.9", "0.2"),
+            fill: false,
+            tension: 0.4,
+            pointStyle: 'rect',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        });
+    });
+
+    // 차트 구성
+    const createChartConfig = (datasets, title) => ({
+        type: "line",
         data: {
             labels: labels,
-            datasets: chartData
+            datasets: datasets
         },
         options: {
-            scales: {
-                x: {
-                    ticks: {
-                        color: 'black', // 축 글씨 색상
-                        font: {
-                            size: 14 // 축 글씨 크기
-                        }
-                    },
-                    barPercentage: 0.5, // 막대 폭 설정
-                    categoryPercentage: 0.7 // 범주 간 간격 설정
-                },
-                y: {
-                    beginAtZero: true,
-                    max: 5,
-                    ticks: {
-                        color: 'black', // 축 글씨 색상
-                        font: {
-                            size: 14 // 축 글씨 크기
-                        }
-                    }
-                }
-            },
+            responsive: true,
             plugins: {
+                title: {
+                    display: true,
+                    text: title,
+                    font: {
+                        size: 24,
+                        weight: "bold",
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                    },
+                    color: "#000000"  // 검은색 텍스트 색상
+                },
                 legend: {
+                    display: true,
+                    position: 'top',
                     labels: {
                         font: {
-                            size: 14, // 범례 글씨 크기
-                            color: 'black' // 범례 텍스트를 검정색으로 설정
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    }
+                },
+                tooltip: {
+                    backgroundColor: "#f5f5f5",
+                    titleFont: {
+                        size: 16,
+                        weight: "bold",
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.dataset.label}: ${context.raw.toLocaleString()} 원`;
                         }
                     }
                 }
             },
-            animation: false
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: '년도',
+                        color: '#000000',
+                        font: {
+                            size: 16,
+                            weight: 'bold',
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: '금액 (원)',
+                        color: '#000000',
+                        font: {
+                            size: 16,
+                            weight: 'bold',
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        }
+                    },
+                    beginAtZero: false,
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: "bold",
+                            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                        },
+                        color: "#000000"  // 검은색 텍스트 색상
+                    },
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.1)"  // 연한 검은색 그리드 선
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 20,
+                    bottom: 10
+                }
+            },
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
         }
-    };
-    addChartToGrid('esgChart', chartConfig, '환경, 사회, 지배구조(ESG) 통합 분석');
+    });
+
+    // 각 현금흐름 차트를 그리드에 추가
+    addChartToGrid("operatingCashFlowChart", createChartConfig(operatingCashFlowDatasets, "영업활동현금흐름 비교 분석"), "영업활동현금흐름 비교 분석");
+    addChartToGrid("investingCashFlowChart", createChartConfig(investingCashFlowDatasets, "투자활동현금흐름 비교 분석"), "투자활동현금흐름 비교 분석");
+    addChartToGrid("financingCashFlowChart", createChartConfig(financingCashFlowDatasets, "재무활동현금흐름 비교 분석"), "재무활동현금흐름 비교 분석");
 }
+
+function addChartToGrid(chartId, chartConfig, title) {
+    const gridPositions = ['grid-item-1', 'grid-item-2', 'grid-item-3'];
+
+    for (let position of gridPositions) {
+        const gridItem = document.getElementById(position);
+        if (!gridItem.innerHTML.trim()) { // 해당 위치가 비어있는지 확인
+            gridItem.innerHTML = `<h3>${title}</h3><canvas id="${chartId}"></canvas>`;
+            const ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, chartConfig);
+            break;
+        }
+    }
+}
+
+
 
 // 활동성 지표 시각화
 function visualizeActivityMetrics(data, ctx) {
