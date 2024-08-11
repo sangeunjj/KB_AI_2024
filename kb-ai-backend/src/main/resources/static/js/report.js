@@ -136,22 +136,20 @@ function fetchCompanyData() {
 
 // 데이터 시각화 어디로 할지 정하는 갈림길 같은거
 function visualizeData(data, features) {
-    const ctx1 = document.getElementById('activityChart').getContext('2d');
-
     if (features.includes('ESG')) {
-        visualizeESGData(data, ctx1);
+        visualizeESGData(data);
     }
     if (features.includes('활동성 지표')) {
-        visualizeActivityMetrics(data, ctx1);
+        visualizeActivityMetrics(data);
     }
     if (features.includes('성장성 지표')) {
-        visualizeGrowthMetrics(data, ctx1);
+        visualizeGrowthMetrics(data);
     }
     if (features.includes('안정성 지표')) {
-        visualizeStabilityMetrics(data, ctx1);
+        visualizeStabilityMetrics(data);
     }
     if (features.includes('수익성 지표')) {
-        visualizeProfitabilityMetrics(data, ctx1); // 차트를 추가적으로 할당하거나 교체할 수 있음
+        visualizeProfitabilityMetrics(data); // 차트를 추가적으로 할당하거나 교체할 수 있음
     }
 }
 
@@ -184,7 +182,7 @@ function visualizeESGData(data, ctx) {
     }));
 
     // 첫 번째 차트: 막대 그래프
-    new Chart(ctx, {
+    const chartConfig = {
         type: 'bar',
         data: {
             labels: labels,
@@ -217,14 +215,16 @@ function visualizeESGData(data, ctx) {
                 legend: {
                     labels: {
                         font: {
-                            size: 14 // 범례 글씨 크기
+                            size: 14, // 범례 글씨 크기
+                            color: 'black' // 범례 텍스트를 검정색으로 설정
                         }
                     }
                 }
             },
             animation: false
         }
-    });
+    };
+    addChartToGrid('esgChart', chartConfig);
 }
 
 // 활동성 지표 시각화
@@ -245,7 +245,7 @@ function visualizeActivityMetrics(data, ctx) {
     }));
 
     // 차트 그리기
-    window.activityChart = new Chart(ctx, {
+    const chartConfig = {
         type: 'bar', // Radar Chart 사용
         data: {
             labels: labels,
@@ -275,14 +275,16 @@ function visualizeActivityMetrics(data, ctx) {
                 legend: {
                     labels: {
                         font: {
-                            size: 14
+                            size: 14,
+                            color: 'black' // 범례 텍스트를 검정색으로 설정
                         }
                     }
                 }
             },
             animation: false
         }
-    });
+    };
+    addChartToGrid('activitychart', chartConfig);
 }
 
 // 성장성 지표 시각화
@@ -302,7 +304,7 @@ function visualizeGrowthMetrics(data, ctx) {
         borderWidth: 1
     }));
 
-    new Chart(ctx, {
+    const chartConfig = {
         type: 'bar', // 성장성 지표에 적합한 차트 타입
         data: {
             labels: labels,
@@ -332,14 +334,16 @@ function visualizeGrowthMetrics(data, ctx) {
                 legend: {
                     labels: {
                         font: {
-                            size: 14
+                            size: 14,
+                            color: 'black' // 범례 텍스트를 검정색으로 설정
                         }
                     }
                 }
             },
             animation: false
         }
-    });
+    };
+    addChartToGrid('growthchart', chartConfig);
 }
 
 // 수익성 지표 시각화
@@ -358,7 +362,7 @@ function visualizeProfitabilityMetrics(data, ctx) {
         borderWidth: 1
     }));
 
-    new Chart(ctx, {
+    const chartConfig = {
         type: 'bar', // 수익성 지표에 적합한 차트 타입
         data: {
             labels: labels,
@@ -388,14 +392,16 @@ function visualizeProfitabilityMetrics(data, ctx) {
                 legend: {
                     labels: {
                         font: {
-                            size: 14
+                            size: 14,
+                            color: 'black' // 범례 텍스트를 검정색으로 설정
                         }
                     }
                 }
             },
             animation: false
         }
-    });
+    };
+    addChartToGrid('fitchart', chartConfig);
 }
 
 
@@ -415,25 +421,49 @@ function visualizeStabilityMetrics(data, ctx) {
         borderWidth: 1
     }));
 
-    new Chart(ctx, {
-        type: 'bar', // 안정성 지표에 적합한 차트 타입
+
+
+
+    const chartConfig = {
+        type: 'bar', // 수익성 지표에 적합한 차트 타입
         data: {
             labels: labels,
             datasets: chartData
         },
         options: {
-            plugins: {
-                legend: {
-                    labels: {
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'black',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'black',
                         font: {
                             size: 14
                         }
                     }
                 }
             },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 14,
+                            color: 'black' // 범례 텍스트를 검정색으로 설정
+                        }
+                    }
+                }
+            },
             animation: false
         }
-    });
+    };
+    addChartToGrid('stabledchart', chartConfig);
 }
 
 // 회사 선택 시 버튼에 이름 표시
@@ -456,4 +486,19 @@ function getRandomColor() {
         'rgba(178, 34, 34, 0.8)'    // Dark Red
     ];
     return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function addChartToGrid(chartId, chartConfig) {
+    // 1행 1열, 1행 2열, 1행 3열, 2행 1열, 2행 2열, 2행 3열의 순서로 채움
+    const gridPositions = ['grid-item-1', 'grid-item-2', 'grid-item-3', 'grid-item-4', 'grid-item-5', 'grid-item-6'];
+
+    for (let position of gridPositions) {
+        const gridItem = document.getElementById(position);
+        if (!gridItem.innerHTML.trim()) { // 해당 위치가 비어있는지 확인
+            gridItem.innerHTML = `<canvas id="${chartId}"></canvas>`;
+            const ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, chartConfig);
+            break;
+        }
+    }
 }

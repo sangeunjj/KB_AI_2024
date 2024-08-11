@@ -207,11 +207,20 @@ body {
 
 .charts-row {
     display: flex;
-    flex-direction: column; /* 차트를 세로로 쌓이도록 설정 */
-    align-items: center; /* 차트를 가운데 정렬 */
-    width: 100%; /* 전체 폭을 100%로 설정 */
-    margin-top: 20px; /* 위쪽에 약간의 여백 추가 */
+    flex-wrap: wrap; /* 자동으로 다음 줄로 넘어가도록 설정 */
+    justify-content: space-between; /* 차트 사이 간격 설정 */
+    margin-bottom: 20px;
 }
+
+.chart-container {
+    flex: 1; /* 모든 차트 컨테이너가 동일한 크기를 가지도록 설정 */
+    min-width: 30%; /* 최소 너비 설정, 필요에 따라 조정 가능 */
+    max-width: 30%;
+    margin-bottom: 20px; /* 차트 간 간격을 위해 아래쪽 여백 추가 */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 
 .chart-container {
     width: 100%; /* 차트 컨테이너가 부모 요소의 전체 너비를 차지 */
@@ -236,23 +245,15 @@ body {
     margin-bottom: 30px;
 }
 
-/* 차트의 범례 글씨 크기 */
-.chart-legend {
-    font-size: 16px;
-    color: black;
-    font-weight: normal;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열로 설정 */
+    grid-gap: 20px; /* 항목 간 간격 */
 }
 
-/* 범례의 각 아이템 색상 변경 */
-.chart-legend-item {
-    color: black;
-    /*color: #333;*/
-}
-
-.controls {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    align-items: center;
-    gap: 13px; /* 요소 간 간격 */
-    margin-bottom: 20px; /* 차트와의 간격 */
+.grid-item {
+    width: 100%;
+    height: 300px; /* 필요에 따라 높이 조정 */
+    padding: 10px;
+    box-sizing: border-box;
 }
