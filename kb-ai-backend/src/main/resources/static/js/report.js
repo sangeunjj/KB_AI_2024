@@ -215,7 +215,7 @@ function visualizeFinancialHealthAndProfitability(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 3개년 영업이익률 변화율`,
+                        // text: `${company.companyName} - 3개년 영업이익률 변화율`,
                         font: {
                             size: 18
                         }
@@ -275,7 +275,7 @@ function visualizeFinancialHealthAndProfitability(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 3개년 부채비율 변화율`,
+                        // text: `${company.companyName} - 3개년 부채비율 변화율`,
                         font: {
                             size: 18
                         }
@@ -335,7 +335,7 @@ function visualizeFinancialHealthAndProfitability(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 3개년 유동비율 변화율`,
+                        // text: `${company.companyName} - 3개년 유동비율 변화율`,
                         font: {
                             size: 18
                         }
@@ -408,7 +408,7 @@ function visualizeFinancialHealthAndLiquidity(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 금융비용대매출액비율 변화율`,
+                        // text: `${company.companyName} - 금융비용대매출액비율 변화율`,
                         font: {
                             size: 18
                         }
@@ -468,7 +468,7 @@ function visualizeFinancialHealthAndLiquidity(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 미수금 대비 현금성 자산 충분성 분석`,
+                        // text: `${company.companyName} - 미수금 대비 현금성 자산 충분성 분석`,
                         font: {
                             size: 18
                         }
@@ -623,7 +623,7 @@ function visualizeCustomCashFlowComparison(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 영업활동현금흐름`,
+                        // text: `${company.companyName} - 영업활동현금흐름`,
                         font: {
                             size: 18
                         }
@@ -683,7 +683,7 @@ function visualizeCustomCashFlowComparison(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 투자활동현금흐름`,
+                        // text: `${company.companyName} - 투자활동현금흐름`,
                         font: {
                             size: 18
                         }
@@ -743,7 +743,7 @@ function visualizeCustomCashFlowComparison(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: `${company.companyName} - 재무활동현금흐름`,
+                        // text: `${company.companyName} - 재무활동현금흐름`,
                         font: {
                             size: 18
                         }
