@@ -247,7 +247,40 @@ public class CompanyController {
 
                 companyData.put("cashFlow", cashFlowData);
             }
+            if (features.contains("재무 건전성 및 유동성 분석")) {
+                Map<String, Object> financialCostToSalesRatio = new HashMap<>();
+                financialCostToSalesRatio.put("current", company.getFinancialCostToSalesRatioCurrent());
+                financialCostToSalesRatio.put("previous", company.getFinancialCostToSalesRatioPrevious());
+                financialCostToSalesRatio.put("prePrevious", company.getFinancialCostToSalesRatioPrePrevious());
+                companyData.put("financialCostToSalesRatio", financialCostToSalesRatio);
 
+                Map<String, Object> receivablesToCashRatio = new HashMap<>();
+                receivablesToCashRatio.put("current", company.getReceivablesToCashRatioCurrent());
+                receivablesToCashRatio.put("previous", company.getReceivablesToCashRatioPrevious());
+                receivablesToCashRatio.put("prePrevious", company.getReceivablesToCashRatioPrePrevious());
+                companyData.put("receivablesToCashRatio", receivablesToCashRatio);
+            }
+
+            // 3개년 영업이익률 변화율
+            if (features.contains("재무 건전성 및 수익성 지표 분석")) {
+                Map<String, Object> operatingProfitMargin = new HashMap<>();
+                operatingProfitMargin.put("current", company.getOperatingProfitMarginCurrent());
+                operatingProfitMargin.put("previous", company.getOperatingProfitMarginPrevious());
+                operatingProfitMargin.put("prePrevious", company.getOperatingProfitMarginPrePrevious());
+                companyData.put("operatingProfitMargin", operatingProfitMargin);
+
+                Map<String, Object> debtRatio = new HashMap<>();
+                debtRatio.put("current", company.getDebtRatioCurrent());
+                debtRatio.put("previous", company.getDebtRatioPrevious());
+                debtRatio.put("prePrevious", company.getDebtRatioPrePrevious());
+                companyData.put("debtRatio", debtRatio);
+
+                Map<String, Object> liquidityRatio = new HashMap<>();
+                liquidityRatio.put("current", company.getLiquidityRatioCurrent());
+                liquidityRatio.put("previous", company.getLiquidityRatioPrevious());
+                liquidityRatio.put("prePrevious", company.getLiquidityRatioPrePrevious());
+                companyData.put("liquidityRatio", liquidityRatio);
+            }
             return companyData;
         }).collect(Collectors.toList());
 
