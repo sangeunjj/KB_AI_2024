@@ -117,6 +117,8 @@ function getSelectedFeatures() {
         .map(button => button.textContent.trim());
 }
 
+let fetchedData = []; // 데이터를 저장할 변수
+
 // 선택한 기업과 피처에 따라 데이터를 가져와서 시각화하는 함수
 function fetchCompanyData() {
     const companies = getSelectedCompanies();
@@ -125,36 +127,35 @@ function fetchCompanyData() {
     fetch(`/api/company/features?companyCodes=${companies.join(',')}&features=${features.join(',')}`)
         .then(response => response.json())
         .then(data => {
+            fetchedData = data; // 데이터를 저장
             console.log(data); // 데이터를 사용하여 비교 결과를 표시
             visualizeData(data, features);
         })
         .catch(error => console.error('Error:', error));
 }
 
-// 데이터를 시각화하는 함수
+// 데이터 시각화 어디로 할지 정하는 갈림길 같은거
 function visualizeData(data, features) {
-    const ctx1 = document.getElementById('chart1').getContext('2d');
-    const ctx2 = document.getElementById('chart2').getContext('2d');
-    const ctx3 = document.getElementById('chart3').getContext('2d');
+    const ctx1 = document.getElementById('activityChart').getContext('2d');
 
     if (features.includes('ESG')) {
-        visualizeESGData(data);
+        visualizeESGData(data, ctx1);
     }
     if (features.includes('활동성 지표')) {
         visualizeActivityMetrics(data, ctx1);
     }
     if (features.includes('성장성 지표')) {
-        visualizeGrowthMetrics(data, ctx2);
+        visualizeGrowthMetrics(data, ctx1);
     }
     if (features.includes('안정성 지표')) {
-        visualizeStabilityMetrics(data, ctx3);
+        visualizeStabilityMetrics(data, ctx1);
     }
     if (features.includes('수익성 지표')) {
         visualizeProfitabilityMetrics(data, ctx1); // 차트를 추가적으로 할당하거나 교체할 수 있음
     }
 }
 
-/* 💡 ESG 데이터 💡*/
+/* 💡 ESG 데이터 -> 수치로 변경 💡*/
 function gradeToNumber(grade) {
     const gradeMapping = {
         "A+": 4.3, "A": 4.0, "B+": 3.3, "B": 3.0,
@@ -164,19 +165,14 @@ function gradeToNumber(grade) {
     return gradeMapping[grade] || 0; // 매핑에 없는 경우 0으로 처리
 }
 
-function visualizeESGData(data) {
-    const ctx1 = document.getElementById('chart1').getContext('2d');
-    const ctx2 = document.getElementById('chart2').getContext('2d');
-    const ctx3 = document.getElementById('chart3').getContext('2d');
-
+// ESG 지표 시각화
+function visualizeESGData(data, ctx) {
     const labels = ['환경(Environmental)', '사회(Social)', '지배구조(Governance)', 'ESG 통합'];
-
     const pastelColors = [
         'rgba(0, 102, 204, 0.8)',   // Blue
         'rgba(34, 139, 34, 0.8)',   // Dark Green
         'rgba(178, 34, 34, 0.8)'    // Dark Red
     ];
-
     const chartData = data.map((company, index) => ({
         label: company.companyName,
         data: [
@@ -188,7 +184,7 @@ function visualizeESGData(data) {
     }));
 
     // 첫 번째 차트: 막대 그래프
-    new Chart(ctx1, {
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -233,17 +229,24 @@ function visualizeESGData(data) {
 
 // 활동성 지표 시각화
 function visualizeActivityMetrics(data, ctx) {
-    const labels = ['총자산회전율', '매출채권회전율', '재고자산회전율', '매출원가/재고자산', '매입채무회전율', '비유동자산회전율', '유형자산회전율', '타인자본회전율', '자기자본회전율', '자본금회전율', '배당성향(%)'];
-    const chartData = data.map(company => ({
+    const labels = ['총자산회전율', '매출채권회전율', '재고자산회전율'];
+    const pastelColors = [
+        'rgba(0, 102, 204, 0.8)',   // Blue
+        'rgba(34, 139, 34, 0.8)',   // Dark Green
+        'rgba(178, 34, 34, 0.8)'    // Dark Red
+    ];
+
+    const chartData = data.map((company, index) => ({
         label: company.companyName,
         data: Object.values(company['활동성 지표']),
-        borderColor: getRandomColor(),
-        borderWidth: 2,
-        fill: false
+        backgroundColor: pastelColors[index],
+        borderColor: pastelColors[index].replace('0.8', '1'),
+        borderWidth: 1
     }));
 
-    new Chart(ctx, {
-        type: 'line', // 활동성 지표에 적합한 차트 타입
+    // 차트 그리기
+    window.activityChart = new Chart(ctx, {
+        type: 'bar', // Radar Chart 사용
         data: {
             labels: labels,
             datasets: chartData
@@ -284,17 +287,23 @@ function visualizeActivityMetrics(data, ctx) {
 
 // 성장성 지표 시각화
 function visualizeGrowthMetrics(data, ctx) {
-    const labels = ['매출액증가율(YoY)', '매출총이익증가율(YoY)', '영업이익증가율(YoY)', '세전계속사업이익증가율(YoY)', '순이익증가율(YoY)', '총포괄이익증가율(YoY)', '총자산증가율', '비유동자산증가율', '유형자산증가율', '부채총계증가율', '총차입금증가율', '자기자본증가율', '유동자산증가율', '매출채권증가율', '재고자산증가율', '유동부채증가율', '매입채무증가율', '비유동부채증가율'];
-    const chartData = data.map(company => ({
+    const labels = ['매출액증가율(YoY)', '영업이익증가율(YoY)', '순이익증가율(YoY)', '총포괄이익증가율(YoY)'];
+    const pastelColors = [
+        'rgba(0, 102, 204, 0.8)',   // Blue
+        'rgba(34, 139, 34, 0.8)',   // Dark Green
+        'rgba(178, 34, 34, 0.8)'    // Dark Red
+    ];
+
+    const chartData = data.map((company, index) => ({
         label: company.companyName,
         data: Object.values(company['성장성 지표']),
-        borderColor: getRandomColor(),
-        borderWidth: 2,
-        fill: false
+        backgroundColor: pastelColors[index],
+        borderColor: pastelColors[index].replace('0.8', '1'),
+        borderWidth: 1
     }));
 
     new Chart(ctx, {
-        type: 'line', // 성장성 지표에 적합한 차트 타입
+        type: 'bar', // 성장성 지표에 적합한 차트 타입
         data: {
             labels: labels,
             datasets: chartData
@@ -333,47 +342,20 @@ function visualizeGrowthMetrics(data, ctx) {
     });
 }
 
-// 안정성 지표 시각화
-function visualizeStabilityMetrics(data, ctx) {
-    const labels = ['자기자본비율', '부채비율', '유동비율', '당좌비율', '유동부채비율', '비유동부채비율', '이자보상배율', '순이자보상배율', '비유동비율', '금융비용부담률', '자본유보율', '유보액대비율', '재무레버리지', '비유동적합률', '비유동자산구성비율', '유형자산구성비율', '유동자산구성비율', '재고자산구성비율', '유동자산/비유동자산비율', '재고자산/유동자산비율', '매출채권/매입채무비율', '매입채무/재고자산비율'];
-    const chartData = data.map(company => ({
-        label: company.companyName,
-        data: Object.values(company['안정성 지표']),
-        backgroundColor: getRandomColor(),
-        borderColor: getRandomColor().replace('0.8', '1'),
-        borderWidth: 1
-    }));
-
-    new Chart(ctx, {
-        type: 'pie', // 안정성 지표에 적합한 차트 타입
-        data: {
-            labels: labels,
-            datasets: chartData
-        },
-        options: {
-            plugins: {
-                legend: {
-                    labels: {
-                        font: {
-                            size: 14
-                        }
-                    }
-                }
-            },
-            animation: false
-        }
-    });
-}
-
 // 수익성 지표 시각화
 function visualizeProfitabilityMetrics(data, ctx) {
-    const labels = ['세전계속사업이익률', '순이익률', '총포괄이익률', '매출총이익률', '매출원가율', 'ROE', '판관비율', '총자산영업이익률', '총자산세전계속사업이익률', '자기자본영업이익률', '자기자본세전계속사업이익률', '자본금영업이익률', '자본금세전계속사업이익률', '납입자본이익률', '영업수익경비율'];
-    const chartData = data.map(company => ({
+    const labels = ['순이익률', '매출총이익률', '자기자본영업이익률'];
+    const pastelColors = [
+        'rgba(0, 102, 204, 0.8)',   // Blue
+        'rgba(34, 139, 34, 0.8)',   // Dark Green
+        'rgba(178, 34, 34, 0.8)'    // Dark Red
+    ];
+    const chartData = data.map((company, index) => ({
         label: company.companyName,
         data: Object.values(company['수익성 지표']),
-        borderColor: getRandomColor(),
-        borderWidth: 2,
-        fill: false
+        backgroundColor: pastelColors[index],
+        borderColor: pastelColors[index].replace('0.8', '1'),
+        borderWidth: 1
     }));
 
     new Chart(ctx, {
@@ -416,17 +398,42 @@ function visualizeProfitabilityMetrics(data, ctx) {
     });
 }
 
-// 랜덤한 색상을 생성하는 함수
-function getRandomColor() {
-    const colors = [
-        // 'rgba(173, 216, 230, 0.8)', // Light Blue
-        // 'rgba(221, 160, 221, 0.8)', // Light Purple
-        // 'rgba(240, 230, 140, 0.8)', // Light Yellow
+
+// 안정성 지표 시각화
+function visualizeStabilityMetrics(data, ctx) {
+    const labels = ['자기자본비율', '부채비율', '유동비율'];
+    const pastelColors = [
         'rgba(0, 102, 204, 0.8)',   // Blue
         'rgba(34, 139, 34, 0.8)',   // Dark Green
         'rgba(178, 34, 34, 0.8)'    // Dark Red
     ];
-    return colors[Math.floor(Math.random() * colors.length)];
+    const chartData = data.map((company, index) => ({
+        label: company.companyName,
+        data: Object.values(company['안정성 지표']),
+        backgroundColor: pastelColors[index],
+        borderColor: pastelColors[index].replace('0.8', '1'),
+        borderWidth: 1
+    }));
+
+    new Chart(ctx, {
+        type: 'bar', // 안정성 지표에 적합한 차트 타입
+        data: {
+            labels: labels,
+            datasets: chartData
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            },
+            animation: false
+        }
+    });
 }
 
 // 회사 선택 시 버튼에 이름 표시
@@ -439,4 +446,14 @@ function selectCompany(companyName, companyCode) {
         emptyButton.dataset.companyCode = companyCode; // 회사 코드는 데이터 속성에 저장
         closeModal();
     }
+}
+
+// 랜덤한 색상을 생성하는 함수
+function getRandomColor() {
+    const colors = [
+        'rgba(0, 102, 204, 0.8)',   // Blue
+        'rgba(34, 139, 34, 0.8)',   // Dark Green
+        'rgba(178, 34, 34, 0.8)'    // Dark Red
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
 }

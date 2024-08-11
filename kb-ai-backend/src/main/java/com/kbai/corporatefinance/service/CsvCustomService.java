@@ -135,8 +135,61 @@ public class CsvCustomService {
                         .industryCode(row[101]) // 산업코드
                         .establishmentDate(row[102]) // 설립일자
                         .accountingMonth(row[103]) // 회계월
+                        .financialCostCurrent(parseLongOrDefault(row[104], 0L)) // 금융비용_당액
+                        .financialCostPrevious(parseLongOrDefault(row[105], 0L)) // 금융비용_전기
+                        .financialCostPrePrevious(parseLongOrDefault(row[106], 0L)) // 금융비용_전전기
+                        .cashAndCashEquivalentsCurrent(parseLongOrDefault(row[107], 0L)) // 현금및현금성자산_당액
+                        .cashAndCashEquivalentsPrevious(parseLongOrDefault(row[108], 0L)) // 현금및현금성자산_전기
+                        .cashAndCashEquivalentsPrePrevious(parseLongOrDefault(row[109], 0L)) // 현금및현금성자산_전전기
+                        .operatingCashFlowCurrent(parseLongOrDefault(row[110], 0L)) // 영업활동현금흐름_당액
+                        .operatingCashFlowPrevious(parseLongOrDefault(row[111], 0L)) // 영업활동현금흐름_전기
+                        .operatingCashFlowPrePrevious(parseLongOrDefault(row[112], 0L)) // 영업활동현금흐름_전전기
+                        .provisionsCurrent(parseLongOrDefault(row[113], 0L)) // 충당부채_당액
+                        .provisionsPrevious(parseLongOrDefault(row[114], 0L)) // 충당부채_전기
+                        .provisionsPrePrevious(parseLongOrDefault(row[115], 0L)) // 충당부채_전전기
+                        .financingCashFlowCurrent(parseLongOrDefault(row[116], 0L)) // 재무활동현금흐름_당액
+                        .financingCashFlowPrevious(parseLongOrDefault(row[117], 0L)) // 재무활동현금흐름_전기
+                        .financingCashFlowPrePrevious(parseLongOrDefault(row[118], 0L)) // 재무활동현금흐름_전전기
+                        .investingCashFlowCurrent(parseLongOrDefault(row[119], 0L)) // 투자활동현금흐름_당액
+                        .investingCashFlowPrevious(parseLongOrDefault(row[120], 0L)) // 투자활동현금흐름_전기
+                        .investingCashFlowPrePrevious(parseLongOrDefault(row[121], 0L)) // 투자활동현금흐름_전전기
+                        .accountsReceivableCurrent(parseLongOrDefault(row[122], 0L)) // 미수금_당액
+                        .accountsReceivablePrevious(parseLongOrDefault(row[123], 0L)) // 미수금_전기
+                        .accountsReceivablePrePrevious(parseLongOrDefault(row[124], 0L)) // 미수금_전전기
+                        .totalLiabilitiesCurrent(parseLongOrDefault(row[125], 0L)) // 부채총계_당액
+                        .totalLiabilitiesPrevious(parseLongOrDefault(row[126], 0L)) // 부채총계_전기
+                        .totalLiabilitiesPrePrevious(parseLongOrDefault(row[127], 0L)) // 부채총계_전전기
+                        .nonCurrentLiabilitiesCurrent(parseLongOrDefault(row[128], 0L)) // 비유동부채_당액
+                        .nonCurrentLiabilitiesPrevious(parseLongOrDefault(row[129], 0L)) // 비유동부채_전기
+                        .nonCurrentLiabilitiesPrePrevious(parseLongOrDefault(row[130], 0L)) // 비유동부채_전전기
+                        .nonCurrentAssetsCurrent(parseLongOrDefault(row[131], 0L)) // 비유동자산_당액
+                        .nonCurrentAssetsPrevious(parseLongOrDefault(row[132], 0L)) // 비유동자산_전기
+                        .nonCurrentAssetsPrePrevious(parseLongOrDefault(row[133], 0L)) // 비유동자산_전전기
+                        .currentLiabilitiesCurrent(parseLongOrDefault(row[134], 0L)) // 유동부채_당액
+                        .currentLiabilitiesPrevious(parseLongOrDefault(row[135], 0L)) // 유동부채_전기
+                        .currentLiabilitiesPrePrevious(parseLongOrDefault(row[136], 0L)) // 유동부채_전전기
+                        .currentAssetsCurrent(parseLongOrDefault(row[137], 0L)) // 유동자산_당액
+                        .currentAssetsPrevious(parseLongOrDefault(row[138], 0L)) // 유동자산_전기
+                        .currentAssetsPrePrevious(parseLongOrDefault(row[139], 0L)) // 유동자산_전전기
+                        .shareCapitalCurrent(parseLongOrDefault(row[140], 0L)) // 자본금_당액
+                        .shareCapitalPrevious(parseLongOrDefault(row[141], 0L)) // 자본금_전기
+                        .shareCapitalPrePrevious(parseLongOrDefault(row[142], 0L)) // 자본금_전전기
+                        .totalAssetsCurrent(parseLongOrDefault(row[143], 0L)) // 자산총계_당액
+                        .totalAssetsPrevious(parseLongOrDefault(row[144], 0L)) // 자산총계_전기
+                        .totalAssetsPrePrevious(parseLongOrDefault(row[145], 0L)) // 자산총계_전전기
+                        .salesCurrent(parseLongOrDefault(row[146], 0L)) // 매출액_당액
+                        .salesPrevious(parseLongOrDefault(row[147], 0L)) // 매출액_전기
+                        .salesPrePrevious(parseLongOrDefault(row[148], 0L)) // 매출액_전전기
+                        .operatingProfitCurrent(parseLongOrDefault(row[149], 0L)) // 영업이익_당액
+                        .operatingProfitPrevious(parseLongOrDefault(row[150], 0L)) // 영업이익_전기
+                        .operatingProfitPrePrevious(parseLongOrDefault(row[151], 0L)) // 영업이익_전전기
+                        .accountsReceivableCurrent2(parseLongOrDefault(row[152], 0L)) // 매출채권_당액
+                        .accountsReceivablePrevious2(parseLongOrDefault(row[153], 0L)) // 매출채권_전기
+                        .accountsReceivablePrePrevious2(parseLongOrDefault(row[154], 0L)) // 매출채권_전전기
+                        .costOfSalesCurrent(parseLongOrDefault(row[155], 0L)) // 매출원가_당액
+                        .costOfSalesPrevious(parseLongOrDefault(row[156], 0L)) // 매출원가_전기
+                        .costOfSalesPrePrevious(parseLongOrDefault(row[157], 0L)) // 매출원가_전전기
                         .build();
-
                 companyRepository.save(company); // 데이터베이스에 저장
             }
         } catch (IOException | CsvException e) {

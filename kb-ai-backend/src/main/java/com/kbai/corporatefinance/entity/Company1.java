@@ -326,4 +326,166 @@ public class Company1 {
 
     @Column(nullable = true)
     private String accountingMonth; // 회계월
+
+    @Column(nullable = true)
+    private Long financialCostCurrent; // 금융비용_당액
+
+    @Column(nullable = true)
+    private Long financialCostPrevious; // 금융비용_전기
+
+    @Column(nullable = true)
+    private Long financialCostPrePrevious; // 금융비용_전전기
+
+    @Column(nullable = true)
+    private Long cashAndCashEquivalentsCurrent; // 현금및현금성자산_당액
+
+    @Column(nullable = true)
+    private Long cashAndCashEquivalentsPrevious; // 현금및현금성자산_전기
+
+    @Column(nullable = true)
+    private Long cashAndCashEquivalentsPrePrevious; // 현금및현금성자산_전전기
+
+    @Column(nullable = true)
+    private Long operatingCashFlowCurrent; // 영업활동현금흐름_당액
+
+    @Column(nullable = true)
+    private Long operatingCashFlowPrevious; // 영업활동현금흐름_전기
+
+    @Column(nullable = true)
+    private Long operatingCashFlowPrePrevious; // 영업활동현금흐름_전전기
+
+    @Column(nullable = true)
+    private Long provisionsCurrent; // 충당부채_당액
+
+    @Column(nullable = true)
+    private Long provisionsPrevious; // 충당부채_전기
+
+    @Column(nullable = true)
+    private Long provisionsPrePrevious; // 충당부채_전전기
+
+    @Column(nullable = true)
+    private Long financingCashFlowCurrent; // 재무활동현금흐름_당액
+
+    @Column(nullable = true)
+    private Long financingCashFlowPrevious; // 재무활동현금흐름_전기
+
+    @Column(nullable = true)
+    private Long financingCashFlowPrePrevious; // 재무활동현금흐름_전전기
+
+    @Column(nullable = true)
+    private Long investingCashFlowCurrent; // 투자활동현금흐름_당액
+
+    @Column(nullable = true)
+    private Long investingCashFlowPrevious; // 투자활동현금흐름_전기
+
+    @Column(nullable = true)
+    private Long investingCashFlowPrePrevious; // 투자활동현금흐름_전전기
+
+    @Column(nullable = true)
+    private Long accountsReceivableCurrent; // 미수금_당액
+
+    @Column(nullable = true)
+    private Long accountsReceivablePrevious; // 미수금_전기
+
+    @Column(nullable = true)
+    private Long accountsReceivablePrePrevious; // 미수금_전전기
+
+    @Column(nullable = true)
+    private Long totalLiabilitiesCurrent; // 부채총계_당액
+
+    @Column(nullable = true)
+    private Long totalLiabilitiesPrevious; // 부채총계_전기
+
+    @Column(nullable = true)
+    private Long totalLiabilitiesPrePrevious; // 부채총계_전전기
+
+    @Column(nullable = true)
+    private Long nonCurrentLiabilitiesCurrent; // 비유동부채_당액
+
+    @Column(nullable = true)
+    private Long nonCurrentLiabilitiesPrevious; // 비유동부채_전기
+
+    @Column(nullable = true)
+    private Long nonCurrentLiabilitiesPrePrevious; // 비유동부채_전전기
+
+    @Column(nullable = true)
+    private Long nonCurrentAssetsCurrent; // 비유동자산_당액
+
+    @Column(nullable = true)
+    private Long nonCurrentAssetsPrevious; // 비유동자산_전기
+
+    @Column(nullable = true)
+    private Long nonCurrentAssetsPrePrevious; // 비유동자산_전전기
+
+    @Column(nullable = true)
+    private Long currentLiabilitiesCurrent; // 유동부채_당액
+
+    @Column(nullable = true)
+    private Long currentLiabilitiesPrevious; // 유동부채_전기
+
+    @Column(nullable = true)
+    private Long currentLiabilitiesPrePrevious; // 유동부채_전전기
+
+    @Column(nullable = true)
+    private Long currentAssetsCurrent; // 유동자산_당액
+
+    @Column(nullable = true)
+    private Long currentAssetsPrevious; // 유동자산_전기
+
+    @Column(nullable = true)
+    private Long currentAssetsPrePrevious; // 유동자산_전전기
+
+    @Column(nullable = true)
+    private Long shareCapitalCurrent; // 자본금_당액
+
+    @Column(nullable = true)
+    private Long shareCapitalPrevious; // 자본금_전기
+
+    @Column(nullable = true)
+    private Long shareCapitalPrePrevious; // 자본금_전전기
+
+    @Column(nullable = true)
+    private Long totalAssetsCurrent; // 자산총계_당액
+
+    @Column(nullable = true)
+    private Long totalAssetsPrevious; // 자산총계_전기
+
+    @Column(nullable = true)
+    private Long totalAssetsPrePrevious; // 자산총계_전전기
+
+    @Column(nullable = true)
+    private Long salesCurrent; // 매출액_당액
+
+    @Column(nullable = true)
+    private Long salesPrevious; // 매출액_전기
+
+    @Column(nullable = true)
+    private Long salesPrePrevious; // 매출액_전전기
+
+    @Column(nullable = true)
+    private Long operatingProfitCurrent; // 영업이익_당액
+
+    @Column(nullable = true)
+    private Long operatingProfitPrevious; // 영업이익_전기
+
+    @Column(nullable = true)
+    private Long operatingProfitPrePrevious; // 영업이익_전전기
+
+    @Column(nullable = true)
+    private Long accountsReceivableCurrent2; // 매출채권_당액
+
+    @Column(nullable = true)
+    private Long accountsReceivablePrevious2; // 매출채권_전기
+
+    @Column(nullable = true)
+    private Long accountsReceivablePrePrevious2; // 매출채권_전전기
+
+    @Column(nullable = true)
+    private Long costOfSalesCurrent; // 매출원가_당액
+
+    @Column(nullable = true)
+    private Long costOfSalesPrevious; // 매출원가_전기
+
+    @Column(nullable = true)
+    private Long costOfSalesPrePrevious; // 매출원가_전전기
 }
