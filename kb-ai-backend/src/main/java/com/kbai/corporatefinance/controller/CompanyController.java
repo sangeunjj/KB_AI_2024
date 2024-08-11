@@ -30,6 +30,8 @@ public class CompanyController {
     @Value("${dart.api.key}")
     private String dartApiKey;
 
+    // [기업 페이지]
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CompanyResponse>> getCompanyList() { // dart api와 db에서 모두 가져오기
         // DB에서 모든 Company 엔티티 가져오기
@@ -60,6 +62,7 @@ public class CompanyController {
         return ResponseEntity.ok(responses);
     }
 
+    // [기업 상세 페이지]
     @GetMapping(value = "/{corpCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompanyDetailResponse> getCompanyDetails(@PathVariable Long corpCode) { // dart api와 db에서 모두 가져오기
         // DB에서 Company 엔티티 가져오기
@@ -75,6 +78,8 @@ public class CompanyController {
         );
         return ResponseEntity.ok(response);
     }
+
+    // [레포트 기업 선택 화면]
 
 
     @GetMapping(value = "/ABC", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,6 +111,8 @@ public class CompanyController {
         return name.codePoints().anyMatch(codepoint -> Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.HANGUL_SYLLABLES);
     }
 
+    // [기업 레포트 피처 선택하는 화면]
+
     @GetMapping("/features")
     public ResponseEntity<List<Map<String, Object>>> getCompanyFeatures(
             @RequestParam List<String> companyCodes, // 회사 코드를 받아옴
@@ -122,46 +129,97 @@ public class CompanyController {
             // 선택된 피처에 따라 데이터 매핑
             if (features.contains("ESG")) {
                 companyData.put("ESG_23", company.getEsg());
-//                companyData.put("ESG_22", company.getEsg_22());
                 companyData.put("ESG_23_e", company.getEsg_e());
                 companyData.put("ESG_23_s", company.getEsg_s());
                 companyData.put("ESG_23_g", company.getEsg_g());
-//                companyData.put("ESG_22_e", company.getEsg_22_e());
-//                companyData.put("ESG_22_s", company.getEsg_22_s());
-//                companyData.put("ESG_22_g", company.getEsg_22_g());
             }
-//            if (features.contains("베타계수")) {
-//                companyData.put("베타계수", company.getBetaCoefficient());
-//            }
-//            if (features.contains("여성임원수")) {
-//                companyData.put("여성임원수", company.getFemaleExecutives());
-//            }
-//            if (features.contains("정규직 유무")) {
-//                companyData.put("정규직 유무", company.getRegularEmployeeCount());
-//            }
-//            if (features.contains("성별")) {
-//                companyData.put("성별", company.getGender());
-//            }
-            // TODO 데이터 받으면 시행
-            if (features.contains("사업보고서(현금흐름표)")) {
-                // 이 부분은 추후 현금흐름표 데이터가 추가되면 구현
-                companyData.put("현금흐름표", "현금흐름표 데이터 없음"); // 예시 데이터
+            // 활동성 지표
+            if (features.contains("활동성 지표")) {
+                Map<String, Object> activityMetrics = new HashMap<>();
+                activityMetrics.put("총자산회전율", company.getTotalAssetTurnover());
+                activityMetrics.put("매출채권회전율", company.getReceivablesTurnover());
+                activityMetrics.put("재고자산회전율", company.getInventoryTurnover());
+                activityMetrics.put("매출원가/재고자산", company.getCostOfGoodsSoldToInventory());
+                activityMetrics.put("매입채무회전율", company.getPayablesTurnover());
+                activityMetrics.put("비유동자산회전율", company.getNonCurrentAssetTurnover());
+                activityMetrics.put("유형자산회전율", company.getTangibleAssetTurnover());
+                activityMetrics.put("타인자본회전율", company.getDebtToEquityTurnover());
+                activityMetrics.put("자기자본회전율", company.getEquityTurnover());
+                activityMetrics.put("자본금회전율", company.getCapitalTurnover());
+                activityMetrics.put("배당성향(%)", company.getDividendPayoutRatio());
+                companyData.put("활동성 지표", activityMetrics);
             }
-            if (features.contains("사업보고서(손익계산서)")) {
-                // 이 부분은 추후 손익계산서 데이터가 추가되면 구현
-                companyData.put("손익계산서", "손익계산서 데이터 없음"); // 예시 데이터
+
+            // 성장성 지표
+            if (features.contains("성장성 지표")) {
+                Map<String, Object> growthMetrics = new HashMap<>();
+                growthMetrics.put("매출액증가율(YoY)", company.getSalesGrowthRateYoY());
+                growthMetrics.put("매출총이익증가율(YoY)", company.getGrossProfitGrowthRateYoY());
+                growthMetrics.put("영업이익증가율(YoY)", company.getOperatingProfitGrowthRateYoY());
+                growthMetrics.put("세전계속사업이익증가율(YoY)", company.getPreTaxProfitGrowthRateYoY());
+                growthMetrics.put("순이익증가율(YoY)", company.getNetProfitGrowthRateYoY());
+                growthMetrics.put("총포괄이익증가율(YoY)", company.getComprehensiveIncomeGrowthRateYoY());
+                growthMetrics.put("총자산증가율", company.getTotalAssetGrowthRateYoY());
+                growthMetrics.put("비유동자산증가율", company.getNonCurrentAssetGrowthRateYoY());
+                growthMetrics.put("유형자산증가율", company.getTangibleAssetGrowthRateYoY());
+                growthMetrics.put("부채총계증가율", company.getTotalLiabilitiesGrowthRateYoY());
+                growthMetrics.put("총차입금증가율", company.getTotalBorrowingsGrowthRateYoY());
+                growthMetrics.put("자기자본증가율", company.getEquityGrowthRateYoY());
+                growthMetrics.put("유동자산증가율", company.getCurrentAssetGrowthRateYoY());
+                growthMetrics.put("매출채권증가율", company.getReceivablesGrowthRateYoY());
+                growthMetrics.put("재고자산증가율", company.getInventoryGrowthRateYoY());
+                growthMetrics.put("유동부채증가율", company.getCurrentLiabilitiesGrowthRateYoY());
+                growthMetrics.put("매입채무증가율", company.getPayablesGrowthRateYoY());
+                growthMetrics.put("비유동부채증가율", company.getNonCurrentLiabilitiesGrowthRateYoY());
+                companyData.put("성장성 지표", growthMetrics);
             }
-            if (features.contains("사업보고서(재무상태표)")) {
-                // 이 부분은 추후 재무상태표 데이터가 추가되면 구현
-                companyData.put("재무상태표", "재무상태표 데이터 없음"); // 예시 데이터
+            // 안정성 지표
+            if (features.contains("안정성 지표")) {
+                Map<String, Object> stabilityMetrics = new HashMap<>();
+                stabilityMetrics.put("자기자본비율", company.getEquityRatio());
+                stabilityMetrics.put("부채비율", company.getDebtRatio());
+                stabilityMetrics.put("유동비율", company.getLiquidityRatio());
+                stabilityMetrics.put("당좌비율", company.getQuickRatio());
+                stabilityMetrics.put("유동부채비율", company.getCurrentLiabilitiesRatio());
+                stabilityMetrics.put("비유동부채비율", company.getNonCurrentLiabilitiesRatio());
+                stabilityMetrics.put("이자보상배율", company.getInterestCoverageRatio());
+                stabilityMetrics.put("순이자보상배율", company.getNetInterestCoverageRatio());
+                stabilityMetrics.put("비유동비율", company.getNonCurrentAssetRatio());
+                stabilityMetrics.put("금융비용부담률", company.getFinancialCostBurdenRatio());
+                stabilityMetrics.put("자본유보율", company.getCapitalRetentionRatio());
+                stabilityMetrics.put("유보액대비율", company.getRetentionAmountToEquityRatio());
+                stabilityMetrics.put("재무레버리지", company.getFinancialLeverage());
+                stabilityMetrics.put("비유동적합률", company.getNonCurrentAssetSuitabilityRatio());
+                stabilityMetrics.put("비유동자산구성비율", company.getNonCurrentAssetCompositionRatio());
+                stabilityMetrics.put("유형자산구성비율", company.getTangibleAssetCompositionRatio());
+                stabilityMetrics.put("유동자산구성비율", company.getCurrentAssetCompositionRatio());
+                stabilityMetrics.put("재고자산구성비율", company.getInventoryCompositionRatio());
+                stabilityMetrics.put("유동자산/비유동자산비율", company.getCurrentToNonCurrentAssetRatio());
+                stabilityMetrics.put("재고자산/유동자산비율", company.getInventoryToCurrentAssetRatio());
+                stabilityMetrics.put("매출채권/매입채무비율", company.getReceivablesToPayablesRatio());
+                stabilityMetrics.put("매입채무/재고자산비율", company.getPayablesToInventoryRatio());
+                companyData.put("안정성 지표", stabilityMetrics);
             }
-//            if (features.contains("뉴스 내용 및 개수")) {
-//                companyData.put("뉴스 내용 및 개수", company.getNewsSummary());
-//                companyData.put("기사 개수", company.getTwoWeeksArticleCount());
-//            }
-//            if (features.contains("산업현황(긍정/부정 점수)")) {
-//                companyData.put("긍정/부정 점수", company.getSentimentScore());
-//            }
+            // 수익성 지표
+            if (features.contains("수익성 지표")) {
+                Map<String, Object> profitabilityMetrics = new HashMap<>();
+                profitabilityMetrics.put("세전계속사업이익률", company.getOperatingProfitBeforeTax());
+                profitabilityMetrics.put("순이익률", company.getNetProfitMargin());
+                profitabilityMetrics.put("총포괄이익률", company.getComprehensiveIncomeMargin());
+                profitabilityMetrics.put("매출총이익률", company.getGrossProfitMargin());
+                profitabilityMetrics.put("매출원가율", company.getCostOfGoodsSold());
+                profitabilityMetrics.put("ROE", company.getRoe());
+                profitabilityMetrics.put("판관비율", company.getSgAndAExpenseRatio());
+                profitabilityMetrics.put("총자산영업이익률", company.getOperatingIncomeOnTotalAssets());
+                profitabilityMetrics.put("총자산세전계속사업이익률", company.getPreTaxIncomeOnTotalAssets());
+                profitabilityMetrics.put("자기자본영업이익률", company.getOperatingIncomeOnEquity());
+                profitabilityMetrics.put("자기자본세전계속사업이익률", company.getPreTaxIncomeOnEquity());
+                profitabilityMetrics.put("자본금영업이익률", company.getOperatingIncomeOnPaidInCapital());
+                profitabilityMetrics.put("자본금세전계속사업이익률", company.getPreTaxIncomeOnPaidInCapital());
+                profitabilityMetrics.put("납입자본이익률", company.getRoi());
+                profitabilityMetrics.put("영업수익경비율", company.getOperatingExpenseRatio());
+                companyData.put("수익성 지표", profitabilityMetrics);
+            }
 
             return companyData;
         }).collect(Collectors.toList());
